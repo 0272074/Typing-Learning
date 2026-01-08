@@ -493,7 +493,11 @@
     <div id="screen-title" class="screen active">
         <h1>Typing-Learning</h1>
         <p class="subtitle">ータイピングラーニングー</p>
-        <button class="btn-start" onclick="game.toStageSelect()">スタート！</button>
+        <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+            <button class="btn-start" onclick="game.toStageSelect()">スタート！</button>
+            <button class="btn-start" style="background: #4ECDC4; box-shadow: 0 6px 0 #3BAEA5; font-size: 1.8rem;"
+                onclick="game.toRankingSelect()">ランキングを見る</button>
+        </div>
     </div>
 
     <!-- Stage Select -->
@@ -610,6 +614,36 @@
                     onclick="game.toTitle()">メニューへ</button>
                 <button class="btn-start" style="font-size:1.2rem; padding:0.8rem 2rem;"
                     onclick="game.retry()">もういちど</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ranking View Screen (Standalone) -->
+    <div id="screen-ranking-view" class="screen">
+        <h1 id="ranking-view-title">ランキング</h1>
+        <div class="game-wrapper" style="height:auto; padding:2rem; max-width:650px; overflow-y: auto;">
+            <div id="ranking-view-list-container" style="width:100%;">
+                <table class="ranking-table">
+                    <thead>
+                        <tr>
+                            <th>順位</th>
+                            <th>なまえ</th>
+                            <th>スコア</th>
+                            <th>日付</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ranking-view-body">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top:2rem; display:flex; gap:15px; justify-content: center;">
+                <button class="btn-start"
+                    style="font-size:1.2rem; padding:0.8rem 2rem; background:#4ECDC4; box-shadow: 0 6px 0 #3BAEA5;"
+                    onclick="game.toStageSelect()">もどる</button>
+                <button class="btn-start" style="font-size:1.2rem; padding:0.8rem 2rem;"
+                    onclick="game.toTitle()">メニューへ</button>
             </div>
         </div>
     </div>
@@ -1522,7 +1556,8 @@
                         stage: document.getElementById('screen-stage'),
                         level: document.getElementById('screen-level'),
                         play: document.getElementById('screen-play'),
-                        result: document.getElementById('screen-result')
+                        result: document.getElementById('screen-result'),
+                        rankingView: document.getElementById('screen-ranking-view')
                     },
                     subjectGrid: document.getElementById('subject-grid'),
                     levelTitle: document.getElementById('level-title'),
@@ -1542,7 +1577,9 @@
                     rankDisplay: document.getElementById('rank-display'),
                     rankingBody: document.getElementById('ranking-body'),
                     playerName: document.getElementById('player-name'),
-                    nameRegArea: document.getElementById('name-reg-area')
+                    nameRegArea: document.getElementById('name-reg-area'),
+                    rankingViewBody: document.getElementById('ranking-view-body'),
+                    rankingViewTitle: document.getElementById('ranking-view-title')
                 };
 
                 this.init();
@@ -1594,8 +1631,16 @@
                 });
             }
 
-            toTitle() { this.switchScreen('title'); }
+            toTitle() {
+                this.flowMode = 'PLAY';
+                this.switchScreen('title');
+            }
             toStageSelect() { this.switchScreen('stage'); }
+
+            toRankingSelect() {
+                this.flowMode = 'RANKING';
+                this.toStageSelect();
+            }
 
             selectSubject(subject) {
                 this.currentSubject = subject;
@@ -1610,6 +1655,10 @@
 
             startStage(level) {
                 this.currentLevel = level;
+                if (this.flowMode === 'RANKING') {
+                    this.showRankingOnly();
+                    return;
+                }
                 const allQuestions = GAME_DATA.questions.filter(q => q.subject === this.currentSubject && q.level === level);
 
                 let pool = allQuestions;
@@ -1865,6 +1914,30 @@
                         <td>${dateStr}</td>
                     `;
                     this.els.rankingBody.appendChild(row);
+                });
+            }
+
+            async showRankingOnly() {
+                this.switchScreen('rankingView');
+                this.els.rankingViewTitle.innerText = `${GAME_DATA.subjects[this.currentSubject].label} (Lv.${this.currentLevel}) ランキング`;
+
+                this.els.rankingViewBody.innerHTML = '<tr><td colspan="4">よみこみちゅう...</td></tr>';
+                const rankings = await this.loadRankings();
+
+                this.els.rankingViewBody.innerHTML = '';
+                if (rankings.length === 0) {
+                    this.els.rankingViewBody.innerHTML = '<tr><td colspan="4">まだ きろくが ありません</td></tr>';
+                }
+                rankings.sort((a, b) => b.score - a.score).slice(0, 10).forEach((entry, idx) => {
+                    const row = document.createElement('tr');
+                    const dateStr = new Date(entry.date).toLocaleDateString();
+                    row.innerHTML = `
+                        <td>${idx + 1}</td>
+                        <td>${entry.name}</td>
+                        <td>${entry.score}</td>
+                        <td>${dateStr}</td>
+                    `;
+                    this.els.rankingViewBody.appendChild(row);
                 });
             }
 
