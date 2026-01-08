@@ -1799,37 +1799,54 @@
 
             async updateRankingDisplay() {
                 this.els.rankingBody.innerHTML = '<tr><td colspan="4">よみこみちゅう...</td></tr>';
+                this.els.rankDisplay.innerText = 'よみこみちゅう...';
                 const rankings = await this.loadRankings();
 
-                let myRank = "ー";
                 let totalCount = rankings.length;
+                let myRank = "ー";
+
+                // まずは読み込んだランキング上位10件から自分の順位を計算してみる
+                const superiorCount = rankings.filter(r => r.score > this.lastScore).length;
+
+                // 10件未満しかないか、10位以内に入っている場合は、この計算で確定
+                if (rankings.length < 10 || superiorCount < rankings.length) {
+                    myRank = superiorCount + 1;
+                }
 
                 if (this.db) {
                     try {
                         const { collection, query, where, getCountFromServer } = await import("firebase/firestore");
+
+                        // 全体人数の取得
                         const qCount = query(
                             collection(this.db, "rankings"),
                             where("subject", "==", this.currentSubject),
                             where("level", "==", this.currentLevel)
                         );
-                        const qBetter = query(
-                            collection(this.db, "rankings"),
-                            where("subject", "==", this.currentSubject),
-                            where("level", "==", this.currentLevel),
-                            where("score", ">", this.lastScore)
-                        );
-                        const [snapTotal, snapBetter] = await Promise.all([
-                            getCountFromServer(qCount),
-                            getCountFromServer(qBetter)
-                        ]);
+                        const snapTotal = await getCountFromServer(qCount);
                         totalCount = snapTotal.data().count;
-                        myRank = snapBetter.data().count + 1;
-                    } catch (e) { console.error(e); }
-                } else {
-                    const allScores = [...rankings, { score: this.lastScore, name: 'YOU' }];
-                    allScores.sort((a, b) => b.score - a.score);
-                    myRank = allScores.findIndex(r => r.score === this.lastScore) + 1;
-                    totalCount = allScores.length;
+
+                        // もし10位以内に入っていない（または確定できない）かつ、全人数が10人以上なら
+                        // サーバー側で詳細な順位を計算する（これにはインデックスが必要）
+                        if (myRank === "ー" && totalCount > 10) {
+                            try {
+                                const qBetter = query(
+                                    collection(this.db, "rankings"),
+                                    where("subject", "==", this.currentSubject),
+                                    where("level", "==", this.currentLevel),
+                                    where("score", ">", this.lastScore)
+                                );
+                                const snapBetter = await getCountFromServer(qBetter);
+                                myRank = snapBetter.data().count + 1;
+                            } catch (e) {
+                                console.warn("詳細順位の取得に失敗しました（インデックス未作成の可能性があります）", e);
+                                // 10位以下であることは確かなので「10位〜」のような表記にするか「ー」のままにする
+                                myRank = "11位以下";
+                            }
+                        }
+                    } catch (e) {
+                        console.error("Firestore人数取得エラー", e);
+                    }
                 }
 
                 this.els.rankDisplay.innerText = `${totalCount}人中 ${myRank}位！`;
