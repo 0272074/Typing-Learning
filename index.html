@@ -537,6 +537,93 @@
         .btn-add { background: #4ECDC4; }
         .btn-delete { background: #FF6B6B; }
         .btn-export { background: #FF9F43; }
+
+        /* --- Bonus Game Screen --- */
+        .bonus-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            max-width: 800px;
+            background: white;
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+
+        .bonus-progress {
+            font-size: 1.2rem;
+            color: #718096;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .bonus-word {
+            font-size: 3.5rem;
+            color: #2D3748;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            padding: 1rem 2rem;
+            background: #F7FAFC;
+            border-radius: 20px;
+            border: 4px solid #EDF2F7;
+        }
+
+        .bonus-instruction {
+            font-size: 1.4rem;
+            color: #4A5568;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+
+        .bonus-choices {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .bonus-choice {
+            padding: 1.5rem;
+            font-size: 1.3rem;
+            background: #EDF2F7;
+            color: #2D3748;
+            border-radius: 15px;
+            text-align: left;
+            transition: all 0.2s;
+            font-weight: bold;
+            border: 3px solid transparent;
+        }
+
+        .bonus-choice:hover {
+            background: #E2E8F0;
+            transform: translateX(5px);
+        }
+
+        .bonus-choice.correct {
+            background: #C6F6D5;
+            color: #22543D;
+            border-color: #48BB78;
+        }
+
+        .bonus-choice.incorrect {
+            background: #FED7D7;
+            color: #822727;
+            border-color: #F56565;
+        }
+
+        .bonus-feedback {
+            margin-top: 2rem;
+            font-size: 2.5rem;
+            font-weight: 900;
+            height: 3.5rem;
+            line-height: normal;
+        }
+
+        .bonus-feedback.correct { color: #48BB78; }
+        .bonus-feedback.incorrect { color: #F56565; }
     </style>
 </head>
 
@@ -611,6 +698,22 @@
                 <div id="countdown-label" style="font-size:1rem; color:#A0AEC0;">つぎのもんだいまで</div>
                 <div id="countdown" class="countdown">5</div>
             </div>
+        </div>
+    </div>
+
+    <!-- Bonus Game Screen -->
+    <div id="screen-bonus" class="screen">
+        <div class="bonus-container">
+            <h2>🎯 ボーナスゲーム</h2>
+            <div class="bonus-progress">もんだい <span id="bonus-current">1</span> / 3</div>
+            <div id="bonus-word" class="bonus-word">単語</div>
+            <div class="bonus-instruction">ただしいせつめいをえらんでね！</div>
+            <div id="bonus-choices" class="bonus-choices">
+                <button class="bonus-choice" onclick="game.handleBonusChoice(0)">選択肢1</button>
+                <button class="bonus-choice" onclick="game.handleBonusChoice(1)">選択肢2</button>
+                <button class="bonus-choice" onclick="game.handleBonusChoice(2)">選択肢3</button>
+            </div>
+            <div id="bonus-feedback" class="bonus-feedback"></div>
         </div>
     </div>
 
@@ -1625,7 +1728,7 @@
                 { subject: "info", level: 3, word: "データベース", kana: "でーたべーす", explanations: ["整理されたデータの集まりです。", "検索や管理をしやすくします。"] },
                 { subject: "info", level: 3, word: "キーボード", kana: "きーぼーど", explanations: ["文字を入力する機器です。", "たくさんのキーがあります。"] },
                 { subject: "info", level: 3, word: "コンピュータ", kana: "こんぴゅーた", explanations: ["電子計算機のことです。", "高速に処理を行います。"] },
-                { subject: "info", level: 3, word: "ダウンロード", kana: "だうんはろーど", explanations: ["データを受け取ることです。", "自分のPCに保存します。"] },
+                { subject: "info", level: 3, word: "ダウンロード", kana: "だうんろーど", explanations: ["データを受け取ることです。", "自分のPCに保存します。"] },
                 { subject: "info", level: 3, word: "ハードウェア", kana: "はーどうぇあ", explanations: ["機械そのもののことです。", "触れる部分です。"] },
                 { subject: "info", level: 3, word: "ソフトウェア", kana: "そふとうぇあ", explanations: ["プログラムのことです。", "形のない部分です。"] },
                 { subject: "info", level: 3, word: "ネットワーク", kana: "ねっとわーく", explanations: ["つながりのことです。", "通信回線網です。"] },
@@ -1655,8 +1758,8 @@
                 { subject: "info", level: 3, word: "マルチメディア", kana: "まるちめでぃあ", explanations: ["複数の情報を組み合わせることです。", "文字・音・動画などです。"] },
                 { subject: "info", level: 3, word: "ランゲージ", kana: "らんげーじ", explanations: ["言語のことです。", "プログラミング言語などです。"] },
                 { subject: "info", level: 3, word: "ロケーション", kana: "ろけーしょん", explanations: ["場所や位置情報です。", "GPSなどで分かります。"] },
-                { subject: "info", level: 3, word: "マキシマイズ", kana: "まきしまーず", explanations: ["最大化することです。", "画面いっぱいに広げます。"] },
-                { subject: "info", level: 3, word: "ミニマイズ", kana: "みにまーず", explanations: ["最小化することです。", "タスクバーにしまいます。"] },
+                { subject: "info", level: 3, word: "マキシマイズ", kana: "まきしまいず", explanations: ["最大化することです。", "画面いっぱいに広げます。"] },
+                { subject: "info", level: 3, word: "ミニマイズ", kana: "みにまいず", explanations: ["最小化することです。", "タスクバーにしまいます。"] },
                 { subject: "info", level: 3, word: "ナビゲート", kana: "なびげーと", explanations: ["案内することです。", "目的の場所へ導きます。"] },
                 { subject: "info", level: 3, word: "オペレータ", kana: "おぺれーた", explanations: ["操作する人や記号のことです。", "計算記号なども指します。"] },
                 { subject: "info", level: 3, word: "オプティマイズ", kana: "おぷてぃまいず", explanations: ["最適化することです。", "一番良い状態にします。"] },
@@ -1988,12 +2091,20 @@
 
                 this.typingEngine = new TypingEngine();
 
+                // Bonus Game State
+                this.bonusQuestions = [];
+                this.bonusCurrentIndex = 0;
+                this.bonusCorrectCount = 0;
+                this.answeredQuestions = [];
+                this.totalTypingScore = 0; // Temporary storage before bonus
+
                 this.els = {
                     screens: {
                         title: document.getElementById('screen-title'),
                         stage: document.getElementById('screen-stage'),
                         level: document.getElementById('screen-level'),
                         play: document.getElementById('screen-play'),
+                        bonus: document.getElementById('screen-bonus'),
                         result: document.getElementById('screen-result'),
                         rankingView: document.getElementById('screen-ranking-view'),
                         admin: document.getElementById('screen-admin')
@@ -2060,6 +2171,7 @@
                              screenName === 'stage' ? 'SUBJECT_SELECT' : 
                              screenName === 'level' ? 'DIFFICULTY_SELECT' : 
                              screenName === 'play' ? 'PLAY' : 
+                             screenName === 'bonus' ? 'BONUS' :
                              screenName === 'result' ? 'RESULT' : 'UNKNOWN';
             }
 
@@ -2116,6 +2228,8 @@
                 // Take 10
                 this.questionsQueue = questions.slice(0, 10);
                 this.currentQuestionIndex = 0;
+                this.answeredQuestions = []; // Reset for bonus
+                this.bonusCorrectCount = 0;
                 
                 this.score = 0;
                 this.mistakes = 0;
@@ -2148,11 +2262,9 @@
 
             nextQuestion() {
                 if (this.currentQuestionIndex >= this.questionsQueue.length) {
-                    this.finishGame();
-
+                    this.startBonusGame();
                     return;
                 }
-
                 this.currentQuestion = this.questionsQueue[this.currentQuestionIndex];
                 this.typingEngine.setWord(this.currentQuestion);
                 this.updateHUD();
@@ -2236,6 +2348,10 @@
                     if (count <= 0) {
                         clearInterval(interval);
                         this.els.modal.classList.remove('active');
+                        
+                        // Store answered question for bonus game
+                        this.answeredQuestions.push(this.currentQuestion);
+                        
                         this.currentQuestionIndex++;
                         this.nextQuestion();
 
@@ -2248,6 +2364,94 @@
                 }, 1000);
             }
 
+            /* --- Bonus Game Logic --- */
+            startBonusGame() {
+                clearInterval(this.timerInterval);
+                this.state = 'BONUS';
+                
+                // Shuffle answered questions and pick 3
+                const shuffled = [...this.answeredQuestions].sort(() => Math.random() - 0.5);
+                this.bonusQuestions = shuffled.slice(0, 3);
+                this.bonusCurrentIndex = 0;
+                this.bonusCorrectCount = 0;
+
+                this.switchScreen('bonus');
+                this.showBonusQuestion();
+            }
+
+            showBonusQuestion() {
+                const question = this.bonusQuestions[this.bonusCurrentIndex];
+                document.getElementById('bonus-current').innerText = this.bonusCurrentIndex + 1;
+                document.getElementById('bonus-word').innerText = question.word;
+                document.getElementById('bonus-feedback').innerText = '';
+                document.getElementById('bonus-feedback').className = 'bonus-feedback';
+
+                // Generate choices
+                const correctChoice = question.explanations[0];
+                const wrongChoices = this.getWrongChoices(question);
+                
+                const choices = [correctChoice, ...wrongChoices].sort(() => Math.random() - 0.5);
+                const choiceBtns = document.getElementById('bonus-choices').querySelectorAll('.bonus-choice');
+                
+                choiceBtns.forEach((btn, idx) => {
+                    btn.innerText = choices[idx];
+                    btn.className = 'bonus-choice';
+                    btn.disabled = false;
+                    btn.onclick = () => this.handleBonusChoice(choices[idx], btn, correctChoice);
+                });
+            }
+
+            getWrongChoices(correctQ) {
+                // Find questions in same subject/level but different word
+                let pool = GAME_DATA.questions.filter(q => 
+                    q.subject === correctQ.subject && 
+                    q.level === correctQ.level && 
+                    q.word !== correctQ.word
+                );
+                
+                // If not enough in same level, use same subject any level
+                if (pool.length < 2) {
+                    pool = GAME_DATA.questions.filter(q => 
+                        q.subject === correctQ.subject && 
+                        q.word !== correctQ.word
+                    );
+                }
+
+                const shuffled = pool.sort(() => Math.random() - 0.5);
+                return shuffled.slice(0, 2).map(q => q.explanations[0]);
+            }
+
+            handleBonusChoice(selected, btn, correct) {
+                const choiceBtns = document.getElementById('bonus-choices').querySelectorAll('.bonus-choice');
+                choiceBtns.forEach(b => b.disabled = true);
+
+                const feedback = document.getElementById('bonus-feedback');
+                
+                if (selected === correct) {
+                    this.bonusCorrectCount++;
+                    btn.classList.add('correct');
+                    feedback.innerText = 'せいかい！ ✨';
+                    feedback.className = 'bonus-feedback correct';
+                } else {
+                    btn.classList.add('incorrect');
+                    feedback.innerText = 'ざんねん... 😢';
+                    feedback.className = 'bonus-feedback incorrect';
+                    // Show correct answer
+                    choiceBtns.forEach(b => {
+                        if (b.innerText === correct) b.classList.add('correct');
+                    });
+                }
+
+                setTimeout(() => {
+                    this.bonusCurrentIndex++;
+                    if (this.bonusCurrentIndex < this.bonusQuestions.length) {
+                        this.showBonusQuestion();
+                    } else {
+                        this.finishGame();
+                    }
+                }, 1500);
+            }
+
             finishGame() {
                 clearInterval(this.timerInterval);
                 this.switchScreen('result');
@@ -2255,9 +2459,14 @@
                 const totalTime = this.elapsedTime;
                 let timeBonus = 1000 - (totalTime * 1) - (this.mistakes * 20);
                 if (timeBonus < 0) timeBonus = 0;
-                let calcScore = this.score + timeBonus;
-                // if (calcScore < 0) calcScore = 0;
-                this.lastScore = calcScore; // Store for registration
+                
+                let baseScore = this.score + timeBonus;
+                
+                // Apply Bonus Multiplier: +10% per correct answer
+                const multiplier = 1 + (this.bonusCorrectCount * 0.1);
+                let calcScore = Math.floor(baseScore * multiplier);
+                
+                this.lastScore = calcScore; 
 
                 this.els.resScore.innerText = calcScore;
                 this.els.resTime.innerText = Math.floor(totalTime);
