@@ -698,7 +698,7 @@
                 { subject: "japanese", level: 1, word: "読み取り", kana: "よみとり", explanations: ["文章から意味を考えることです。", "国語の中心の力です。"] },
                 { subject: "japanese", level: 1, word: "感想", kana: "かんそう", explanations: ["読んで感じたことです。", "理由をつけて書きます。"] },
                 { subject: "japanese", level: 1, word: "言葉の力", kana: "ことばのちから", explanations: ["言葉で考え、伝える力です。", "すべての学習の土台です。"] },
-
+                
                 // Lv2 (30語)
                 { subject: "japanese", level: 2, word: "要点", kana: "ようてん", explanations: ["文章で特に大切な部分です。", "短くまとめます。"] },
                 { subject: "japanese", level: 2, word: "中心文", kana: "ちゅうしんぶん", explanations: ["段落の中で一番大事な文です。", "内容をまとめています。"] },
@@ -764,18 +764,101 @@
                 { subject: "japanese", level: 3, word: "初心忘るべからず", kana: "しょしんわするべからず", explanations: ["はじめの気持ちをいつまでも大切にすべきだという意味です。", "学ぶ姿勢の大切さを教える言葉です。"] },
 
                 /* --- 算数 (Math) --- */
-                // Lv1
-                { subject: "math", level: 1, word: "かず", kana: "かず", explanations: ["１，２，３と 数える。", "多いか 少ないか 分かる。"] },
-                { subject: "math", level: 1, word: "とけい", kana: "とけい", explanations: ["時間を 教えて くれる。", "長い針と 短い針が ある。"] },
-                { subject: "math", level: 1, word: "まる", kana: "まる", explanations: ["ボールのような 形。", "角が ない。"] },
-                // Lv2
-                { subject: "math", level: 2, word: "さんすう", kana: "さんすう", explanations: ["計算を する 勉強。", "数字を 使う。"] },
-                { subject: "math", level: 2, word: "ひきざん", kana: "ひきざん", explanations: ["残りは いくつか 計算する。", "引く と いう。"] },
-                { subject: "math", level: 2, word: "ずけい", kana: "ずけい", explanations: ["三角形や 四角形の こと。", "形を 調べる。"] },
-                // Lv3
-                { subject: "math", level: 3, word: "ぶんすう", kana: "ぶんすう", explanations: ["数を 分けた もの。", "２分の１ など。"] },
-                { subject: "math", level: 3, word: "しょうすう", kana: "しょうすう", explanations: ["１より 小さい 数。", "０．１ など。"] },
-                { subject: "math", level: 3, word: "わりざん", kana: "わりざん", explanations: ["同じ数ずつ 分ける 計算。", "割る と いう。"] },
+                // Lv1 (30語) - 短い言葉・きほん (2-4文字)
+                { subject: "math", level: 1, word: "かず", kana: "かず", explanations: ["ものを 数える ときに つかいます。", "１、２、３...と 増えて いきます。"] },
+                { subject: "math", level: 1, word: "すうじ", kana: "すうじ", explanations: ["数を あらわす 記号です。", "０から９まで あります。"] },
+                { subject: "math", level: 1, word: "たしざん", kana: "たしざん", explanations: ["あわせると いくつに なるか 計算します。", "＋の 記号を つかいます。"] },
+                { subject: "math", level: 1, word: "ひきざん", kana: "ひきざん", explanations: ["のこりは いくつに なるか 計算します。", "－の 記号を つかいます。"] },
+                { subject: "math", level: 1, word: "ゼロ", kana: "ぜろ", explanations: ["なにも ない ことを あらわします。", "０ と 書きます。"] },
+                { subject: "math", level: 1, word: "いち", kana: "いち", explanations: ["ものの 始まりの 数です。", "指一本で あらわします。"] },
+                { subject: "math", level: 1, word: "じゅう", kana: "じゅう", explanations: ["９の つぎの 数です。", "両手の 指の 数と 同じです。"] },
+                { subject: "math", level: 1, word: "ひゃく", kana: "ひゃく", explanations: ["１０が １０個 あつまった 数です。", "１００円玉の １００です。"] },
+                { subject: "math", level: 1, word: "まる", kana: "まる", explanations: ["ボールのような 形です。", "かどが ありません。"] },
+                { subject: "math", level: 1, word: "さんかく", kana: "さんかく", explanations: ["かどが ３つ ある 形です。", "おにぎりの 形です。"] },
+                { subject: "math", level: 1, word: "しかく", kana: "しかく", explanations: ["かどが ４つ ある 形です。", "折り紙の 形です。"] },
+                { subject: "math", level: 1, word: "とけい", kana: "とけい", explanations: ["時間を 教えて くれる 道具です。", "長い針と 短い針が あります。"] },
+                { subject: "math", level: 1, word: "じかん", kana: "じかん", explanations: ["１日は ２４時間 あります。", "ときは お金より 大切です。"] },
+                { subject: "math", level: 1, word: "ふん", kana: "ふん", explanations: ["時間の 単位です。", "長い針が １目盛り すすむと １分です。"] },
+                { subject: "math", level: 1, word: "ながい", kana: "ながい", explanations: ["長さが あることです。", "えんぴつが まだ つかえます。"] },
+                { subject: "math", level: 1, word: "みじかい", kana: "みじかい", explanations: ["長さがすくないことです。", "えんぴつが もう なくなります。"] },
+                { subject: "math", level: 1, word: "おもい", kana: "おもい", explanations: ["重さが あることです。", "ぞうは ありが おもいです。"] },
+                { subject: "math", level: 1, word: "かるい", kana: "かるい", explanations: ["重さが すくないことです。", "風船は とても かるいです。"] },
+                { subject: "math", level: 1, word: "ひろい", kana: "ひろい", explanations: ["場所が 大きいことです。", "運動場は ひろいです。"] },
+                { subject: "math", level: 1, word: "せまい", kana: "せまい", explanations: ["場所が 小さいことです。", "箱の中は せまいです。"] },
+                { subject: "math", level: 1, word: "みぎ", kana: "みぎ", explanations: ["おはしを 持つ ほうの手です。", "右側通行の 右です。"] },
+                { subject: "math", level: 1, word: "ひだり", kana: "ひだり", explanations: ["お茶碗を 持つ ほうの手です。", "心臓が ある ほうです。"] },
+                { subject: "math", level: 1, word: "うえ", kana: "うえ", explanations: ["空が ある ほうです。", "高い ところです。"] },
+                { subject: "math", level: 1, word: "した", kana: "した", explanations: ["地面が ある ほうです。", "低い ところです。"] },
+                { subject: "math", level: 1, word: "おかね", kana: "おかね", explanations: ["ものを 買うときに つかいます。", "大切に つかいましょう。"] },
+                { subject: "math", level: 1, word: "えん", kana: "えん", explanations: ["日本のお金の 単位です。", "￥マークで 書きます。"] },
+                { subject: "math", level: 1, word: "なんばん", kana: "なんばん", explanations: ["順番を 聞く 言葉です。", "「１番」のように 答えます。"] },
+                { subject: "math", level: 1, word: "いくつ", kana: "いくつ", explanations: ["数を 聞く 言葉です。", "「３個」のように 答えます。"] },
+                { subject: "math", level: 1, word: "ばつ", kana: "ばつ", explanations: ["まちがいを あらわす 記号です。", "×と 書きます。"] },
+                { subject: "math", level: 1, word: "きごう", kana: "きごう", explanations: ["＋や－などの マークのことです。", "意味が 決まって います。"] },
+
+                // Lv2 (30語) - 中くらいの言葉・単位・道具・図形 (5-7文字)
+                { subject: "math", level: 2, word: "定規", kana: "じょうぎ", explanations: ["直線を 引いたり 長さを 測る 道具です。", "筆箱に 入っています。"] },
+                { subject: "math", level: 2, word: "分度器", kana: "ぶんどき", explanations: ["角度を 測る 道具です。", "半円の 形を しています。"] },
+                { subject: "math", level: 2, word: "コンパス", kana: "こんぱす", explanations: ["きれいな 円を かく 道具です。", "針に 気をつけて 使います。"] },
+                { subject: "math", level: 2, word: "そろばん", kana: "そろばん", explanations: ["珠（たま）を 弾いて 計算する 道具です。", "昔から使われている 電卓のようなものです。"] },
+                { subject: "math", level: 2, word: "電卓", kana: "でんたく", explanations: ["ボタンを 押して 計算する 機械です。", "複雑な 計算も すぐに できます。"] },
+                { subject: "math", level: 2, word: "メートル", kana: "めーとる", explanations: ["長さの 単位で ｍ と書きます。", "１ｍは １００ｃｍです。"] },
+                { subject: "math", level: 2, word: "グラム", kana: "ぐらむ", explanations: ["重さの 単位で ｇ と書きます。", "１円玉は １ｇです。"] },
+                { subject: "math", level: 2, word: "リットル", kana: "りっとる", explanations: ["水のかさの 単位で Ｌ と書きます。", "牛乳パックは １Ｌが多いです。"] },
+                { subject: "math", level: 2, word: "直角", kana: "ちょっかく", explanations: ["９０度の 角度のことです。", "本や ノートの かどの 形です。"] },
+                { subject: "math", level: 2, word: "直線", kana: "ちょくせん", explanations: ["まっすぐな 線のことです。", "どこまでも 続いています。"] },
+                { subject: "math", level: 2, word: "正方形", kana: "せいほうけい", explanations: ["４つの辺が 同じ長さの 四角形です。", "角も すべて 直角です。"] },
+                { subject: "math", level: 2, word: "長方形", kana: "ちょうほうけい", explanations: ["向かい合う辺が 同じ長さの 四角形です。", "角は すべて 直角です。"] },
+                { subject: "math", level: 2, word: "正三角形", kana: "せいさんかくけい", explanations: ["３つの辺が すべて 同じ長さの 三角形です。", "角も すべて ６０度です。"] },
+                { subject: "math", level: 2, word: "円", kana: "えん", explanations: ["まんまるの 形です。", "中心から まわりまでの 長さが 同じです。"] },
+                { subject: "math", level: 2, word: "半径", kana: "はんけい", explanations: ["円の中心から 外側までの長さです。", "直径の 半分です。"] },
+                { subject: "math", level: 2, word: "直径", kana: "ちょっけい", explanations: ["円の中心を通る 端から端までの長さです。", "半径の ２倍です。"] },
+                { subject: "math", level: 2, word: "九九", kana: "くく", explanations: ["かけ算を 覚えるための 歌です。", "「二二が四」などと 唱えます。"] },
+                { subject: "math", level: 2, word: "かけ算", kana: "かけざん", explanations: ["同じ数を 何回も 足す 計算です。", "×の 記号を 使います。"] },
+                { subject: "math", level: 2, word: "わり算", kana: "わりざん", explanations: ["同じ数ずつ 分ける 計算です。", "÷の 記号を 使います。"] },
+                { subject: "math", level: 2, word: "分数", kana: "ぶんすう", explanations: ["１に 満たない数を 表す方法です。", "２分の１のように 書きます。"] },
+                { subject: "math", level: 2, word: "小数", kana: "しょうすう", explanations: ["点（．）を使って 細かい数を 表します。", "０．１などと 書きます。"] },
+                { subject: "math", level: 2, word: "計算", kana: "けいさん", explanations: ["答えを 求める ことです。", "速く 正確に できるよう 練習します。"] },
+                { subject: "math", level: 2, word: "グラフ", kana: "ぐらふ", explanations: ["数や 量を 形にして 見やすくしたものです。", "棒グラフや 折れ線グラフがあります。"] },
+                { subject: "math", level: 2, word: "表", kana: "ひょう", explanations: ["数字や 言葉を 枠の中に 整理したものです。", "見やすく まとめるのに 便利です。"] },
+                { subject: "math", level: 2, word: "約数", kana: "やくすう", explanations: ["ある数を 割り切ることのできる 数です。", "６の約数は １、２、３、６です。"] },
+                { subject: "math", level: 2, word: "倍数", kana: "ばいすう", explanations: ["ある数を 何倍かした 数です。", "２の倍数は ２、４、６...と 続きます。"] },
+                { subject: "math", level: 2, word: "四捨五入", kana: "ししゃごにゅう", explanations: ["およその数を 求める 方法です。", "５以上なら 切り上げ、４以下なら 切り捨てます。"] },
+                { subject: "math", level: 2, word: "垂直", kana: "すいちょく", explanations: ["２つの直線が 直角（９０度）に 交わることです。", "Ｔの字のような 関係です。"] },
+                { subject: "math", level: 2, word: "平行", kana: "へいこう", explanations: ["２つの直線が どこまでいっても 交わらないことです。", "電車のレールのようです。"] },
+                { subject: "math", level: 2, word: "展開図", kana: "てんかいず", explanations: ["箱を 開いて 平らにした 図です。", "組み立てると どんな形になるか 考えます。"] },
+
+                // Lv3 (30語) - 長い言葉・数学者・定理 (8文字以上)
+                { subject: "math", level: 3, word: "ピタゴラス", kana: "ぴたごらす", explanations: ["古代ギリシャの 数学者です。", "「三平方の定理」で とても 有名です。"] },
+                { subject: "math", level: 3, word: "アルキメデス", kana: "あるきめです", explanations: ["古代ギリシャの 数学者・発明家です。", "「Eureka!（わかった！）」と叫んで お風呂から飛び出しました。"] },
+                { subject: "math", level: 3, word: "ユークリッド", kana: "ゆーくりっど", explanations: ["幾何学（図形の勉強）の 父と呼ばれる 数学者です。", "「原論」という とても有名な本を 書きました。"] },
+                { subject: "math", level: 3, word: "ガウス", kana: "がうす", explanations: ["「数学の王様」と 呼ばれる ドイツの学者です。", "１から１００までの和を 一瞬で 計算しました。"] },
+                { subject: "math", level: 3, word: "オイラー", kana: "おいらー", explanations: ["たくさんの公式を 発見した 数学者です。", "目が見えなくなっても 計算を続けました。"] },
+                { subject: "math", level: 3, word: "ニュートン", kana: "にゅーとん", explanations: ["微積分という 新しい数学を 作りました。", "リンゴが落ちるのを見て 重力を発見した人でもあります。"] },
+                { subject: "math", level: 3, word: "アインシュタイン", kana: "あいんしゅたいん", explanations: ["相対性理論で 有名な 物理学者です。", "数学を使って 宇宙の謎を 解き明かしました。"] },
+                { subject: "math", level: 3, word: "関孝和", kana: "せきたかかず", explanations: ["江戸時代の 日本の 数学者です。", "円周率を かなり 正確に 計算しました。"] },
+                { subject: "math", level: 3, word: "三平方の定理", kana: "さんへいほうのていり", explanations: ["直角三角形の 辺の長さの 関係を表す定理です。", "ピタゴラスの定理とも 呼ばれます。"] },
+                { subject: "math", level: 3, word: "フェルマーの最終定理", kana: "ふぇるまーのさいしゅうていり", explanations: ["350年以上も 誰も解けなかった 難しい問題です。", "1995年に ついに証明されました。"] },
+                { subject: "math", level: 3, word: "円周率", kana: "えんしゅうりつ", explanations: ["円周の長さが 直径の何倍かを 表す数です。", "3.14159...と どこまでも 続きます。"] },
+                { subject: "math", level: 3, word: "フィボナッチ数列", kana: "ふぃぼなっちすうれつ", explanations: ["前の２つの数を 足した数が 続く 数字の列です。", "1, 1, 2, 3, 5, 8...と いきます。自然界にも たくさんあります。"] },
+                { subject: "math", level: 3, word: "素数", kana: "そすう", explanations: ["１と自分自身以外では 割り切れない数です。", "２、３、５、７、１１...と 続きます。"] },
+                { subject: "math", level: 3, word: "方程式", kana: "ほうていしき", explanations: ["わからない数を ｘ（エックス）として解く 式です。", "等号（＝）で 結ばれています。"] },
+                { subject: "math", level: 3, word: "二等辺三角形", kana: "にとうへんさんかくけい", explanations: ["２つの辺が 同じ長さの 三角形です。", "２つの角も 同じ大きさに なります。"] },
+                { subject: "math", level: 3, word: "平行四辺形", kana: "へいこうしへんけい", explanations: ["向かい合う２組の辺が 平行な 四角形です。", "向かい合う角の大きさも 同じです。"] },
+                { subject: "math", level: 3, word: "台形", kana: "だいけい", explanations: ["向かい合う１組の辺が 平行な 四角形です。", "平行な辺を 上底・下底と 呼びます。"] },
+                { subject: "math", level: 3, word: "立方体", kana: "りっぽうたい", explanations: ["サイコロのような 形です。", "６つの面が すべて 正方形です。"] },
+                { subject: "math", level: 3, word: "直方体", kana: "ちょくほうたい", explanations: ["ティッシュ箱のような 形です。", "面が 長方形（または正方形）で できています。"] },
+                { subject: "math", level: 3, word: "黄金比", kana: "おうごんひ", explanations: ["人間が 最も美しいと 感じる 比率です。", "パルテノン神殿や モナ・リザにも 使われています。"] },
+                { subject: "math", level: 3, word: "無限", kana: "むげん", explanations: ["限りなく 続くことです。", "数は どこまでも 大きくできます。"] },
+                { subject: "math", level: 3, word: "確率", kana: "かくりつ", explanations: ["ある出来事が 起こる 可能性の高さです。", "サイコロの１が出る確率は ６分の１です。"] },
+                { subject: "math", level: 3, word: "平均", kana: "へいきん", explanations: ["いくつかの数を 平らにならした 値です。", "合計÷個数で 求めます。"] },
+                { subject: "math", level: 3, word: "反比例", kana: "はんぴれい", explanations: ["一方が２倍になると、もう一方が１／２になる関係です。", "グラフは 双曲線になります。"] },
+                { subject: "math", level: 3, word: "最大公約数", kana: "さいだいこうやくすう", explanations: ["共通する約数の中で 一番大きい数のことです。", "分数の 約分に使います。"] },
+                { subject: "math", level: 3, word: "最小公倍数", kana: "さいしょうこうばいすう", explanations: ["共通する倍数の中で 一番小さい数のことです。", "分数の 通分に使います。"] },
+                { subject: "math", level: 3, word: "五角形", kana: "ごかくけい", explanations: ["５つの辺と ５つの角がある 多角形です。", "アメリカの ペンタゴンは この形です。"] },
+                { subject: "math", level: 3, word: "六角形", kana: "ろっかくけい", explanations: ["６つの辺と ６つの角がある 多角形です。", "ハチの巣や 雪の結晶は この形です。"] },
+                { subject: "math", level: 3, word: "円の面積の公式", kana: "えんのめんせきのこうしき", explanations: ["円の広さを求める公式です。", "半径×半径×3.14 です。"] },
+                { subject: "math", level: 3, word: "台形の公式", kana: "だいけいのこうしき", explanations: ["台形の面積を求める公式です。", "（上底＋下底）×高さ÷２ です。"] },
 
                 /* --- 理科 (Science) --- */
                 // Lv1 (30語)
@@ -1026,7 +1109,6 @@
                 { subject: "social", level: 3, word: "選挙制度", kana: "せんきょせいど", explanations: ["代表を選ぶ仕組みで、選挙区・比例代表・投票年齢などのルールから成ります。", "公正さが民主主義の柱です。"] },
                 { subject: "social", level: 3, word: "地方自治", kana: "ちほうじち", explanations: ["地域のことは地域で決めるという考え方で、住民参加・分権の仕組みが重要です。", "民主主義の学校とも呼ばれます。"] },
 
-
                 /* --- 外国語 (English) --- */
                 // Lv1 (50語) - 短い単語
                 { subject: "english", level: 1, word: "cat", kana: "ねこ", romanji: "cat", explanations: ["Meowと鳴くかわいい動物です。", "ペットとして世界中で人気があります。"] },
@@ -1079,7 +1161,6 @@
                 { subject: "english", level: 1, word: "bye", kana: "ばいばい", romanji: "bye", explanations: ["さようならの短い言い方です。", "See you!と一緒に使うこともあります。"] },
                 { subject: "english", level: 1, word: "big", kana: "おおきい", romanji: "big", explanations: ["サイズが大きいことを表します。", "反対はsmall（小さい）です。"] },
                 { subject: "english", level: 1, word: "new", kana: "あたらしい", romanji: "new", explanations: ["新しいことを表します。", "反対はold（古い）です。"] },
-
                 // Lv2 (50語) - 中くらいの単語
                 { subject: "english", level: 2, word: "apple", kana: "りんご", romanji: "apple", explanations: ["赤くて丸い果物です。", "甘くておいしいです。"] },
                 { subject: "english", level: 2, word: "banana", kana: "ばなな", romanji: "banana", explanations: ["黄色くて細長い果物です。", "皮をむいて食べます。"] },
@@ -1130,7 +1211,6 @@
                 { subject: "english", level: 2, word: "water", kana: "みず", romanji: "water", explanations: ["飲み物の基本です。", "生き物には欠かせません。"] },
                 { subject: "english", level: 2, word: "please", kana: "おねがい", romanji: "please", explanations: ["「お願いします」を表す言葉です。", "丁寧なお願いに使います。"] },
                 { subject: "english", level: 2, word: "sorry", kana: "ごめんなさい", romanji: "sorry", explanations: ["「ごめんなさい」を表す言葉です。", "I'm sorry.と言います。"] },
-
                 // Lv3 (50語) - 長い単語とフレーズ
                 { subject: "english", level: 3, word: "elephant", kana: "ぞう", romanji: "elephant", explanations: ["陸で一番大きな動物です。", "長い鼻が特徴です。"] },
                 { subject: "english", level: 3, word: "penguin", kana: "ぺんぎん", romanji: "penguin", explanations: ["南極に住む飛べない鳥です。", "泳ぎがとても上手です。"] },
@@ -1185,201 +1265,200 @@
                 /* --- 音楽 (Music) --- */
                 // Lv1 (30語) - 短い語（2〜4文字）
                 { subject: "music", level: 1, word: "歌", kana: "うた", explanations: ["メロディーに合わせて声を出すことです。", "みんなで歌うと楽しい気持ちになります。"] },
-                { subject: "music", level: 1, word: "声", kana: "こえ", explanations: ["人が出す音のことです。", "歌ったり話したりするときに使います。"] },
-                { subject: "music", level: 1, word: "音", kana: "おと", explanations: ["耳で聞こえるものです。", "楽器からもいろいろな音が出ます。"] },
-                { subject: "music", level: 1, word: "曲", kana: "きょく", explanations: ["作曲された音楽のことです。", "歌やメロディーで構成されています。"] },
-                { subject: "music", level: 1, word: "拍", kana: "はく", explanations: ["音楽のリズムを刻む単位です。", "「イチ、ニ、サン、シ」と数えます。"] },
-                { subject: "music", level: 1, word: "鈴", kana: "すず", explanations: ["振るとシャンシャンと鳴る小さな楽器です。", "クリスマスの曲によく使われます。"] },
-                { subject: "music", level: 1, word: "笛", kana: "ふえ", explanations: ["息を吹いて音を出す楽器です。", "リコーダーも笛の仲間です。"] },
-                { subject: "music", level: 1, word: "琴", kana: "こと", explanations: ["弦を指で弾いて演奏する日本の伝統楽器です。", "お正月によく聴かれます。"] },
-                { subject: "music", level: 1, word: "鐘", kana: "かね", explanations: ["叩くと「ゴーン」と響く楽器です。", "教会やお寺にもあります。"] },
-                { subject: "music", level: 1, word: "調", kana: "ちょう", explanations: ["曲の音の組み合わせの種類です。", "長調と短調があります。"] },
-                { subject: "music", level: 1, word: "ピアノ", kana: "ぴあの", explanations: ["鍵盤を押して音を出す楽器です。", "88個の鍵盤があります。"] },
-                { subject: "music", level: 1, word: "ギター", kana: "ぎたー", explanations: ["6本の弦を弾いて演奏する楽器です。", "弾き語りによく使われます。"] },
-                { subject: "music", level: 1, word: "ドラム", kana: "どらむ", explanations: ["バチで叩いて演奏する打楽器セットです。", "バンドのリズムを担当します。"] },
-                { subject: "music", level: 1, word: "リズム", kana: "りずむ", explanations: ["音楽の規則的な動きです。", "手拍子や足踏みで感じられます。"] },
-                { subject: "music", level: 1, word: "テンポ", kana: "てんぽ", explanations: ["曲の速さを表す言葉です。", "速いテンポ・遅いテンポがあります。"] },
-                { subject: "music", level: 1, word: "バッハ", kana: "ばっは", explanations: ["「音楽の父」と呼ばれるドイツの作曲家です。", "教会音楽や器楽曲を多く作りました。"] },
-                { subject: "music", level: 1, word: "弾く", kana: "ひく", explanations: ["ピアノやギターなどの楽器を演奏することです。", "指や手を使います。"] },
-                { subject: "music", level: 1, word: "吹く", kana: "ふく", explanations: ["笛やトランペットなど息で音を出すことです。", "肺活量が大切です。"] },
-                { subject: "music", level: 1, word: "聴く", kana: "きく", explanations: ["音楽に耳を傾けることです。", "よく聴くと新しい発見があります。"] },
-                { subject: "music", level: 1, word: "歌う", kana: "うたう", explanations: ["声を使ってメロディーを表現することです。", "心を込めて歌いましょう。"] },
-                { subject: "music", level: 1, word: "叩く", kana: "たたく", explanations: ["太鼓やドラムを手やバチで打つことです。", "リズムを刻みます。"] },
-                { subject: "music", level: 1, word: "指揮", kana: "しき", explanations: ["演奏のまとめ役です。", "指揮棒を振って全体をリードします。"] },
-                { subject: "music", level: 1, word: "音符", kana: "おんぷ", explanations: ["楽譜で音の高さと長さを表す記号です。", "五線譜の上に書きます。"] },
-                { subject: "music", level: 1, word: "休符", kana: "きゅうふ", explanations: ["音を出さない長さを表す記号です。", "音楽の「間」を作ります。"] },
-                { subject: "music", level: 1, word: "高音", kana: "こうおん", explanations: ["高い音のことです。", "小鳥のさえずりのような音です。"] },
-                { subject: "music", level: 1, word: "低音", kana: "ていおん", explanations: ["低い音のことです。", "太鼓やベースの音が代表的です。"] },
-                { subject: "music", level: 1, word: "和音", kana: "わおん", explanations: ["複数の音を同時に鳴らすことです。", "ピアノでよく使います。"] },
-                { subject: "music", level: 1, word: "楽器", kana: "がっき", explanations: ["音楽を奏でる道具です。", "弦楽器・管楽器・打楽器などがあります。"] },
-                { subject: "music", level: 1, word: "楽譜", kana: "がくふ", explanations: ["音楽を記号で書いたものです。", "演奏するときに読みます。"] },
-                { subject: "music", level: 1, word: "太鼓", kana: "たいこ", explanations: ["バチで叩いて音を出す打楽器です。", "お祭りでよく見かけます。"] },
+                { subject: "music", level: 1, word: "音", kana: "おと", explanations: ["耳に聞こえる空気のふるえです。", "高い音や低い音があります。"] },
+                { subject: "music", level: 1, word: "曲", kana: "きょく", explanations: ["音楽の作品のことです。", "好きな曲を聴くと元気が出ます。"] },
+                { subject: "music", level: 1, word: "声", kana: "こえ", explanations: ["のどを震わせて出す音です。", "歌うときにも使います。"] },
+                { subject: "music", level: 1, word: "拍", kana: "はく", explanations: ["音楽のリズムの基本単位です。", "手拍子で感じることができます。"] },
+                { subject: "music", level: 1, word: "笛", kana: "ふえ", explanations: ["息を吹き込んで音を出す楽器です。", "リコーダーも笛の仲間です。"] },
+                { subject: "music", level: 1, word: "弦", kana: "げん", explanations: ["ギターやバイオリンに張ってある糸です。", "はじいたりこすったりして音を出します。"] },
+                { subject: "music", level: 1, word: "鍵", kana: "けん", explanations: ["ピアノなどの鍵盤の1つ1つのことです。", "白鍵と黒鍵があります。"] },
+                { subject: "music", level: 1, word: "指揮", kana: "しき", explanations: ["演奏をまとめる役割です。", "棒を振ってテンポを指示します。"] },
+                { subject: "music", level: 1, word: "楽器", kana: "がっき", explanations: ["音楽を演奏するための道具です。", "ピアノや太鼓などがあります。"] },
+                { subject: "music", level: 1, word: "伴奏", kana: "ばんそう", explanations: ["歌や主旋律を引き立てる演奏です。", "ピアノ伴奏がよくあります。"] },
+                { subject: "music", level: 1, word: "合唱", kana: "がっしょう", explanations: ["みんなで声を合わせて歌うことです。", "ハーモニーがきれいです。"] },
+                { subject: "music", level: 1, word: "独唱", kana: "どくしょう", explanations: ["一人で歌うことです。", "ソロとも言います。"] },
+                { subject: "music", level: 1, word: "演奏", kana: "えんそう", explanations: ["楽器を使って音楽を奏でることです。", "練習の成果を発表します。"] },
+                { subject: "music", level: 1, word: "鼓笛", kana: "こてき", explanations: ["太鼓と笛を中心とした演奏です。", "運動会でパレードをします。"] },
+                { subject: "music", level: 1, word: "民謡", kana: "みんよう", explanations: ["地域に伝わる昔ながらの歌です。", "お祭りで歌われることもあります。"] },
+                { subject: "music", level: 1, word: "音符", kana: "おんぷ", explanations: ["音の長さや高さを表す記号です。", "楽譜に書かれています。"] },
+                { subject: "music", level: 1, word: "休符", kana: "きゅうふ", explanations: ["音を出さない休みを表す記号です。", "音楽には「間」も大切です。"] },
+                { subject: "music", level: 1, word: "楽譜", kana: "がくふ", explanations: ["音楽を記録した紙です。", "音符や記号が書かれています。"] },
+                { subject: "music", level: 1, word: "音階", kana: "おんかい", explanations: ["ドレミファソラシドの並びのことです。", "階段のように音が上がります。"] },
+                { subject: "music", level: 1, word: "和音", kana: "わおん", explanations: ["複数の音が同時に響くことです。", "コードとも呼ばれます。"] },
+                { subject: "music", level: 1, word: "旋律", kana: "せんりつ", explanations: ["メロディーのことです。", "曲の顔となる部分です。"] },
+                { subject: "music", level: 1, word: "歌詞", kana: "かし", explanations: ["歌の言葉のことです。", "心に響くメッセージがあります。"] },
+                { subject: "music", level: 1, word: "作曲", kana: "さっきょく", explanations: ["新しい音楽を作ることです。", "世界で一つの曲が生まれます。"] },
+                { subject: "music", level: 1, word: "作詞", kana: "さくし", explanations: ["歌の言葉を作ることです。", "詩を書くのに似ています。"] },
+                { subject: "music", level: 1, word: "高音", kana: "こうおん", explanations: ["高い音のことです。", "ソプラノなどが担当します。"] },
+                { subject: "music", level: 1, word: "低音", kana: "ていおん", explanations: ["低い音のことです。", "音楽の土台を支えます。"] },
+                { subject: "music", level: 1, word: "強弱", kana: "きょうじゃく", explanations: ["音の大きさの変化です。", "曲に表情をつけます。"] },
+                { subject: "music", level: 1, word: "速度", kana: "そくど", explanations: ["曲の速さのことです。", "テンポとも言います。"] },
+                { subject: "music", level: 1, word: "太鼓", kana: "たいこ", explanations: ["叩いて音を出す楽器です。", "リズムを刻むのに適しています。"] },
 
-                // Lv2 (30語) - 中くらいの語（5〜7文字）
-                { subject: "music", level: 2, word: "フルート", kana: "ふるーと", explanations: ["横向きに持って吹く管楽器です。", "澄んだ高い音が特徴です。"] },
-                { subject: "music", level: 2, word: "木琴", kana: "もっきん", explanations: ["木の板を並べた打楽器です。", "マレットで叩いて演奏します。"] },
-                { subject: "music", level: 2, word: "鉄琴", kana: "てっきん", explanations: ["金属の板を並べた打楽器です。", "キラキラした音が特徴です。"] },
-                { subject: "music", level: 2, word: "長調", kana: "ちょうちょう", explanations: ["明るく元気な感じの調です。", "ハ長調やト長調などがあります。"] },
-                { subject: "music", level: 2, word: "短調", kana: "たんちょう", explanations: ["暗く悲しい感じの調です。", "イ短調やニ短調などがあります。"] },
-                { subject: "music", level: 2, word: "強弱", kana: "きょうじゃく", explanations: ["音の大きさの変化です。", "強く弾いたり弱く弾いたりします。"] },
-                { subject: "music", level: 2, word: "速度", kana: "そくど", explanations: ["曲の速さのことです。", "速い曲やゆっくりな曲があります。"] },
-                { subject: "music", level: 2, word: "旋律", kana: "せんりつ", explanations: ["メロディーのことです。", "曲の「歌う部分」の流れです。"] },
-                { subject: "music", level: 2, word: "五線譜", kana: "ごせんふ", explanations: ["5本の線で音の高さを表す楽譜です。", "音符を書く場所です。"] },
-                { subject: "music", level: 2, word: "合唱", kana: "がっしょう", explanations: ["複数の人が一緒に歌うことです。", "学校行事でよく行います。"] },
-                { subject: "music", level: 2, word: "合奏", kana: "がっそう", explanations: ["複数の楽器で一緒に演奏することです。", "心を合わせることが大切です。"] },
-                { subject: "music", level: 2, word: "独唱", kana: "どくしょう", explanations: ["一人で歌うことです。", "ソロとも言います。"] },
-                { subject: "music", level: 2, word: "独奏", kana: "どくそう", explanations: ["一人で楽器を演奏することです。", "ピアノ独奏などがあります。"] },
-                { subject: "music", level: 2, word: "伴奏", kana: "ばんそう", explanations: ["歌や主旋律を支える演奏です。", "ピアノ伴奏がよく使われます。"] },
-                { subject: "music", level: 2, word: "シャープ", kana: "しゃーぷ", explanations: ["音を半音上げる記号です。", "♯と書きます。"] },
-                { subject: "music", level: 2, word: "フラット", kana: "ふらっと", explanations: ["音を半音下げる記号です。", "♭と書きます。"] },
-                { subject: "music", level: 2, word: "フォルテ", kana: "ふぉるて", explanations: ["強く演奏する記号です。", "「f」と書きます。"] },
-                { subject: "music", level: 2, word: "レガート", kana: "れがーと", explanations: ["音をなめらかをつなげて演奏する記号です。", "弧線で表します。"] },
-                { subject: "music", level: 2, word: "アレグロ", kana: "あれぐろ", explanations: ["速いテンポを指示する用語です。", "明るく快活な曲によく使われます。"] },
-                { subject: "music", level: 2, word: "ショパン", kana: "しょぱん", explanations: ["ポーランドの作曲家で「ピアノの詩人」と呼ばれます。", "美しいピアノ曲を多く残しました。"] },
-                { subject: "music", level: 2, word: "弦楽器", kana: "げんがっき", explanations: ["弦を振動させて音を出す楽器です。", "バイオリンやチェロが代表的です。"] },
-                { subject: "music", level: 2, word: "管楽器", kana: "かんがっき", explanations: ["息を吹いて音を出す楽器です。", "フルートやトランペットが代表的です。"] },
-                { subject: "music", level: 2, word: "打楽器", kana: "だがっき", explanations: ["叩いて音を出す楽器です。", "太鼓やシンバルが代表的です。"] },
-                { subject: "music", level: 2, word: "赤とんぼ", kana: "あかとんぼ", explanations: ["山田耕筰作曲の童謡です。", "夕焼けと故郷を思い出す歌詞が有名です。"] },
-                { subject: "music", level: 2, word: "ふるさと", kana: "ふるさと", explanations: ["文部省唱歌の一つで、故郷への思いを歌った曲です。", "「兎追いしかの山」で始まります。"] },
-                { subject: "music", level: 2, word: "春の海", kana: "はるのうみ", explanations: ["宮城道雄作曲の箏曲です。", "穏やかな春の海の情景を表現しています。"] },
-                { subject: "music", level: 2, word: "全音符", kana: "ぜんおんぷ", explanations: ["4拍の長さを表す音符です。", "白い丸だけの形です。"] },
-                { subject: "music", level: 2, word: "二重唱", kana: "にじゅうしょう", explanations: ["二人で歌う歌のことです。", "デュエットとも言います。"] },
-                { subject: "music", level: 2, word: "アンダンテ", kana: "あんだんて", explanations: ["歩くような速さを指示する用語です。", "落ち着いた曲によく使われます。"] },
-                { subject: "music", level: 2, word: "バイオリン", kana: "ばいおりん", explanations: ["弓で弦をこすって音を出す弦楽器です。", "オーケストラの主役です。"] },
+                // Lv2 (30語) - 中くらいの語、楽器名など
+                { subject: "music", level: 2, word: "鍵盤", kana: "けんばん", explanations: ["ピアノやオルガンの指で押す部分です。", "白と黒の鍵が並んでいます。"] },
+                { subject: "music", level: 2, word: "木琴", kana: "もっきん", explanations: ["木の板を並べて叩く楽器です。", "コンコンと温かい音がします。"] },
+                { subject: "music", level: 2, word: "鉄琴", kana: "てっきん", explanations: ["金属の板を並べて叩く楽器です。", "キラキラした音がします。"] },
+                { subject: "music", level: 2, word: "大太鼓", kana: "おおだいこ", explanations: ["低い大きな音が出る太鼓です。", "迫力があります。"] },
+                { subject: "music", level: 2, word: "小太鼓", kana: "こだいこ", explanations: ["高い音が出る太鼓です。", "細かいリズムを刻めます。"] },
+                { subject: "music", level: 2, word: "三味線", kana: "しゃみせん", explanations: ["日本の伝統的な弦楽器です。", "バチで弦を弾きます。"] },
+                { subject: "music", level: 2, word: "琴", kana: "こと", explanations: ["日本の伝統的な弦楽器です。", "爪をつけて演奏します。"] },
+                { subject: "music", level: 2, word: "尺八", kana: "しゃくはち", explanations: ["竹でできた日本の笛です。", "独特の音色がします。"] },
+                { subject: "music", level: 2, word: "和太鼓", kana: "わだいこ", explanations: ["日本のお祭りで使われる太鼓です。", "力強い音が響きます。"] },
+                { subject: "music", level: 2, word: "校歌", kana: "こうか", explanations: ["学校のシンボルとなる歌です。", "式典でみんなで歌います。"] },
+                { subject: "music", level: 2, word: "国歌", kana: "こっか", explanations: ["国を象徴する歌です。", "日本では「君が代」です。"] },
+                { subject: "music", level: 2, word: "合奏", kana: "がっそう", explanations: ["いろいろな楽器で一緒に演奏することです。", "心を合わせることが大切です。"] },
+                { subject: "music", level: 2, word: "重奏", kana: "じゅうそう", explanations: ["少人数で各パート一人ずつ演奏することです。", "二重奏や三重奏があります。"] },
+                { subject: "music", level: 2, word: "吹奏楽", kana: "すいそうがく", explanations: ["管楽器と打楽器による演奏です。", "ブラスバンドとも呼ばれます。"] },
+                { subject: "music", level: 2, word: "管弦楽", kana: "かんげんがく", explanations: ["オーケストラのことです。", "多くの種類の楽器が集まります。"] },
+                { subject: "music", level: 2, word: "長調", kana: "ちょうちょう", explanations: ["明るい感じの音階です。", "メジャーとも呼ばれます。"] },
+                { subject: "music", level: 2, word: "短調", kana: "たんちょう", explanations: ["暗い・悲しい感じの音階です。", "マイナーとも呼ばれます。"] },
+                { subject: "music", level: 2, word: "四分音符", kana: "しぶおんぷ", explanations: ["1泊の長さの音符です。", "黒い玉に棒がついています。"] },
+                { subject: "music", level: 2, word: "八分音符", kana: "はちぶおんぷ", explanations: ["半泊の長さの音符です。", "旗が1本ついています。"] },
+                { subject: "music", level: 2, word: "二分音符", kana: "にぶおんぷ", explanations: ["2泊の長さの音符です。", "白い玉に棒がついています。"] },
+                { subject: "music", level: 2, word: "全音符", kana: "ぜんおんぷ", explanations: ["4泊の長さの音符です。", "ただの白い丸です。"] },
+                { subject: "music", level: 2, word: "五線譜", kana: "ごせんふ", explanations: ["5本の線が引かれた楽譜です。", "音の高さを表すのに便利です。"] },
+                { subject: "music", level: 2, word: "ト音記号", kana: "とおんきごう", explanations: ["高い音域を表す記号です。", "Gの文字がデザインされています。"] },
+                { subject: "music", level: 2, word: "ヘ音記号", kana: "へおんきごう", explanations: ["低い音域を表す記号です。", "Fの文字がデザインされています。"] },
+                { subject: "music", level: 2, word: "鑑賞", kana: "かんしょう", explanations: ["音楽を聴いて味わうことです。", "曲の良さを感じ取ります。"] },
+                { subject: "music", level: 2, word: "手拍子", kana: "てびょうし", explanations: ["手を叩いてリズムをとることです。", "演奏を盛り上げます。"] },
+                { subject: "music", level: 2, word: "輪唱", kana: "りんしょう", explanations: ["同じ旋律を少しずらして追いかけるように歌うことです。", "「カエルの歌」が有名です。"] },
+                { subject: "music", level: 2, word: "強弱記号", kana: "きょうじゃくきごう", explanations: ["フォルテやピアノなど、強さを表す記号です。", "fやpで書かれます。"] },
+                { subject: "music", level: 2, word: "前奏", kana: "ぜんそう", explanations: ["歌の前に演奏される部分です。", "イントロとも呼ばれます。"] },
+                { subject: "music", level: 2, word: "間奏", kana: "かんそう", explanations: ["歌と歌の間に演奏される部分です。", "一息つく時間です。"] },
 
-                // Lv3 (30語) - 長い語（8文字以上）
-                { subject: "music", level: 3, word: "トランペット", kana: "とらんぺっと", explanations: ["金管楽器の一つで、明るく力強い音が出ます。", "ファンファーレでよく使われます。"] },
-                { subject: "music", level: 3, word: "リコーダー", kana: "りこーだー", explanations: ["学校でよく使う縦笛です。", "穴を押さえて音の高さを変えます。"] },
-                { subject: "music", level: 3, word: "ハーモニカ", kana: "はーもにか", explanations: ["息を吹いて音を出す楽器です。", "小さくて持ち運びやすいです。"] },
-                { subject: "music", level: 3, word: "カスタネット", kana: "かすたねっと", explanations: ["2枚の板を打ち合わせて音を出す楽器です。", "スペインの踊りでよく使います。"] },
-                { subject: "music", level: 3, word: "トライアングル", kana: "とらいあんぐる", explanations: ["三角形の金属を叩く楽器です。", "「チーン」という澄んだ音がします。"] },
-                { subject: "music", level: 3, word: "タンバリン", kana: "たんばりん", explanations: ["叩いたり振ったりして音を出す楽器です。", "周りに小さな金属がついています。"] },
-                { subject: "music", level: 3, word: "ト音記号", kana: "とおんきごう", explanations: ["高い音の楽譜に書く記号です。", "「ト」の音の位置を示します。"] },
-                { subject: "music", level: 3, word: "ヘ音記号", kana: "へおんきごう", explanations: ["低い音の楽譜に書く記号です。", "「ヘ」の音の位置を示します。"] },
-                { subject: "music", level: 3, word: "メロディー", kana: "めろでぃー", explanations: ["曲の主な旋律のことです。", "口ずさめる部分です。"] },
-                { subject: "music", level: 3, word: "ハーモニー", kana: "ハーモニー", explanations: ["複数の音が重なり合う響きです。", "合唱で美しく聞こえます。"] },
-                { subject: "music", level: 3, word: "四分音符", kana: "しぶおんぷ", explanations: ["1拍の長さを表す音符です。", "黒い丸に棒がついています。"] },
-                { subject: "music", level: 3, word: "八分音符", kana: "はちぶおんぷ", explanations: ["半拍の長さを表す音符です。", "旗が1本ついています。"] },
-                { subject: "music", level: 3, word: "ベートーヴェン", kana: "べーとーゔぇん", explanations: ["ドイツの作曲家で「交響曲第九番」などを作曲しました。", "耳が聞こえなくなっても作曲を続けました。"] },
-                { subject: "music", level: 3, word: "モーツァルト", kana: "もーつぁると", explanations: ["オーストリアの天才作曲家です。", "5歳で作曲を始め、600以上の曲を残しました。"] },
-                { subject: "music", level: 3, word: "チャイコフスキー", kana: "ちゃいこふすきー", explanations: ["ロシアの作曲家です。", "「白鳥の湖」「くるみ割り人形」などが有名です。"] },
-                { subject: "music", level: 3, word: "ヴィヴァルディ", kana: "ゔぃゔぁるでぃ", explanations: ["イタリアの作曲家で「四季」が有名です。", "バロック音楽を代表する作曲家です。"] },
-                { subject: "music", level: 3, word: "滝廉太郎", kana: "たきれんたろう", explanations: ["日本の作曲家で「荒城の月」「花」などを作曲しました。", "日本の西洋音楽の先駆者です。"] },
-                { subject: "music", level: 3, word: "山田耕筰", kana: "やまだこうさく", explanations: ["「赤とんぼ」「この道」を作曲した日本の音楽家です。", "日本歌曲の父と呼ばれます。"] },
-                { subject: "music", level: 3, word: "宮城道雄", kana: "みやぎみちお", explanations: ["「春の海」を作曲した箏曲家です。", "目が見えなくても素晴らしい曲を作りました。"] },
-                { subject: "music", level: 3, word: "交響曲第九番", kana: "こうきょうきょくだいくばん", explanations: ["ベートーヴェンの最後の交響曲です。", "「喜びの歌」として年末によく演奏されます。"] },
-                { subject: "music", level: 3, word: "エリーゼのために", kana: "えりーぜのために", explanations: ["ベートーヴェンが作曲した有名なピアノ曲です。", "初心者もよく練習する曲です。"] },
-                { subject: "music", level: 3, word: "トルコ行進曲", kana: "とるここうしんきょく", explanations: ["モーツァルトのピアノ曲です。", "軽快なリズムが特徴で人気があります。"] },
-                { subject: "music", level: 3, word: "白鳥の湖", kana: "はくちょうのみずうみ", explanations: ["チャイコフスキー作曲のバレエ音楽です。", "美しく悲しい物語が描かれています。"] },
-                { subject: "music", level: 3, word: "くるみ割り人形", kana: "くるみわりにんぎょう", explanations: ["チャイコフスキー作曲のバレエ音楽です。", "クリスマスの夜のお話です。"] },
-                { subject: "music", level: 3, word: "荒城の月", kana: "こうじょうのつき", explanations: ["滝廉太郎作曲の日本の名曲です。", "古い城の寂しさを歌っています。"] },
-                { subject: "music", level: 3, word: "クレッシェンド", kana: "くれっしぇんど", explanations: ["だんだん強くなる記号です。", "「<」の形で表します。"] },
-                { subject: "music", level: 3, word: "デクレッシェンド", kana: "でくれっしぇんど", explanations: ["だんだん弱くなる記号です。", "「>」の形で表します。"] },
+                // Lv3 (30語) - 音楽用語、作曲家など
+                { subject: "music", level: 3, word: "交響曲", kana: "こうきょうきょく", explanations: ["オーケストラのための大規模な楽曲です。", "シンフォニーとも呼ばれます。"] },
+                { subject: "music", level: 3, word: "協奏曲", kana: "きょうそうきょく", explanations: ["独奏楽器とオーケストラの共演曲です。", "コンチェルトとも呼ばれます。"] },
+                { subject: "music", level: 3, word: "四重奏", kana: "しじゅうそう", explanations: ["4人で演奏することです。", "弦楽四重奏が有名です。"] },
+                { subject: "music", level: 3, word: "変奏曲", kana: "へんそうきょく", explanations: ["主題をいろいろに変形させていく曲です。", "バリエーションとも呼ばれます。"] },
+                { subject: "music", level: 3, word: "練習曲", kana: "れんしゅうきょく", explanations: ["技術を高めるための曲です。", "エチュードとも呼ばれます。"] },
+                { subject: "music", level: 3, word: "夜想曲", kana: "やそうきょく", explanations: ["夜の静かな雰囲気を表した曲です。", "ノクターンとも呼ばれます。"] },
+                { subject: "music", level: 3, word: "行進曲", kana: "こうしんきょく", explanations: ["歩くペースに合わせた元気な曲です。", "マーチとも呼ばれます。"] },
+                { subject: "music", level: 3, word: "狂詩曲", kana: "きょうしきょく", explanations: ["自由な形式の物語風な曲です。", "ラプソディとも呼ばれます。"] },
+                { subject: "music", level: 3, word: "組曲", kana: "くみきょく", explanations: ["いくつかの曲を組み合わせた作品です。", "物語になっていることもあります。"] },
+                { subject: "music", level: 3, word: "オペラ", kana: "おぺら", explanations: ["歌と演技で物語を進める音楽劇です。", "歌劇とも呼ばれます。"] },
+                { subject: "music", level: 3, word: "バッハ", kana: "ばっは", explanations: ["「音楽の父」と呼ばれるドイツの作曲家です。", "バロック音楽を完成させました。"] },
+                { subject: "music", level: 3, word: "モーツァルト", kana: "もーつぁると", explanations: ["神童と呼ばれたオーストリアの作曲家です。", "美しく楽しい曲をたくさん作りました。"] },
+                { subject: "music", level: 3, word: "ベートーヴェン", kana: "べーとーうぇん", explanations: ["「楽聖」と呼ばれるドイツの作曲家です。", "耳が聞こえなくなっても作曲を続けました。"] },
+                { subject: "music", level: 3, word: "ショパン", kana: "しょぱん", explanations: ["「ピアノの詩人」と呼ばれるポーランドの作曲家です。", "ピアノ曲の名作を多く残しました。"] },
+                { subject: "music", level: 3, word: "シューベルト", kana: "しゅーべると", explanations: ["「歌曲の王」と呼ばれるオーストリアの作曲家です。", "「魔王」などが有名です。"] },
+                { subject: "music", level: 3, word: "チャイコフスキー", kana: "ちゃいこふすきー", explanations: ["ロシアの作曲家です。", "バレエ音楽「白鳥の湖」などが有名です。"] },
+                { subject: "music", level: 3, word: "滝廉太郎", kana: "たきれんたろう", explanations: ["「荒城の月」などを作曲した日本人です。", "明治時代の洋楽の先駆者です。"] },
+                { subject: "music", level: 3, word: "山田耕筰", kana: "やまだこうさく", explanations: ["「赤とんぼ」などを作曲した日本人です。", "日本の近代音楽の基礎を築きました。"] },
+                { subject: "music", level: 3, word: "宮城道雄", kana: "みやぎみちお", explanations: ["「春の海」を作曲した箏曲家です。", "邦楽の新しい可能性を広げました。"] },
+                { subject: "music", level: 3, word: "クレッシェンド", kana: "くれっしぇんど", explanations: ["だんだん強くという意味の記号です。", "<の形で書かれます。"] },
+                { subject: "music", level: 3, word: "デクレッシェンド", kana: "でくれっしぇんど", explanations: ["だんだん弱くという意味の記号です。", ">の形で書かれます。"] },
                 { subject: "music", level: 3, word: "スタッカート", kana: "すたっかーと", explanations: ["音を短く切って演奏する記号です。", "音符の上に点をつけます。"] },
-                { subject: "music", level: 3, word: "ピアニッシモ", kana: "ぴあにっしも", explanations: ["とても弱く演奏する記号です。", "「pp」と書きます。"] },
-                { subject: "music", level: 3, word: "オーケストラ", kana: "おーけすとら", explanations: ["多くの楽器が集まった大編成の演奏グループです。", "交響楽団とも言います。"] },
+                { subject: "music", level: 3, word: "フェルマータ", kana: "ふぇるまーた", explanations: ["音を程よく延ばす記号です。", "半円に点がついた形です。"] },
+                { subject: "music", level: 3, word: "アンサンブル", kana: "あんさんぶる", explanations: ["少人数の合奏・重奏のことです。", "調和という意味もあります。"] },
+                { subject: "music", level: 3, word: "アカペラ", kana: "あかぺら", explanations: ["伴奏なしでの合唱です。", "声だけでハーモニーを作ります。"] },
+                { subject: "music", level: 3, word: "ハ長調", kana: "はちょうちょう", explanations: ["ドを主音とする明るい音階です。", "#やbがつかない基本の調です。"] },
+                { subject: "music", level: 3, word: "イ短調", kana: "いたんちょう", explanations: ["ラを主音とする短調です。", "ハ長調と同じ音を使いますが暗い響きです。"] },
+                { subject: "music", level: 3, word: "電子音楽", kana: "でんしおんがく", explanations: ["シンセサイザーやPCで作る音楽です。", "新しい音色表現が可能です。"] },
+                { subject: "music", level: 3, word: "民族音楽", kana: "みんぞくおんがく", explanations: ["世界各地の地域特有の音楽です。", "独特のリズムや音階があります。"] },
+                { subject: "music", level: 3, word: "著作権", kana: "ちょさくけん", explanations: ["音楽などの作品を作った人の権利です。", "無断でコピーしてはいけません。"] },
 
                 /* --- 家庭科 (Home Economics) --- */
                 // Lv1 (30語) - 短い語（2〜4文字）
                 { subject: "home", level: 1, word: "米", kana: "こめ", explanations: ["日本人の主食であるお米です。", "炊くとふっくらしておいしくなります。"] },
-                { subject: "home", level: 1, word: "箸", kana: "はし", explanations: ["日本の食事に欠かせない道具です。", "正しく持ってきれいに使いましょう。"] },
-                { subject: "home", level: 1, word: "肉", kana: "にく", explanations: ["体を作るタンパク質が豊富です。", "牛や豚、鶏などいろいろな種類があります。"] },
-                { subject: "home", level: 1, word: "魚", kana: "さかな", explanations: ["海や川でとれる大切な食材です。", "焼いたり煮たりして食べます。"] },
-                { subject: "home", level: 1, word: "卵", kana: "たまご", explanations: ["いろいろな料理に使える便利な食材です。", "ゆでたり焼いたりして楽しめます。"] },
-                { subject: "home", level: 1, word: "豆", kana: "まめ", explanations: ["「畑の肉」と呼ばれるほど栄養があります。", "豆腐や納豆の原料になります。"] },
-                { subject: "home", level: 1, word: "塩", kana: "しお", explanations: ["料理の基本となる調味料です。", "味を引き締めたり保存に使ったりします。"] },
-                { subject: "home", level: 1, word: "酢", kana: "す", explanations: ["酸っぱい味が特徴の調味料です。", "体を元気にする効果もあります。"] },
-                { subject: "home", level: 1, word: "お茶", kana: "おちゃ", explanations: ["食事の時や休憩中に飲む飲み物です。", "急須で淹れると香りがいいです。"] },
-                { subject: "home", level: 1, word: "湯", kana: "ゆ", explanations: ["水を温めたものです。", "お茶を淹れたり調理に使ったりします。"] },
-                { subject: "home", level: 1, word: "汁", kana: "しる", explanations: ["味噌汁やスープなどの液体部分です。", "食材の旨みが溶け出しています。"] },
-                { subject: "home", level: 1, word: "針", kana: "はり", explanations: ["縫い物をする時に使う鋭い道具です。", "使い終わったら必ず片付けましょう。"] },
-                { subject: "home", level: 1, word: "糸", kana: "いと", explanations: ["布を縫い合わせる時に使います。", "太さや色を選んで使い分けます。"] },
-                { subject: "home", level: 1, word: "布", kana: "ぬの", explanations: ["服や小物の材料になるものです。", "綿や麻などいろいろな種類があります。"] },
-                { subject: "home", level: 1, word: "服", kana: "ふく", explanations: ["体を守り、清潔に保つためのものです。", "Ｔシャツやズボンなど季節で選びます。"] },
-                { subject: "home", level: 1, word: "食", kana: "しょく", explanations: ["食べること全般を指す言葉です。", "健康な体を作るためにとても大切です。"] },
-                { subject: "home", level: 1, word: "料理", kana: "りょうり", explanations: ["食材をおいしく加工することです。", "自分で作るともっと楽しくなります。"] },
-                { subject: "home", level: 1, word: "焼く", kana: "やく", explanations: ["火を使って食材を加熱することです。", "香ばしい香りが食欲をそそります。"] },
-                { subject: "home", level: 1, word: "煮る", kana: "にる", explanations: ["水などの液体で食材を加熱することです。", "味が中までじっくり染み込みます。"] },
-                { subject: "home", level: 1, word: "蒸す", kana: "むす", explanations: ["水蒸気の熱で食材を加熱することです。", "形を崩さずふっくら仕上がります。"] },
-                { subject: "home", level: 1, word: "切る", kana: "きる", explanations: ["包丁などで食材を分けることです。", "食べやすい大きさに整えます。"] },
-                { subject: "home", level: 1, word: "洗う", kana: "あらう", explanations: ["汚れを落としてきれいにすることです。", "野菜も服もしっかり洗いましょう。"] },
-                { subject: "home", level: 1, word: "拭く", kana: "ふく", explanations: ["雑巾などで水分や汚れを取ることです。", "机や床をきれいに保ちます。"] },
-                { subject: "home", level: 1, word: "掃除", kana: "そうじ", explanations: ["部屋のゴミを払い、きれいにすることです。", "気持ちよく過ごすために必要です。"] },
-                { subject: "home", level: 1, word: "洗濯", kana: "せんたく", explanations: ["衣服の汚れを水と洗剤で落とすことです。", "干して乾かすと清潔になります。"] },
-                { subject: "home", level: 1, word: "油", kana: "あぶら", explanations: ["炒め物や揚げ物に使うものです。", "脂質は大切なエネルギー源です。"] },
-                { subject: "home", level: 1, word: "鍋", kana: "なべ", explanations: ["煮炊きに使う調理道具です。", "大きなものから小さなものまであります。"] },
-                { subject: "home", level: 1, word: "皿", kana: "さら", explanations: ["料理を盛り付ける器です。", "割れないように大切に扱いましょう。"] },
-                { subject: "home", level: 1, word: "調理", kana: "ちょうり", explanations: ["食材を加工して食べやすくすることです。", "火や包丁を正しく使いましょう。"] },
-                { subject: "home", level: 1, word: "ミシン", kana: "みしん", explanations: ["布を速く丈夫に縫う機械です。", "使い方を覚えてエプロンなどを作ります。"] },
+                { subject: "home", level: 1, word: "肉", kana: "にく", explanations: ["タンパク質が多く、体を作るもとになります。", "牛・豚・鶏などがあります。"] },
+                { subject: "home", level: 1, word: "魚", kana: "さかな", explanations: ["DHAなど体に良い脂が含まれています。", "焼き魚や煮魚にして食べます。"] },
+                { subject: "home", level: 1, word: "卵", kana: "たまご", explanations: ["完全栄養食品とも言われる食材です。", "ゆでたり焼いたりして食べます。"] },
+                { subject: "home", level: 1, word: "豆", kana: "まめ", explanations: ["畑の肉と言われる大豆などがあります。", "豆腐や味噌の原料になります。"] },
+                { subject: "home", level: 1, word: "野菜", kana: "やさい", explanations: ["ビタミンや食物繊維が多い食材です。", "体の調子を整えます。"] },
+                { subject: "home", level: 1, word: "果物", kana: "くだもの", explanations: ["ビタミンCが多く、甘くておいしいです。", "デザートやおやつに食べます。"] },
+                { subject: "home", level: 1, word: "牛乳", kana: "ぎゅうにゅう", explanations: ["カルシウムが多く、骨を強くします。", "そのまま飲んだり料理に使ったりします。"] },
+                { subject: "home", level: 1, word: "塩", kana: "しお", explanations: ["料理の味付けの基本となる調味料です。", "とりすぎには注意が必要です。"] },
+                { subject: "home", level: 1, word: "砂糖", kana: "さとう", explanations: ["甘い味をつける調味料です。", "お菓子作りにも欠かせません。"] },
+                { subject: "home", level: 1, word: "酢", kana: "す", explanations: ["すっぱい味の調味料です。", "さっぱりした料理に使います。"] },
+                { subject: "home", level: 1, word: "油", kana: "あぶら", explanations: ["炒め物や揚げ物に使います。", "エネルギーになります。"] },
+                { subject: "home", level: 1, word: "包丁", kana: "ほうちょう", explanations: ["食材を切るための道具です。", "使い方を間違えると危ないです。"] },
+                { subject: "home", level: 1, word: "鍋", kana: "なべ", explanations: ["煮たりゆでたりするときに使う道具です。", "大きさや深さがいろいろあります。"] },
+                { subject: "home", level: 1, word: "皿", kana: "さら", explanations: ["料理を盛り付ける食器です。", "きれいに盛り付けるとおいしそうです。"] },
+                { subject: "home", level: 1, word: "箸", kana: "はし", explanations: ["食事をするときに使う道具です。", "正しく持つのは練習が必要です。"] },
+                { subject: "home", level: 1, word: "服", kana: "ふく", explanations: ["体を守り、おしゃれをするものです。", "TPOに合わせて選びます。"] },
+                { subject: "home", level: 1, word: "布", kana: "ぬの", explanations: ["服や小物の材料になります。", "綿や絹などいろいろな素材があります。"] },
+                { subject: "home", level: 1, word: "糸", kana: "いと", explanations: ["布を縫い合わせるのに使います。", "ミシン糸や手縫い糸があります。"] },
+                { subject: "home", level: 1, word: "針", kana: "はり", explanations: ["糸を通して縫うための道具です。", "先が尖っているので注意します。"] },
+                { subject: "home", level: 1, word: "掃除", kana: "そうじ", explanations: ["部屋をきれいにする家事です。", "ほうきや掃除機を使います。"] },
+                { subject: "home", level: 1, word: "洗濯", kana: "せんたく", explanations: ["汚れた服を洗う家事です。", "洗剤を使って洗います。"] },
+                { subject: "home", level: 1, word: "ゴミ", kana: "ごみ", explanations: ["いらなくなったものです。", "分別して捨てることが大切です。"] },
+                { subject: "home", level: 1, word: "整理", kana: "せいり", explanations: ["いらないものを処分することです。", "整頓の前に行います。"] },
+                { subject: "home", level: 1, word: "整頓", kana: "せいとん", explanations: ["ものを使いやすく並べることです。", "見た目もきれいになります。"] },
+                { subject: "home", level: 1, word: "家族", kana: "かぞく", explanations: ["一緒に暮らす大切な人たちです。", "協力して生活します。"] },
+                { subject: "home", level: 1, word: "食事", kana: "しょくじ", explanations: ["ごはんを食べることです。", "家族団らんで食べるとおいしいです。"] },
+                { subject: "home", level: 1, word: "睡眠", kana: "すいみん", explanations: ["体を休めるために眠ることです。", "成長にも欠かせません。"] },
+                { subject: "home", level: 1, word: "運動", kana: "うんどう", explanations: ["体を動かすことです。", "健康な体を作ります。"] },
+                { subject: "home", level: 1, word: "安全", kana: "あんぜん", explanations: ["危険がない状態のことです。", "家の中の事故にも気をつけます。"] },
 
-                // Lv2 (30語) - 中くらいの語（5〜7文字）
-                { subject: "home", level: 2, word: "朝食", kana: "ちょうしょく", explanations: ["1日の始まりに食べる食事です。", "脳と体を動かすエネルギーになります。"] },
-                { subject: "home", level: 2, word: "昼食", kana: "ちゅうしょく", explanations: ["お昼に食べる食事のことです。", "学校での給食も大切な昼食の時間です。"] },
-                { subject: "home", level: 2, word: "夕食", kana: "ゆうしょく", explanations: ["夜に食べる食事のことです。", "家族で楽しく食べる大切な時間です。"] },
-                { subject: "home", level: 2, word: "包丁", kana: "ほうちょう", explanations: ["食材を切るための鋭い道具です。", "刃先や手元に注意して使いましょう。"] },
-                { subject: "home", level: 2, word: "盛り付け", kana: "もりつけ", explanations: ["料理を器に並べることです。", "色どりよく、おいしそうに工夫しましょう。"] },
-                { subject: "home", level: 2, word: "玉結び", kana: "たまむすび", explanations: ["縫い始める時に作る結び目です。", "糸が抜けないようにしっかり作ります。"] },
-                { subject: "home", level: 2, word: "整理整頓", kana: "せいりせいとん", explanations: ["物を片付けて整えることです。", "必要なものを使いやすく配置します。"] },
-                { subject: "home", level: 2, word: "拭き掃除", kana: "ふきそうじ", explanations: ["雑巾などで汚れを拭き取ることです。", "力を入れてピカピカに磨きましょう。"] },
-                { subject: "home", level: 2, word: "栄養素", kana: "えいようそ", explanations: ["食べ物に含まれる体に大切な成分です。", "バランスのよい食生活を心がけましょう。"] },
-                { subject: "home", level: 2, word: "タンパク質", kana: "たんぱくしつ", explanations: ["筋肉や血を作る大切な栄養です。", "肉や魚、豆などに多く含まれます。"] },
-                { subject: "home", level: 2, word: "炭水化物", kana: "たんすいかぶつ", explanations: ["体を動かす力の元になる栄養です。", "ご飯やパン、麺類に含まれます。"] },
-                { subject: "home", level: 2, word: "消費期限", kana: "しょうひきげん", explanations: ["安全に食べられる期限のことです。", "過ぎたら食べないように注意しましょう。"] },
-                { subject: "home", level: 2, word: "賞味期限", kana: "しょうみきげん", explanations: ["おいしく食べられる期限のことです。", "品質が保たれる目安を示しています。"] },
-                { subject: "home", level: 2, word: "食品表示", kana: "しょくひんひょうじ", explanations: ["食品の情報をラベルに書いたものです。", "アレルギーや期限を確認できます。"] },
-                { subject: "home", level: 2, word: "食品ロス", kana: "しょくひんろす", explanations: ["まだ食べられるのに捨てられる食品です。", "無駄にしないよう工夫することが大切です。"] },
-                { subject: "home", level: 2, word: "地産地消", kana: "ちさんちしょう", explanations: ["地元でとれたものを地元で食べることです。", "新鮮で、環境への負担も減らせます。"] },
-                { subject: "home", level: 2, word: "エコバッグ", kana: "えこばっぐ", explanations: ["買い物に持参する自分のカバンです。", "プラスチックのゴミを減らす助けになります。"] },
-                { subject: "home", level: 2, word: "ジャガイモ", kana: "じゃがいも", explanations: ["カレーなどの料理に人気の野菜です。", "芽には毒があるので丁寧に取りましょう。"] },
-                { subject: "home", level: 2, word: "フライパン", kana: "ふらいぱん", explanations: ["食材を焼いたり炒めたりする道具です。", "焦がさないように火力を調節しましょう。"] },
-                { subject: "home", level: 2, word: "ほうれん草", kana: "ほうれんそう", explanations: ["緑黄色野菜の代表格です。", "茹でてお浸しにするとおいしいです。"] },
-                { subject: "home", level: 2, word: "味の基本", kana: "あじのきほん", explanations: ["甘い、塩っぱい、酸っぱいなどの味です。", "調味料の特性を知って使いましょう。"] },
-                { subject: "home", level: 2, word: "野菜炒め", kana: "やさいいため", explanations: ["手軽に作れる、ビタミン豊富の料理です。", "強火で手早く炒めるのがコツです。"] },
-                { subject: "home", level: 2, word: "本返し縫い", kana: "ほんがえしぬい", explanations: ["手縫いの中でも丈夫な縫い方です。", "一針戻って縫い進めるのが特徴です。"] },
-                { subject: "home", level: 2, word: "お金の計画", kana: "おかねのけいかく", explanations: ["お小遣いなどの使い方を考えることです。", "必要なものを考えて大切に使いましょう。"] },
-                { subject: "home", level: 2, word: "衣服の手入れ", kana: "いふくのていれ", explanations: ["洗濯やシワ伸ばしのことです。", "服を長く大切に着るために必要です。"] },
-                { subject: "home", level: 2, word: "ゴミの分別", go: "ごみのぶんべつ", explanations: ["ゴミを種類ごとに分けることです。", "資源の再利用に協力しましょう。"] },
-                { subject: "home", level: 2, word: "家族との時間", kana: "かぞくとのじかん", explanations: ["一緒に家事をしたり食事をしたりします。", "お互いを思いやる気持ちが大切です。"] },
-                { subject: "home", level: 2, word: "自分の役割", kana: "じぶんのやくわり", explanations: ["家庭の中で担当する手伝いのことです。", "責任を持って最後までやり遂げましょう。"] },
-                { subject: "home", level: 2, word: "掃除の工夫", kana: "そうじのくふう", explanations: ["場所に合わせて道具を選ぶことです。", "効率よくきれいにする方法を考えます。"] },
-                { subject: "home", level: 2, word: "目玉焼き", kana: "めだまやき", explanations: ["卵を焼いたシンプルな料理です。", "黄身の固さを好みに合わせて焼きます。"] },
+                // Lv2 (30語) - 中くらいの語、調理用語など
+                { subject: "home", level: 2, word: "栄養", kana: "えいよう", explanations: ["生命を維持し、成長するために必要な成分です。", "バランスよく摂ることが大切です。"] },
+                { subject: "home", level: 2, word: "炭水化物", kana: "たんすいかぶつ", explanations: ["エネルギーのもとになる栄養素です。", "ご飯やパンに含まれます。"] },
+                { subject: "home", level: 2, word: "タンパク質", kana: "たんぱくしつ", explanations: ["筋肉や血を作る栄養素です。", "肉や魚、卵に含まれます。"] },
+                { subject: "home", level: 2, word: "脂質", kana: "ししつ", explanations: ["エネルギーになり、体温を保つ栄養素です。", "油やバターに含まれます。"] },
+                { subject: "home", level: 2, word: "ビタミン", kana: "びたみん", explanations: ["体の調子を整える栄養素です。", "野菜や果物に含まれます。"] },
+                { subject: "home", level: 2, word: "ミネラル", kana: "みねらる", explanations: ["骨や歯を作り、体の働きを助ける栄養素です。", "カルシウムや鉄などがあります。"] },
+                { subject: "home", level: 2, word: "朝食", kana: "ちょうしょく", explanations: ["朝食べるごはんです。", "1日のエネルギースイッチを入れます。"] },
+                { subject: "home", level: 2, word: "夕食", kana: "ゆうしょく", explanations: ["夜食べるごはんです。", "家族でゆっくり食べる食事です。"] },
+                { subject: "home", level: 2, word: "献立", kana: "こんだて", explanations: ["食事のメニューの計画です。", "栄養バランスを考えて立てます。"] },
+                { subject: "home", level: 2, word: "調理", kana: "ちょうり", explanations: ["食材から料理を作ることです。", "「切る」「煮る」「焼く」などがあります。"] },
+                { subject: "home", level: 2, word: "計量", kana: "けいりょう", explanations: ["材料の量や重さをはかることです。", "計量スプーンやカップを使います。"] },
+                { subject: "home", level: 2, word: "まな板", kana: "まないた", explanations: ["包丁で切るときに下に敷く板です。", "清潔に使うことが大切です。"] },
+                { subject: "home", level: 2, word: "フライパン", kana: "ふらいぱん", explanations: ["焼いたり炒めたりする調理器具です。", "取っ手を持って使います。"] },
+                { subject: "home", level: 2, word: "味噌汁", kana: "みそしる", explanations: ["だしと味噌で作る日本のスープです。", "具を変えて楽しみます。"] },
+                { subject: "home", level: 2, word: "おにぎり", kana: "おにぎり", explanations: ["ご飯を三角形などに握った料理です。", "手軽に食べられます。"] },
+                { subject: "home", level: 2, word: "ゆで卵", kana: "ゆでたまご", explanations: ["お湯でゆでた卵です。", "ゆで時間で固さが変わります。"] },
+                { subject: "home", level: 2, word: "ミシン", kana: "みしん", explanations: ["布を縫う機械です。", "手縫いより早くきれいに縫えます。"] },
+                { subject: "home", level: 2, word: "ボタン", kana: "ぼたん", explanations: ["服を留めるための部品です。", "とれたら付け直します。"] },
+                { subject: "home", level: 2, word: "アイロン", kana: "あいろん", explanations: ["熱と蒸気で服のシワを伸ばす道具です。", "やけどに注意して使います。"] },
+                { subject: "home", level: 2, word: "洗濯機", kana: "せんたくき", explanations: ["服を洗う機械です。", "洗剤と水で汚れを落とします。"] },
+                { subject: "home", level: 2, word: "掃除機", kana: "そうじき", explanations: ["ゴミを吸い取る機械です。", "部屋の隅々まできれいにします。"] },
+                { subject: "home", level: 2, word: "換気", kana: "かんき", explanations: ["部屋の空気を入れ替えることです。", "新鮮な空気を取り入れます。"] },
+                { subject: "home", level: 2, word: "買い物", kana: "かいもの", explanations: ["必要なものを買うことです。", "値段や品質を見て選びます。"] },
+                { subject: "home", level: 2, word: "小遣い", kana: "こづかい", explanations: ["自分のために使えるお金です。", "計画的に使う練習をします。"] },
+                { subject: "home", level: 2, word: "賞味期限", kana: "しょうみきげん", explanations: ["おいしく食べられる期限です。", "過ぎてもすぐ食べられなくなるわけではありません。"] },
+                { subject: "home", level: 2, word: "消費期限", kana: "しょうひきげん", explanations: ["安全に食べられる期限です。", "お弁当など傷みやすいものに書いてあります。"] },
+                { subject: "home", level: 2, word: "旬", kana: "しゅん", explanations: ["その食材が一番おいしくて栄養がある時期です。", "季節を感じられます。"] },
+                { subject: "home", level: 2, word: "伝統食", kana: "でんとうしょく", explanations: ["地域や国に昔から伝わる料理です。", "おせち料理などが有名です。"] },
+                { subject: "home", level: 2, word: "地産地消", kana: "ちさんちしょう", explanations: ["地元でとれたものを地元で食べることです。", "新鮮で輸送のエネルギーも少なく済みます。"] },
+                { subject: "home", level: 2, word: "バリアフリー", kana: "ばりあふりー", explanations: ["高齢者や障害者にとっての障壁を取り除くことです。", "段差をなくすスロープなどがあります。"] },
 
-                // Lv3 (30語) - 長い語（8文字以上）
-                { subject: "home", level: 3, word: "五大栄養素", kana: "ごだいえいようそ", explanations: ["体に必要な5つの重要な栄養素です。", "炭水化物、脂質、タンパク質などです。"] },
-                { subject: "home", level: 3, word: "健康的な食事", kana: "けんこうてきなしょくじ", explanations: ["体の健康を保つための食事のことです。", "偏らずにいろいろな食材を食べましょう。"] },
-                { subject: "home", level: 3, word: "バランスの良い献立", kana: "ばらんすのよいこんだて", explanations: ["栄養バランスを考えたメニューです。", "主食・主菜・副菜を組み合わせます。"] },
-                { subject: "home", level: 3, word: "旬の食材を味わう", kana: "しゅんのしょくざいをあじわう", explanations: ["その時期に一番おいしい食材を食べます。", "季節の移り変わりを感じられます。"] },
-                { subject: "home", level: 3, word: "安全な調理方法", kana: "あんぜんなちょうりほうほう", explanations: ["怪我や火傷を防ぐ調理の進め方です。", "正しい道具の使い方を確認しましょう。"] },
-                { subject: "home", level: 3, word: "三つのグループ", kana: "みっつのぐるーぷ", explanations: ["働きで食べ物を3つの色に分けることです。", "赤、黄、緑のグループに分けられます。"] },
-                { subject: "home", level: 3, word: "快適な住まい方", kana: "かいてきなすまいかた", explanations: ["気持ちよく過ごすための工夫のことです。", "明るさや風通し、清潔さが大切です。"] },
-                { subject: "home", level: 3, word: "環境に優しい生活", kana: "かんきょうにやさしいせいかつ", explanations: ["地球の環境を守るための生活習慣です。", "節水や節電、リサイクルを心がけます。"] },
-                { subject: "home", level: 3, word: "買い物と契約", kana: "かいものとけいやく", explanations: ["物やサービスを買う時の約束のことです。", "内容をよく理解してから決めましょう。"] },
-                { subject: "home", level: 3, word: "計画的な購入", kana: "けいかくてきなこうにゅう", explanations: ["あらかじめ計画を立てて買うことです。", "無駄な買い物を防ぐことができます。"] },
-                { subject: "home", level: 3, word: "消費者トラブル", kana: "しょうひしゃとらぶる", explanations: ["買い物などで困った事が起きることです。", "トラブルの際は大人に相談しましょう。"] },
-                { subject: "home", level: 3, word: "地域との交流", kana: "ちいきとのこうりゅう", explanations: ["地域の行事などの活動に参加することです。", "助け合って安心して暮らせる社会を作ります。"] },
-                { subject: "home", level: 3, word: "生活リズムを整える", kana: "せいかつりずむをととのえる", explanations: ["規則正しい生活習慣を作ることです。", "体と心の健康のためにとても大切です。"] },
-                { subject: "home", level: 3, word: "製作計画書", kana: "せいさくけいかくしょ", explanations: ["物を作る前に立てる手順の計画です。", "必要な材料や道具、時間を書き出します。"] },
-                { subject: "home", level: 3, word: "ミシンの使い方", kana: "みしんのつかいかた", explanations: ["裁縫でミシンを正しく動かす方法です。", "上糸や下糸の準備が肝心です。"] },
-                { subject: "home", level: 3, word: "災害への備え", kana: "さいがいへのそなえ", explanations: ["非常時の食料や道具を準備することです。", "万が一の時の行動も家族で話しましょう。"] },
-                { subject: "home", level: 3, word: "ユニバーサルデザイン", kana: "ゆにばーさるでざいん", explanations: ["誰にでも使いやすい設計のことです。", "不自由なく使える工夫を見つけましょう。"] },
-                { subject: "home", level: 3, word: "おもてなしの心", kana: "おもてなしのこころ", explanations: ["相手を歓迎し、思いやる気持ちのことです。", "お客様が心地よく過ごせるよう工夫します。"] },
-                { subject: "home", level: 3, word: "伝統的な行事食", kana: "でんとうてきなぎょうじしょく", explanations: ["お正月などの行事で食べる特別な料理です。", "文化を知って大切に受け継ぎましょう。"] },
-                { subject: "home", level: 3, word: "未来の生活設計", kana: "みらいのせいかつせっけい", explanations: ["将来どのような生活をしたいか考える事です。", "夢を実現するための基礎を作りましょう。"] },
-                { subject: "home", level: 3, word: "衣服の着合わせ", kana: "いふくのきあわせ", explanations: ["気候や目的に合わせて服を選ぶことです。", "快適に過ごせるように工夫しましょう。"] },
-                { subject: "home", level: 3, word: "整理整頓の習慣", kana: "せいりせいとんのしゅうかん", explanations: ["常に身の回りを片付ける習慣のことです。", "一度決めた場所に戻すのがコツです。"] },
-                { subject: "home", level: 3, word: "小物の製作", kana: "こもののせいさく", explanations: ["布を使って袋や小物を作ることです。", "針やミシンを使って仕上げましょう。"] },
-                { subject: "home", level: 3, word: "朝食の役割", kana: "ちょうしょくのやくわり", explanations: ["朝食が体に与える大切な働きのことです。", "体温を上げ、活動をサポートします。"] },
-                { subject: "home", level: 3, word: "だしの取り方", kana: "だしのとりかた", explanations: ["昆布や鰹節から旨みを引き出すことです。", "美味しい料理を作るための基本です。"] },
-                { subject: "home", level: 3, word: "ゆで方の基本", kana: "ゆでかたのきほん", explanations: ["お湯で食材を茹でる手順のことです。", "食材によって水の量や時間を変えます。"] },
-                { subject: "home", level: 3, word: "炒め方の基本", kana: "いためかたのきほん", explanations: ["油を熱して食材を加熱する方法です。", "手際よく動かすのがおいしさの秘密です。"] },
-                { subject: "home", level: 3, word: "清掃の仕方の基本", kana: "せいそうのしかたのきほん", explanations: ["汚れに合わせた掃除の進め方です。", "上から下、奥から手前が鉄則です。"] },
-                { subject: "home", level: 3, word: "住まいの明るさ", kana: "すまいのあかるさ", explanations: ["光を取り入れて健康に住む工夫です。", "カーテンや照明を上手に使いましょう。"] },
-                { subject: "home", level: 3, word: "消費生活の工夫", kana: "しょうひせいかつのくふう", explanations: ["お金や物を大切に使う智恵のことです。", "環境や社会への影響も考えましょう。"] }
+                // Lv3 (30語) - 専門的・社会的語句
+                { subject: "home", level: 3, word: "五大栄養素", kana: "ごだいえいようそ", explanations: ["炭水化物・脂質・タンパク質・無機質・ビタミンの総称です。", "これらをバランスよく摂ることが健康の基本です。"] },
+                { subject: "home", level: 3, word: "基礎代謝", kana: "きそたいしゃ", explanations: ["生きていくために最低限必要なエネルギーです。", "寝ている間も消費されます。"] },
+                { subject: "home", level: 3, word: "生活習慣病", kana: "せいかつしゅうかんびょう", explanations: ["食事や運動などの習慣が原因で起こる病気です。", "糖尿病や高血圧などがあります。"] },
+                { subject: "home", level: 3, word: "食品添加物", kana: "しょくひんてんかぶつ", explanations: ["保存や着色などのために食品に加えられるものです。", "安全性や表示のルールがあります。"] },
+                { subject: "home", level: 3, word: "食中毒", kana: "しょくちゅうどく", explanations: ["細菌やウイルスがついた食品を食べてお腹が痛くなることです。", "手洗いや加熱で予防します。"] },
+                { subject: "home", level: 3, word: "一汁三菜", kana: "いちじゅうさんさい", explanations: ["汁物一品と、おかず三品（主菜・副菜）の献立スタイルです。", "栄養バランスがとりやすい和食の基本です。"] },
+                { subject: "home", level: 3, word: "郷土料理", kana: "きょうどりょうり", explanations: ["それぞれの地域で独自に発展した料理です。", "地域の特産物が使われています。"] },
+                { subject: "home", level: 3, word: "並縫い", kana: "なみぬい", explanations: ["手縫いの基本的な縫い方です。", "表と裏の縫い目が同じ長さになります。"] },
+                { subject: "home", level: 3, word: "本返し縫い", kana: "ほんがえしぬい", explanations: ["一針ごとに戻って縫う、丈夫な縫い方です。", "ミシンのような縫い目になります。"] },
+                { subject: "home", level: 3, word: "玉結び", kana: "たまむすび", explanations: ["縫い始めに糸が抜けないようにする結び目です。", "指先でくるっと回して作ります。"] },
+                { subject: "home", level: 3, word: "玉どめ", kana: "たまどめ", explanations: ["縫い終わりに糸がほどけないようにする結び目です。", "布の近くで作ります。"] },
+                { subject: "home", level: 3, word: "取扱表示", kana: "とりあつかいひょうじ", explanations: ["服のタグについている洗濯やアイロンのマークです。", "これを守ると服が長持ちします。"] },
+                { subject: "home", level: 3, word: "合成洗剤", kana: "ごうせいせんざい", explanations: ["化学的に作られた洗浄剤です。", "汚れを落とす力が強いです。"] },
+                { subject: "home", level: 3, word: "リサイクル", kana: "りさいくる", explanations: ["使い終わったものを資源として再利用することです。", "とペットボトルなどが対象です。"] },
+                { subject: "home", level: 3, word: "ユニバーサルデザイン", kana: "ゆにばーさるでざいん", explanations: ["誰にでも使いやすいように工夫されたデザインです。", "シャンプーボトルのギザギザなどが例です。"] },
+                { subject: "home", level: 3, word: "消費者権利", kana: "しょうひしゃけんり", explanations: ["安全を求めたり、情報を知らされたりする消費者の権利です。", "ケネディ大統領が提唱しました。"] },
+                { subject: "home", level: 3, word: "クーリング・オフ", kana: "くーりんぐ・おふ", explanations: ["訪問販売などで契約した後、一定期間なら無条件で解約できる制度です。", "消費者を守るためのルールです。"] },
+                { subject: "home", level: 3, word: "契約", kana: "けいやく", explanations: ["法的な約束のことです。", "買い物も売買契約の一つです。"] },
+                { subject: "home", level: 3, word: "電子マネー", kana: "でんしまねー", explanations: ["現金の代わりにデータで支払うお金です。", "カードやスマホで決済できます。"] },
+                { subject: "home", level: 3, word: "クレジットカード", kana: "くれじっとかーど", explanations: ["後払いで買い物ができるカードです。", "信用に基づいて発行されます。"] },
+                { subject: "home", level: 3, word: "家庭内事故", kana: "かていないじこ", explanations: ["家の中で起こる転倒や誤飲などの事故です。", "整理整頓や安全対策で防ぎます。"] },
+                { subject: "home", level: 3, word: "防災グッズ", kana: "ぼうさいぐっず", explanations: ["災害に備えて準備しておく道具や食料です。", "非常持ち出し袋に入れておきます。"] },
+                { subject: "home", level: 3, word: "持続可能な社会", kana: "じぞくかのうなしゃかい", explanations: ["環境を守りながら、将来の世代も豊かに暮らせる社会です。", "SDGsの目標です。"] },
+                { subject: "home", level: 3, word: "フェアトレード", kana: "ふぇあとれーど", explanations: ["発展途上国の生産者と適正な価格で取引することです。", "貧困解消につながります。"] },
+                { subject: "home", level: 3, word: "エコマーク", kana: "えこまーく", explanations: ["環境にやさしい商品についているマークです。", "買い物時の目印になります。"] },
+                { subject: "home", level: 3, word: "家事分担", kana: "かじぶんたん", explanations: ["家族みんなで家事を分け合うことです。", "お互いを思いやる気持ちが大切です。"] },
+                { subject: "home", level: 3, word: "幼児", kana: "ようじ", explanations: ["小学校に入る前の子どものことです。", "心も体も大きく成長する時期です。"] },
+                { subject: "home", level: 3, word: "高齢者", kana: "こうれいしゃ", explanations: ["一般に65歳以上の人のことです。", "豊かな経験や知識を持っています。"] },
+                { subject: "home", level: 3, word: "地域コミュニティ", kana: "ちいきこみゅにてぃ", explanations: ["同じ地域に住む人々のつながりです。", "助け合いや防犯に役立ちます。"] },
+                { subject: "home", level: 3, word: "ボランティア", kana: "ぼらんてぃあ", explanations: ["自発的に社会や他人のために活動することです。", "金銭的な報酬を求めない活動です。"] },
             ]
         };
 
-        /* --- LOGIC --- */
-                const KANA_MAP = {
+        const KANA_MAP = {
             'あ': ['a'], 'い': ['i', 'yi'], 'う': ['u', 'wu'], 'え': ['e'], 'お': ['o'], 'ゔ': ['vu'],
             'か': ['ka', 'ca'], 'き': ['ki'], 'く': ['ku', 'cu', 'qu'], 'け': ['ke'], 'こ': ['ko', 'co'],
             'さ': ['sa'], 'し': ['shi', 'si', 'ci'], 'す': ['su'], 'せ': ['se', 'ce'], 'そ': ['so'],
@@ -1389,19 +1468,15 @@
             'ま': ['ma'], 'み': ['mi'], 'む': ['mu'], 'め': ['me'], 'も': ['mo'],
             'や': ['ya'], 'ゆ': ['yu'], 'よ': ['yo'],
             'ら': ['ra'], 'り': ['ri'], 'る': ['ru'], 'れ': ['re'], 'ろ': ['ro'],
-            'わ': ['wa'], 'を': ['wo'], 'ん': ['n', 'nn', "n'"],
+            'わ': ['wa'], 'を': ['wo'], 'ん': ['n', "n'", 'xn'],
             'が': ['ga'], 'ぎ': ['gi'], 'ぐ': ['gu'], 'げ': ['ge'], 'ご': ['go'],
             'ざ': ['za'], 'じ': ['ji', 'zi'], 'ず': ['zu'], 'ぜ': ['ze'], 'ぞ': ['zo'],
             'だ': ['da'], 'ぢ': ['ji', 'di'], 'づ': ['zu', 'du'], 'で': ['de'], 'ど': ['do'],
             'ば': ['ba'], 'び': ['bi'], 'ぶ': ['bu'], 'べ': ['be'], 'ぼ': ['bo'],
             'ぱ': ['pa'], 'ぴ': ['pi'], 'ぷ': ['pu'], 'ぺ': ['pe'], 'ぽ': ['po'],
-            'ー': ['-'],
-            '・': ['/'], '、': ['/'], ',': ['/'], '。': ['.'], '.': ['.'],
-            '「': [''], '」': [''],
-            // 小さい仮名
             'ぁ': ['xa', 'la'], 'ぃ': ['xi', 'li'], 'ぅ': ['xu', 'lu'], 'ぇ': ['xe', 'le'], 'ぉ': ['xo', 'lo'],
             'ゃ': ['xya', 'lya'], 'ゅ': ['xyu', 'lyu'], 'ょ': ['xyo', 'lyo'],
-            'っ': ['xtu', 'ltu', 'xtsu', 'ltsu']
+            'っ': ['xtu', 'ltu'], 'ー': ['-']
         };
 
         const DIGRAPH_MAP = {
@@ -1413,135 +1488,145 @@
             'みゃ': ['mya'], 'みゅ': ['myu'], 'みょ': ['myo'],
             'りゃ': ['rya'], 'りゅ': ['ryu'], 'りょ': ['ryo'],
             'ぎゃ': ['gya'], 'ぎゅ': ['gyu'], 'ぎょ': ['gyo'],
-            'じゃ': ['ja', 'zya', 'jya'], 'じゅ': ['ju', 'zyu', 'jyu'], 'じょ': ['jo', 'zyo', 'jyo'],
+            'じゃ': ['ja', 'jya', 'zya'], 'じゅ': ['ju', 'jyu', 'zyu'], 'じょ': ['jo', 'jyo', 'zyo'],
+            'ぢゃ': ['dya'], 'ぢゅ': ['dyu'], 'ぢょ': ['dyo'],
             'びゃ': ['bya'], 'びゅ': ['byu'], 'びょ': ['byo'],
             'ぴゃ': ['pya'], 'ぴゅ': ['pyu'], 'ぴょ': ['pyo'],
-            // 外来語など
-            'てぃ': ['thi', 'texi', 'teli'],
-            'でぃ': ['dhi', 'dexi', 'deli'],
-            'でゅ': ['dhu', 'dexyu', 'delyu'],
-            'とぅ': ['twu', 'toxu', 'tolu'],
-            'どぅ': ['dwu', 'doxu', 'dolu'],
-            'ふぁ': ['fa', 'fuxa', 'hula'],
-            'ふぃ': ['fi', 'fuxi', 'fuli'],
-            'ふぇ': ['fe', 'fuxe', 'fule'],
-            'ふぉ': ['fo', 'fuxo', 'fulo'],
-            'うぃ': ['wi', 'uxi', 'uli'],
-            'うぇ': ['we', 'uxe', 'ule'],
-            'うぉ': ['who', 'uxo', 'ulo'],
-            'ヴぁ': ['va', 'vuxa'], 'ヴぃ': ['vi', 'vuxi'], 'ヴ': ['vu'], 'ヴぇ': ['ve', 'vuxe'], 'ヴぉ': ['vo', 'vuxo']
+            'ふぁ': ['fa'], 'ふぃ': ['fi'], 'ふぇ': ['fe'], 'ふぉ': ['fo'],
+            'うぇ': ['we'], 'うぃ': ['wi'], 
+            'ゔぁ': ['va'], 'ゔぃ': ['vi'], 'ゔぇ': ['ve'], 'ゔぉ': ['vo'],
+            'しぇ': ['she', 'sye'], 'ちぇ': ['che', 'tye'], 'じぇ': ['je', 'jye', 'zye'],
+            'てぃ': ['thi'], 'てゅ': ['thu'], 'でぃ': ['dhi'], 'でゅ': ['dhu'],
+            'つぁ': ['tsa'], 'つぃ': ['tsi'], 'つぇ': ['tse'], 'つぉ': ['tso']
         };
 
         class TypingEngine {
             constructor() {
                 this.currentKana = "";
                 this.inputBuffer = "";
-                this.validPaths = [];
-                this.displayRomanji = "";
+                this.validPaths = []; // All valid remaining romanji sequences
+                this.displayRomanji = ""; // One representative path to show
             }
 
             setWord(wordData) {
                 this.currentKana = wordData.kana || wordData.word;
                 this.inputBuffer = "";
-
+                
                 if (wordData.romanji) {
+                    // Manual override
                     this.validPaths = [wordData.romanji];
                     this.displayRomanji = wordData.romanji;
                 } else {
+                    // Generate all standard romanji permutations
                     this.validPaths = this.generatePermutations(this.currentKana);
-                    this.displayRomanji = this.validPaths[0];
+                    // Just pick the shortest or first one for display
+                    this.displayRomanji = this.validPaths[0]; 
                 }
             }
 
+            // Recursive generation of all valid romanji strings for a kana string
             generatePermutations(kana) {
-                let results = [""];
+                if (kana.length === 0) return [""];
 
-                let i = 0;
-                while (i < kana.length) {
-                    const char = kana[i];
-                    const next = kana[i + 1];
-                    let patterns = [];
-                    let consumed = 1;
+                let results = [];
 
-                    if (char === 'っ') {
-                        if (next && KANA_MAP[next]) {
-                            let nextPatterns = [];
-                            let nextConsumed = 1;
-
-                            if (i + 2 < kana.length && DIGRAPH_MAP[next + kana[i + 2]]) {
-                                nextPatterns = DIGRAPH_MAP[next + kana[i + 2]];
-                                nextConsumed = 2;
-                            } else if (KANA_MAP[next]) {
-                                nextPatterns = KANA_MAP[next];
+                // 1. Try digraphs (2 chars)
+                if (kana.length >= 2) {
+                    const sub2 = kana.substring(0, 2);
+                    if (DIGRAPH_MAP[sub2]) {
+                        const tails = this.generatePermutations(kana.substring(2));
+                        for (let r of DIGRAPH_MAP[sub2]) {
+                            for (let t of tails) {
+                                results.push(r + t);
                             }
-
-                            if (nextPatterns.length > 0) {
-                                patterns = [];
-                                nextPatterns.forEach(p => {
-                                    if (p.startsWith('ch')) {
-                                        patterns.push('t' + p);
-                                        patterns.push('c' + p);
-                                    } else {
-                                        patterns.push(p[0] + p);
-                                    }
-                                });
-                                consumed = 1 + nextConsumed;
-                            } else {
-                                patterns = ['xtu', 'tsu'];
-                            }
-                        } else {
-                            patterns = ['xtu', 'tsu'];
                         }
                     }
-                    else if (next && DIGRAPH_MAP[char + next]) {
-                        patterns = DIGRAPH_MAP[char + next];
-                        consumed = 2;
-                    }
-                    else if (KANA_MAP[char]) {
-                        patterns = KANA_MAP[char];
-                    } else {
-                        patterns = [char];
-                    }
-
-                    let newResults = [];
-                    results.forEach(prefix => {
-                        patterns.forEach(p => {
-                            newResults.push(prefix + p);
-                        });
-                    });
-                    results = newResults;
-
-                    i += consumed;
                 }
+
+                // 2. Try single char
+                const sub1 = kana.substring(0, 1);
+                // Special case for 'っ' (sokuon)
+                if (sub1 === 'っ') {
+                    if (kana.length >= 2) {
+                        const nextChar = kana.substring(1, 1); // just a peek? No we need the romanji of next char
+                        // Actually 'っ' generally doubles the first consonant of the next romaji.
+                        // But wait, the next char might be a digraph.
+                        // Sokuon logic is tricky in simple recursion.
+                        // Let's do a simpler approach: 
+                        // If we have "xtu" or "ltu" it works as single char mapping.
+                        // Ideally we also support doubling next consonant.
+                        
+                        // Let's rely on standard mappings for 'っ' first (xtu, ltu).
+                        // Doubling consonant support:
+                        // peek next char's romanji perms
+                        const tails = this.generatePermutations(kana.substring(1));
+                        for (let t of tails) {
+                            if (t.length > 0) {
+                                // Double the first char of the tail
+                                const firstChar = t.charAt(0);
+                                results.push(firstChar + t); 
+                            }
+                        }
+                    }
+                }
+                
+                if (KANA_MAP[sub1]) {
+                    const tails = this.generatePermutations(kana.substring(1));
+                    for (let r of KANA_MAP[sub1]) {
+                        for (let t of tails) {
+                            results.push(r + t);
+                        }
+                    }
+                } else if (!results.length && !DIGRAPH_MAP[kana.substring(0,2)]) {
+                    // No mapping found? Just keep char (maybe punctuation or number)
+                    const tails = this.generatePermutations(kana.substring(1));
+                    for (let t of tails) {
+                        results.push(sub1 + t); 
+                    }
+                }
+
+                // Special handling for 'ん' (n)
+                // If 'n' is followed by a vowel or y, it typically needs n' or xn to distinguish from na/ni/nu...
+                // But here we generate valid strings. Input checking handles "n" vs "nn" logic usually.
+                // Our generatePermutations is for *target* generation. 
+                // Let's trust KANA_MAP['ん'] which has ['n', "n'", 'xn'].
+                // If the user types 'n', and next is 'a', it matches 'na' not 'n'+'a'.
+                // So purely concatenating is fine here. 
+                
                 return results;
             }
 
             checkInput(key) {
+                // Return true if key advances any valid path
+                // Filter validPaths to only those that start with (inputBuffer + key)
                 const nextInput = this.inputBuffer + key;
-                const candidates = this.validPaths.filter(path => path.toLowerCase().startsWith(nextInput.toLowerCase()));
-
-                if (candidates.length > 0) {
+                
+                // Special check for 'n' automatic expansion?
+                // e.g. typing 'n' for 'ん' might be valid if it's end of word or before consonant.
+                // But simplistic approach: compare strict prefixes.
+                
+                const nextValidPaths = this.validPaths.filter(path => path.startsWith(nextInput));
+                
+                if (nextValidPaths.length > 0) {
                     this.inputBuffer += key;
-                    if (!candidates.includes(this.displayRomanji)) {
-                        this.displayRomanji = candidates[0];
-                    }
+                    this.validPaths = nextValidPaths; // Narrow down possibilities
+                    
+                    // Update display logic: try to ensure display matches what user is typing if possible
+                    // e.g. if user types 'c' for 'ka', switch display from 'ka' to 'ca' if available
+                    // Find a path in validPaths that is "closest" or just pick first
+                    this.displayRomanji = this.validPaths[0]; 
+                    
                     return true;
                 }
                 return false;
             }
 
             isComplete() {
-                return this.validPaths.some(p => p.toLowerCase() === this.inputBuffer.toLowerCase());
+                // If any valid path exactly equals inputBuffer
+                return this.validPaths.some(path => path === this.inputBuffer);
             }
         }
 
-        /*
-        ================================================================================
-          【Firebase 設定エリア】
-          GitHub Pages等で公開し、グローバルランキングを使いたい場合は、
-          Firebase Consoleで取得した設定をここに貼り付けてください。
-        ================================================================================
-        */
         const firebaseConfig = {
             apiKey: "AIzaSyB2tG4Xy7GkBgCakt0YvhfQS_C_H-gBtwc",
             authDomain: "typing-learning-c844d.firebaseapp.com",
@@ -1554,7 +1639,7 @@
 
         class GameManager {
             constructor() {
-                this.state = 'TITLE';
+                this.state = 'TITLE'; // TITLE, SUBJECT_SELECT, DIFFICULTY_SELECT, PLAY, RESULT, EXPLAIN, RANKING_VIEW
                 this.score = 0;
                 this.mistakes = 0;
                 this.startTime = 0;
@@ -1563,6 +1648,7 @@
 
                 this.questionsQueue = [];
                 this.currentQuestion = null;
+                this.currentQuestionIndex = 0;
                 this.currentSubject = null;
                 this.currentLevel = null;
 
@@ -1606,115 +1692,127 @@
             init() {
                 this.renderSubjects();
                 document.addEventListener('keydown', (e) => this.handleKey(e));
+                
+                // Initialize Firebase
                 this.initFirebase();
             }
 
             async initFirebase() {
-                if (!firebaseConfig.apiKey) return;
                 try {
-                    const { initializeApp } = await import("firebase/app");
-                    const { getFirestore } = await import("firebase/firestore");
-                    this.fbApp = initializeApp(firebaseConfig);
-                    this.db = getFirestore(this.fbApp);
-                    console.log("Firebase initialized");
+                    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js");
+                    const { getFirestore } = await import("https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js");
+                    
+                    this.app = initializeApp(firebaseConfig);
+                    this.db = getFirestore(this.app);
                 } catch (e) {
-                    console.error("Firebase init failed", e);
+                    console.error("Firebase init failed (offline?)", e);
+                    this.db = null;
                 }
             }
 
             switchScreen(screenName) {
-                Object.values(this.els.screens).forEach(el => {
-                    el.classList.remove('active');
-                    el.classList.add('hidden');
-                });
-
-                const target = this.els.screens[screenName];
-                target.classList.remove('hidden');
-                void target.offsetWidth;
-                target.classList.add('active');
-
-                this.state = screenName.toUpperCase();
+                Object.values(this.els.screens).forEach(el => el.classList.remove('active'));
+                this.els.screens[screenName].classList.add('active');
+                this.state = screenName === 'rankingView' ? 'RANKING_VIEW' : 
+                             screenName === 'title' ? 'TITLE' : 
+                             screenName === 'stage' ? 'SUBJECT_SELECT' : 
+                             screenName === 'level' ? 'DIFFICULTY_SELECT' : 
+                             screenName === 'play' ? 'PLAY' : 
+                             screenName === 'result' ? 'RESULT' : 'UNKNOWN';
             }
 
             renderSubjects() {
                 this.els.subjectGrid.innerHTML = '';
-                Object.entries(GAME_DATA.subjects).forEach(([key, data]) => {
-                    const btn = document.createElement('button');
-                    btn.className = 'subject-btn';
-                    btn.innerHTML = `<span class="subject-icon">${data.icon || '📘'}</span><span class="subject-label">${data.label}</span>`;
-                    btn.style.borderColor = data.color;
-                    // btn.style.color = data.color; 
+                Object.entries(GAME_DATA.subjects).forEach(([key, subject]) => {
+                    const btn = document.createElement('div');
+                    btn.className = 'subject-card';
+                    btn.style.borderColor = subject.color;
+                    btn.style.color = subject.color; // text color also
+                    btn.innerHTML = `
+                        <div class="icon">${subject.icon}</div>
+                        <div class="label">${subject.label}</div>
+                    `;
                     btn.onclick = () => this.selectSubject(key);
                     this.els.subjectGrid.appendChild(btn);
                 });
             }
 
             toTitle() {
-                this.flowMode = 'PLAY';
                 this.switchScreen('title');
             }
-            toStageSelect() { this.switchScreen('stage'); }
 
-            toRankingSelect() {
-                this.flowMode = 'RANKING';
-                this.toStageSelect();
+            toStageSelect() {
+                this.switchScreen('stage');
             }
 
             selectSubject(subject) {
                 this.currentSubject = subject;
-                const info = GAME_DATA.subjects[subject];
-                this.els.levelTitle.innerText = `${info.label} - レベル を えらぼう！`;
+                this.els.levelTitle.innerText = `${GAME_DATA.subjects[subject].label} - レベルをえらんでね`;
                 this.switchScreen('level');
             }
 
             getCurrentRankKey() {
-                return `typing_rank_${this.currentSubject}_${this.currentLevel}`;
+                // Fallback for localStorage if offline
+                return `typinggame_rank_${this.currentSubject}_${this.currentLevel}`;
             }
 
             startStage(level) {
                 this.currentLevel = level;
-                if (this.flowMode === 'RANKING') {
-                    this.showRankingOnly();
+                // Filter questions
+                let questions = GAME_DATA.questions.filter(q => 
+                    q.subject === this.currentSubject && q.level === this.currentLevel
+                );
+
+                if (questions.length === 0) {
+                    alert('もんだいが まだありません！');
                     return;
                 }
-                const allQuestions = GAME_DATA.questions.filter(q => q.subject === this.currentSubject && q.level === level);
 
-                let pool = allQuestions;
-                if (pool.length === 0) {
-                    alert("このレベルの もんだい は まだありません。");
-                    return;
-                }
-
-                this.questionsQueue = pool.sort(() => 0.5 - Math.random()).slice(0, 10);
-
+                // Shuffle
+                questions.sort(() => Math.random() - 0.5);
+                // Take 10
+                this.questionsQueue = questions.slice(0, 10);
+                this.currentQuestionIndex = 0;
+                
                 this.score = 0;
                 this.mistakes = 0;
-                this.currentQuestionIndex = 0;
-                this.startTime = Date.now();
                 this.elapsedTime = 0;
-
+                this.startTime = Date.now();
+                
                 this.switchScreen('play');
                 this.nextQuestion();
 
+                // Timer
                 if (this.timerInterval) clearInterval(this.timerInterval);
                 this.timerInterval = setInterval(() => {
-                    this.elapsedTime = Math.floor((Date.now() - this.startTime) / 1000);
-                    // Removed gauge update from timer to update only on progress
+                    if (this.state === 'PLAY') {
+                        this.elapsedTime = Math.floor((Date.now() - this.startTime) / 1000);
+                        this.updateGauge(); // Update gauge every tick
+                    }
                 }, 100);
             }
 
             updateGauge() {
-                const current = this.currentQuestionIndex + 1;
-                const total = this.questionsQueue.length;
-                const percentage = (current / total) * 100;
-
-                this.els.timeText.innerText = `もんだい ${current} / ${total}`;
-                this.els.gaugeBar.style.width = `${percentage}%`;
+                // Max time for full bar? E.g. 60 sec/question avg or total 300 sec?
+                // Let's make it visualized simply: Time elapsed
+                // Or "Life gauge" if we had life.
+                // Or "Progress" in total questions.
+                
+                // Let's use it as TIME gauge (decreasing?) or increasing?
+                // Visual indicates "Time" label.
+                // Let's say 10 questions, target 100 seconds (10s each).
+                // Or just show total seconds.
+                
+                const maxTime = 300; // 5 mins max display
+                const percent = Math.min(100, (this.elapsedTime / maxTime) * 100);
+                this.els.gaugeBar.style.width = `${percent}%`;
+                this.els.timeText.innerText = `${this.elapsedTime}秒`;
             }
 
             nextQuestion() {
                 if (this.currentQuestionIndex >= this.questionsQueue.length) {
                     this.finishGame();
+
                     return;
                 }
 
@@ -1818,8 +1916,10 @@
                 this.switchScreen('result');
 
                 const totalTime = this.elapsedTime;
-                let calcScore = 1000 - (totalTime * 1) - (this.mistakes * 20);
-                if (calcScore < 0) calcScore = 0;
+                let timeBonus = 1000 - (totalTime * 1) - (this.mistakes * 20);
+                if (timeBonus < 0) timeBonus = 0;
+                let calcScore = this.score + timeBonus;
+                // if (calcScore < 0) calcScore = 0;
                 this.lastScore = calcScore; // Store for registration
 
                 this.els.resScore.innerText = calcScore;
