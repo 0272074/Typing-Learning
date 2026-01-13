@@ -484,6 +484,59 @@
         .ranking-table tr:last-child td {
             border-bottom: none;
         }
+
+        /* --- Admin Screen --- */
+        .admin-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+        }
+        .admin-table-container {
+            width: 100%;
+            height: 60vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .admin-table th {
+            position: sticky;
+            top: 0;
+            background: #4ECDC4;
+            color: white;
+            padding: 10px;
+            z-index: 10;
+        }
+        .admin-table td {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .admin-input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .btn-admin {
+            padding: 8px 15px;
+            border-radius: 10px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-add { background: #4ECDC4; }
+        .btn-delete { background: #FF6B6B; }
+        .btn-export { background: #FF9F43; }
     </style>
 </head>
 
@@ -497,6 +550,8 @@
             <button class="btn-start" onclick="game.toStageSelect()">スタート！</button>
             <button class="btn-start" style="background: #4ECDC4; box-shadow: 0 6px 0 #3BAEA5; font-size: 1.8rem;"
                 onclick="game.toRankingSelect()">ランキングを見る</button>
+            <button class="btn-start" style="background: #718096; box-shadow: 0 6px 0 #4A5568; font-size: 1.0rem; padding: 0.5rem 1rem;"
+                onclick="game.toAdmin()">管理者モード</button>
         </div>
     </div>
 
@@ -644,6 +699,42 @@
                     onclick="game.selectSubject(game.currentSubject)">もどる</button>
                 <button class="btn-start" style="font-size:1.2rem; padding:0.8rem 2rem;"
                     onclick="game.toTitle()">メニューへ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Screen -->
+    <div id="screen-admin" class="screen">
+        <h2>管理者モード</h2>
+        <div class="game-wrapper" style="width:95%; max-width:1100px; height:90vh; overflow:hidden;">
+            <div class="admin-controls">
+                <select id="admin-subject-select" class="admin-input" style="width:150px;">
+                    <!-- Copied from GAME_DATA -->
+                </select>
+                <select id="admin-level-select" class="admin-input" style="width:100px;">
+                    <option value="1">Lv 1</option>
+                    <option value="2">Lv 2</option>
+                    <option value="3">Lv 3</option>
+                </select>
+                <button class="btn-admin btn-add" onclick="game.addQuestion()">＋ 追加</button>
+                <button class="btn-admin btn-export" onclick="game.exportData()">JSON書き出し</button>
+                <button class="btn-admin btn-delete" style="background:#718096" onclick="game.toTitle()">終了</button>
+            </div>
+            
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th width="15%">単語</th>
+                            <th width="20%">読み（ひらがな）</th>
+                            <th width="50%">解説（カンマ区切りで複数可）</th>
+                            <th width="15%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-table-body">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -1661,10 +1752,16 @@
                         level: document.getElementById('screen-level'),
                         play: document.getElementById('screen-play'),
                         result: document.getElementById('screen-result'),
-                        rankingView: document.getElementById('screen-ranking-view')
+                        rankingView: document.getElementById('screen-ranking-view'),
+                        admin: document.getElementById('screen-admin')
                     },
                     subjectGrid: document.getElementById('subject-grid'),
                     levelTitle: document.getElementById('level-title'),
+                    // Admin UI
+                    adminSubjectSelect: document.getElementById('admin-subject-select'),
+                    adminLevelSelect: document.getElementById('admin-level-select'),
+                    adminTableBody: document.getElementById('admin-table-body'),
+
                     word: document.getElementById('word-display'),
                     kana: document.getElementById('kana-display'),
                     romanji: document.getElementById('romanji-display'),
@@ -1715,6 +1812,7 @@
                 Object.values(this.els.screens).forEach(el => el.classList.remove('active'));
                 this.els.screens[screenName].classList.add('active');
                 this.state = screenName === 'rankingView' ? 'RANKING_VIEW' : 
+                             screenName === 'admin' ? 'ADMIN' :
                              screenName === 'title' ? 'TITLE' : 
                              screenName === 'stage' ? 'SUBJECT_SELECT' : 
                              screenName === 'level' ? 'DIFFICULTY_SELECT' : 
@@ -2096,6 +2194,139 @@
                 } else {
                     this.toStageSelect();
                 }
+            }
+            
+            /* --- Admin Mode Methods --- */
+            toAdmin() {
+                this.switchScreen('admin');
+                this.renderAdminSubjectSelect();
+                this.renderAdminTable();
+            }
+
+            renderAdminSubjectSelect() {
+                const sel = this.els.adminSubjectSelect;
+                sel.innerHTML = '';
+                Object.entries(GAME_DATA.subjects).forEach(([key, sub]) => {
+                    const opt = document.createElement('option');
+                    opt.value = key;
+                    opt.text = sub.label;
+                    sel.appendChild(opt);
+                });
+                sel.onchange = () => this.renderAdminTable();
+                this.els.adminLevelSelect.onchange = () => this.renderAdminTable();
+            }
+
+            renderAdminTable() {
+                const sub = this.els.adminSubjectSelect.value || 'japanese';
+                const lvl = parseInt(this.els.adminLevelSelect.value) || 1;
+                const tbody = this.els.adminTableBody;
+                tbody.innerHTML = '';
+
+                const questions = GAME_DATA.questions.filter(q => q.subject === sub && q.level === lvl);
+
+                questions.forEach((q, idx) => {
+                    const row = document.createElement('tr');
+                    
+                    // Word Input
+                    const tdWord = document.createElement('td');
+                    const inpWord = document.createElement('input');
+                    inpWord.className = 'admin-input';
+                    inpWord.value = q.word;
+                    inpWord.onchange = (e) => { q.word = e.target.value; };
+                    tdWord.appendChild(inpWord);
+
+                    // Kana Input
+                    const tdKana = document.createElement('td');
+                    const inpKana = document.createElement('input');
+                    inpKana.className = 'admin-input';
+                    inpKana.value = q.kana;
+                    inpKana.onchange = (e) => { q.kana = e.target.value; };
+                    tdKana.appendChild(inpKana);
+
+                    // Explanations Input
+                    const tdExp = document.createElement('td');
+                    const inpExp = document.createElement('input');
+                    inpExp.className = 'admin-input';
+                    inpExp.value = q.explanations.join('$$'); // use $$ delimiter for simple parsing or just CSV
+                    // Actually, let's use comma for simplicity in UI, but users might use comma in text.
+                    // Let's use '$$' as internal delimiter, but show newlines in textarea?
+                    // For simplicity, let's just assume CSV-like or pipe.
+                    // Let's use a simple text input and say "Enter multiple separated by commas"
+                    // But wait, comma is common. Let's use '、' or just newline.
+                    // Input is single line. Let's use '$$' visually or just standard CSV.
+                    // Let's stick to standard array of strings. 
+                    inpExp.value = q.explanations.join('、'); 
+                    inpExp.placeholder = "解説1、解説2";
+                    inpExp.onchange = (e) => { 
+                        // Split by '、' (Japanese comma) or ','
+                        q.explanations = e.target.value.split(/[、,]/).map(s => s.trim()).filter(s => s); 
+                    };
+                    tdExp.appendChild(inpExp);
+
+                    // Actions
+                    const tdAct = document.createElement('td');
+                    const btnDel = document.createElement('button');
+                    btnDel.innerText = "削除";
+                    btnDel.className = "btn-admin btn-delete";
+                    btnDel.style.fontSize = "0.8rem";
+                    btnDel.onclick = () => {
+                        this.deleteQuestion(sub, lvl, idx);
+                    };
+                    tdAct.appendChild(btnDel);
+
+                    row.appendChild(tdWord);
+                    row.appendChild(tdKana);
+                    row.appendChild(tdExp);
+                    row.appendChild(tdAct);
+                    tbody.appendChild(row);
+                });
+            }
+
+            addQuestion() {
+                const sub = this.els.adminSubjectSelect.value;
+                const lvl = parseInt(this.els.adminLevelSelect.value);
+                
+                GAME_DATA.questions.push({
+                    subject: sub,
+                    level: lvl,
+                    word: "新しい単語",
+                    kana: "あたらしい",
+                    explanations: ["解説を入力してください"]
+                });
+                this.renderAdminTable();
+                // Scroll to bottom
+                setTimeout(() => {
+                   const container = document.querySelector('.admin-table-container');
+                   container.scrollTop = container.scrollHeight;
+                }, 100);
+            }
+
+            deleteQuestion(sub, lvl, idxInFiltered) {
+                if(!confirm("本当に削除しますか？")) return;
+                
+                // Find index in main array
+                // The idxInFiltered is index within the filtered list.
+                // We need to identify the object reference clearly.
+                // Re-find the object in the main array.
+                const questions = GAME_DATA.questions.filter(q => q.subject === sub && q.level === lvl);
+                const targetQ = questions[idxInFiltered];
+                
+                const realIdx = GAME_DATA.questions.indexOf(targetQ);
+                if (realIdx > -1) {
+                    GAME_DATA.questions.splice(realIdx, 1);
+                    this.renderAdminTable();
+                }
+            }
+
+            exportData() {
+                const json = JSON.stringify(GAME_DATA, null, 4);
+                // Copy to clipboard
+                navigator.clipboard.writeText(json).then(() => {
+                    alert("クリップボードにコピーしました！\nコードの window.GAME_DATA = {...} の部分を置き換えてください。");
+                }).catch(err => {
+                    console.error('Copy failed', err);
+                    alert("コピーに失敗しました。コンソールを確認してください。");
+                });
             }
         }
 
