@@ -717,7 +717,10 @@
                     <option value="3">Lv 3</option>
                 </select>
                 <button class="btn-admin btn-add" onclick="game.addQuestion()">＋ 追加</button>
-                <button class="btn-admin btn-export" onclick="game.exportData()">JSON書き出し</button>
+                <button class="btn-admin btn-export" style="background:#FF9F43" onclick="game.saveCloudData()">クラウド保存</button>
+                <button class="btn-admin btn-export" style="background:#48bb78; font-size:0.8rem;" onclick="game.exportData()">JSON書出</button>
+                <button class="btn-admin btn-export" style="background:#667EEA; font-size:0.8rem;" onclick="game.changeAdminPassword()">パスワード変更</button>
+                <button class="btn-admin btn-delete" style="background:#e53e3e" onclick="game.resetData()">初期化</button>
                 <button class="btn-admin btn-delete" style="background:#718096" onclick="game.toTitle()">終了</button>
             </div>
             
@@ -2196,11 +2199,148 @@
                 }
             }
             
+            /* --- Persistence Methods --- */
+            async loadCloudData() {
+                if (!this.db) {
+                    this.loadLocalData();
+                    return;
+                }
+                
+                try {
+                    const { doc, getDoc } = await import("firebase/firestore");
+                    const docRef = doc(this.db, "game_data", "v1");
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        if (data && Array.isArray(data.questions)) {
+                            GAME_DATA.questions = data.questions;
+                            console.log("Loaded game data from Cloud");
+                            localStorage.setItem('typing_game_data_v1', JSON.stringify({ questions: GAME_DATA.questions }));
+                        }
+                        // Load password
+                        if (data.adminPassword) {
+                            this.adminPassword = data.adminPassword;
+                            console.log("Loaded admin password from Cloud");
+                        } else {
+                            this.adminPassword = "admin123";
+                        }
+                    } else {
+                        console.log("No cloud data found, using default/local");
+                        this.adminPassword = "admin123";
+                        this.loadLocalData();
+                    }
+                } catch (e) {
+                    console.error("Failed to load cloud data", e);
+                    this.adminPassword = "admin123";
+                    this.loadLocalData();
+                }
+            }
+
+            async saveCloudData() {
+                if (!this.db) {
+                    alert("データベースに接続されていません。");
+                    return;
+                }
+                if (!confirm("クラウドに保存しますか？\n（これは全プレイヤーに反映されます）")) return;
+
+                try {
+                    // Ensure password is set to fallback if not present
+                    const pw = this.adminPassword || "admin123";
+                    
+                    const { doc, setDoc } = await import("firebase/firestore");
+                    await setDoc(doc(this.db, "game_data", "v1"), {
+                        questions: GAME_DATA.questions,
+                        adminPassword: pw,
+                        updatedAt: Date.now()
+                    });
+                    
+                    // Update local cache too
+                    localStorage.setItem('typing_game_data_v1', JSON.stringify({ questions: GAME_DATA.questions }));
+                    
+                    alert("クラウドに保存しました！");
+                } catch (e) {
+                    console.error("Cloud save failed", e);
+                    alert("保存に失敗しました: " + e.message);
+                }
+            }
+
+            loadLocalData() {
+                const json = localStorage.getItem('typing_game_data_v1');
+                if (json) {
+                    try {
+                        const savedData = JSON.parse(json);
+                        if (savedData && Array.isArray(savedData.questions)) {
+                            GAME_DATA.questions = savedData.questions;
+                            console.log("Loaded custom data from LocalStorage (Cache)");
+                        }
+                    } catch (e) {
+                        console.error("Failed to load local data", e);
+                    }
+                }
+            }
+
+            saveLocalData() {
+                // Auto-save to local cache on edit
+                try {
+                    const dataToSave = {
+                        questions: GAME_DATA.questions
+                    };
+                    localStorage.setItem('typing_game_data_v1', JSON.stringify(dataToSave));
+                } catch (e) {
+                    console.error("Failed to save local data", e);
+                }
+            }
+
+            resetData() {
+                if (!confirm("初期データに戻しますか？\n（編集した内容はすべて消えます）")) return;
+                localStorage.removeItem('typing_game_data_v1');
+                alert("初期化しました。ページをリロードします。");
+                location.reload();
+            }
+
             /* --- Admin Mode Methods --- */
             toAdmin() {
+                const currentPw = this.adminPassword || "admin123";
+                const password = prompt("管理者パスワードを入力してください");
+                if (password !== currentPw) {
+                    alert("パスワードが違います。");
+                    return;
+                }
                 this.switchScreen('admin');
                 this.renderAdminSubjectSelect();
                 this.renderAdminTable();
+            }
+
+            async changeAdminPassword() {
+                const currentPw = this.adminPassword || "admin123";
+                
+                const inputOld = prompt("現在のパスワードを入力してください:");
+                if (inputOld === null) return;
+                if (inputOld !== currentPw) {
+                    alert("現在のパスワードが違います。");
+                    return;
+                }
+
+                const inputNew = prompt("新しいパスワードを入力してください:");
+                if (inputNew === null || inputNew.trim() === "") {
+                    alert("パスワードは空にできません。");
+                    return;
+                }
+
+                const inputConfirm = prompt("新しいパスワード（確認）を入力してください:");
+                if (inputNew !== inputConfirm) {
+                    alert("新しいパスワードが一致しません。");
+                    return;
+                }
+
+                if(!confirm("パスワードを変更してクラウドに保存しますか？\n（次回から新しいパスワードが必要になります）")) return;
+
+                // Update local state
+                this.adminPassword = inputNew;
+                
+                // Save to cloud immediately
+                await this.saveCloudData();
             }
 
             renderAdminSubjectSelect() {
@@ -2232,7 +2372,10 @@
                     const inpWord = document.createElement('input');
                     inpWord.className = 'admin-input';
                     inpWord.value = q.word;
-                    inpWord.onchange = (e) => { q.word = e.target.value; };
+                    inpWord.onchange = (e) => { 
+                        q.word = e.target.value; 
+                        this.saveLocalData();
+                    };
                     tdWord.appendChild(inpWord);
 
                     // Kana Input
@@ -2240,26 +2383,21 @@
                     const inpKana = document.createElement('input');
                     inpKana.className = 'admin-input';
                     inpKana.value = q.kana;
-                    inpKana.onchange = (e) => { q.kana = e.target.value; };
+                    inpKana.onchange = (e) => { 
+                        q.kana = e.target.value; 
+                        this.saveLocalData();
+                    };
                     tdKana.appendChild(inpKana);
 
                     // Explanations Input
                     const tdExp = document.createElement('td');
                     const inpExp = document.createElement('input');
                     inpExp.className = 'admin-input';
-                    inpExp.value = q.explanations.join('$$'); // use $$ delimiter for simple parsing or just CSV
-                    // Actually, let's use comma for simplicity in UI, but users might use comma in text.
-                    // Let's use '$$' as internal delimiter, but show newlines in textarea?
-                    // For simplicity, let's just assume CSV-like or pipe.
-                    // Let's use a simple text input and say "Enter multiple separated by commas"
-                    // But wait, comma is common. Let's use '、' or just newline.
-                    // Input is single line. Let's use '$$' visually or just standard CSV.
-                    // Let's stick to standard array of strings. 
                     inpExp.value = q.explanations.join('、'); 
                     inpExp.placeholder = "解説1、解説2";
                     inpExp.onchange = (e) => { 
-                        // Split by '、' (Japanese comma) or ','
                         q.explanations = e.target.value.split(/[、,]/).map(s => s.trim()).filter(s => s); 
+                        this.saveLocalData();
                     };
                     tdExp.appendChild(inpExp);
 
@@ -2293,6 +2431,7 @@
                     kana: "あたらしい",
                     explanations: ["解説を入力してください"]
                 });
+                this.saveLocalData();
                 this.renderAdminTable();
                 // Scroll to bottom
                 setTimeout(() => {
@@ -2305,15 +2444,13 @@
                 if(!confirm("本当に削除しますか？")) return;
                 
                 // Find index in main array
-                // The idxInFiltered is index within the filtered list.
-                // We need to identify the object reference clearly.
-                // Re-find the object in the main array.
                 const questions = GAME_DATA.questions.filter(q => q.subject === sub && q.level === lvl);
                 const targetQ = questions[idxInFiltered];
                 
                 const realIdx = GAME_DATA.questions.indexOf(targetQ);
                 if (realIdx > -1) {
                     GAME_DATA.questions.splice(realIdx, 1);
+                    this.saveLocalData();
                     this.renderAdminTable();
                 }
             }
@@ -2330,8 +2467,12 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             window.game = new GameManager();
+            // Init firebase first to get DB connection
+            await window.game.initFirebase(); 
+            // Then load cloud data
+            window.game.loadCloudData();
         });
     </script>
 </body>
