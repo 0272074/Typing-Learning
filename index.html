@@ -114,7 +114,7 @@
         }
 
         .btn-start {
-            font-size: 2.5rem;
+            font-size: 3.0rem;
             padding: 1rem 3rem;
             border-radius: 50px;
             background: #FF6B6B;
@@ -155,7 +155,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 120px;
+            height: 140px;
             /* Square-ish */
             box-shadow: var(--shadow-md);
             border: 4px solid transparent;
@@ -169,13 +169,13 @@
         }
 
         .subject-icon {
-            font-size: 2.5rem;
+            font-size: 3.0rem;
             margin-bottom: 5px;
             line-height: 1;
         }
 
         .subject-label {
-            font-size: 1.3rem;
+            font-size: 1.6rem;
             font-weight: bold;
             color: #2d3748;
         }
@@ -320,7 +320,7 @@
             border-radius: 100px;
             font-family: "Courier New", monospace;
             /* Retain monospace for alignment */
-            font-size: 2.5rem;
+            font-size: 3.0rem;
             display: flex;
             gap: 2px;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -385,6 +385,45 @@
             font-weight: 900;
         }
 
+        /* --- Explanation Modal Enhancements --- */
+        .explain-word-box {
+            background: #F7FAFC;
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 2px solid #E2E8F0;
+        }
+        .explain-word-large {
+            font-size: 3.0rem;
+            font-weight: 800;
+            color: #2D3748;
+            margin-bottom: 0.2rem;
+        }
+        .explain-kana-small {
+            font-size: 1.1rem;
+            color: #718096;
+            font-weight: bold;
+        }
+        .pause-btn {
+            background: #EDF2F7;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #4A5568;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.2s;
+            font-weight: bold;
+        }
+        .pause-btn:hover {
+            background: #E2E8F0;
+        }
+        .pause-btn.paused {
+            background: #ECC94B;
+            color: #744210;
+        }
+
         @keyframes shake {
 
             0%,
@@ -412,7 +451,7 @@
 
         .score-val {
             color: #FF6B6B;
-            font-size: 2.5rem;
+            font-size: 3.0rem;
         }
 
         /* Ranking UI */
@@ -587,7 +626,7 @@
 
         .bonus-choice {
             padding: 1.5rem;
-            font-size: 1.3rem;
+            font-size: 1.6rem;
             background: #EDF2F7;
             color: #2D3748;
             border-radius: 15px;
@@ -616,7 +655,7 @@
 
         .bonus-feedback {
             margin-top: 2rem;
-            font-size: 2.5rem;
+            font-size: 3.0rem;
             font-weight: 900;
             height: 3.5rem;
             line-height: normal;
@@ -624,10 +663,114 @@
 
         .bonus-feedback.correct { color: #48BB78; }
         .bonus-feedback.incorrect { color: #F56565; }
+
+        /* --- Custom Modal (replaces alert/confirm/prompt) --- */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .custom-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .custom-modal-box {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .custom-modal-message {
+            font-size: 1.3rem;
+            color: #2D3748;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+        .custom-modal-input {
+            width: 100%;
+            font-size: 1.5rem;
+            padding: 0.8rem;
+            border: 3px solid #4ECDC4;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-family: var(--font-main);
+            font-weight: bold;
+        }
+        .custom-modal-input:focus {
+            outline: none;
+            border-color: #FF6B6B;
+        }
+        .custom-modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .custom-modal-btn {
+            font-size: 1.2rem;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-main);
+        }
+        .custom-modal-btn.primary {
+            background: #4ECDC4;
+            color: white;
+            box-shadow: 0 4px 0 #3BAEA5;
+        }
+        .custom-modal-btn.primary:hover {
+            background: #5DD9D0;
+        }
+        .custom-modal-btn.secondary {
+            background: #CBD5E0;
+            color: #4A5568;
+            box-shadow: 0 4px 0 #A0AEC0;
+        }
+        .custom-modal-btn.secondary:hover {
+            background: #E2E8F0;
+        }
+        .custom-modal-btn.danger {
+            background: #FF6B6B;
+            color: white;
+            box-shadow: 0 4px 0 #D63031;
+        }
+        .custom-modal-btn:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- Custom Modal Container -->
+    <div id="custom-modal" class="custom-modal-overlay">
+        <div class="custom-modal-box">
+            <div id="custom-modal-message" class="custom-modal-message"></div>
+            <input type="text" id="custom-modal-input" class="custom-modal-input" style="display:none;">
+            <div id="custom-modal-buttons" class="custom-modal-buttons"></div>
+        </div>
+    </div>
+
 
     <!-- Title Screen -->
     <div id="screen-title" class="screen active">
@@ -693,9 +836,18 @@
 
             <!-- Inline Overlay for Explanation -->
             <div id="modal-explain" class="modal-overlay">
-                <div style="font-size:1.5rem; color:#4ECDC4; font-weight:bold; margin-bottom:10px;">クリア！</div>
+                <div style="font-size:1.2rem; color:#4ECDC4; font-weight:bold; margin-bottom:5px;">クリア！</div>
+                
+                <div class="explain-word-box">
+                    <div id="explain-word-display" class="explain-word-large">単語</div>
+                    <div id="explain-kana-display" class="explain-kana-small">よみがな</div>
+                </div>
+
                 <div id="explanation-text" class="explanation-text">Explanation...</div>
-                <div id="countdown-label" style="font-size:1rem; color:#A0AEC0;">つぎのもんだいまで</div>
+                
+                <button id="pause-btn" class="pause-btn" onclick="game.togglePause()">一時停止</button>
+
+                <div id="countdown-label" style="font-size:0.9rem; color:#A0AEC0; margin-top:15px;">つぎのもんだいまで</div>
                 <div id="countdown" class="countdown">5</div>
             </div>
         </div>
@@ -1853,7 +2005,7 @@
 
                 // Lv3 (40語) - 長い言葉 (8文字以上)
                 { subject: "economy", level: 3, word: "インフレーション", kana: "いんふれーしょん", explanations: ["物価が上昇し続けることです。", "お金の価値が下がります。"] },
-                { subject: "economy", level: 3, word: "デフレーション", kana: "でふれーしょん", explanations: ["物価が下がり続けることです。", "経済が停滞する原因になります。"] },
+                { subject: "economy", level: 3, word: "経済成長率", kana: "けいざいせいちょうりつ", explanations: ["国の経済がどれくらい成長したかを示す数字です。", "GDPの伸び率で計算されます。"] },
                 { subject: "economy", level: 3, word: "グローバル化", kana: "ぐろーばるか", explanations: ["世界規模で経済が一体化することです。", "貿易や投資が国境を越えます。"] },
                 { subject: "economy", level: 3, word: "マーケティング", kana: "まーけてぃんぐ", explanations: ["商品を売るための活動全体です。", "広告や市場調査を含みます。"] },
                 { subject: "economy", level: 3, word: "コンプライアンス", kana: "こんぷらいあんす", explanations: ["法律やルールを守ることです。", "企業の信頼を守るために大切です。"] },
@@ -1944,14 +2096,14 @@
                 this.validPaths = []; // All valid remaining romanji sequences
                 this.displayRomanji = ""; // One representative path to show
             }
-
             setWord(wordData) {
                 this.currentKana = wordData.kana || wordData.word;
                 this.inputBuffer = "";
                 
                 if (wordData.romanji) {
-                    // Manual override
-                    this.validPaths = [wordData.romanji];
+                    // Manual override (Foreign language)
+                    const normalized = wordData.romanji.toLowerCase().trim();
+                    this.validPaths = [normalized];
                     this.displayRomanji = wordData.romanji;
                 } else {
                     // Generate all standard romanji permutations
@@ -2032,27 +2184,18 @@
                 
                 return results;
             }
-
             checkInput(key) {
                 // Return true if key advances any valid path
-                // Filter validPaths to only those that start with (inputBuffer + key)
-                const nextInput = this.inputBuffer + key;
+                // Normalize input: lowercase, and convert full-width space to half-width
+                let normalizedKey = key.toLowerCase();
+                if (normalizedKey === '　') normalizedKey = ' ';
                 
-                // Special check for 'n' automatic expansion?
-                // e.g. typing 'n' for 'ん' might be valid if it's end of word or before consonant.
-                // But simplistic approach: compare strict prefixes.
-                
+                const nextInput = this.inputBuffer + normalizedKey;
+
                 const nextValidPaths = this.validPaths.filter(path => path.startsWith(nextInput));
                 
                 if (nextValidPaths.length > 0) {
-                    this.inputBuffer += key;
-                    this.validPaths = nextValidPaths; // Narrow down possibilities
-                    
-                    // Update display logic: try to ensure display matches what user is typing if possible
-                    // e.g. if user types 'c' for 'ka', switch display from 'ka' to 'ca' if available
-                    // Find a path in validPaths that is "closest" or just pick first
-                    this.displayRomanji = this.validPaths[0]; 
-                    
+                    this.inputBuffer += normalizedKey;
                     return true;
                 }
                 return false;
@@ -2074,6 +2217,75 @@
             measurementId: "G-HB7C6F2VPX"
         };
 
+
+        // ========== Custom Modal Utilities (replaces browser popups) ==========
+        const ModalUtil = {
+            show(type, message, options = {}) {
+                return new Promise((resolve) => {
+                    const overlay = document.getElementById('custom-modal');
+                    const msgEl = document.getElementById('custom-modal-message');
+                    const inputEl = document.getElementById('custom-modal-input');
+                    const btnContainer = document.getElementById('custom-modal-buttons');
+                    
+                    msgEl.innerText = message;
+                    btnContainer.innerHTML = '';
+                    inputEl.style.display = 'none';
+                    inputEl.value = options.defaultValue || '';
+                    
+                    if (type === 'alert') {
+                        const okBtn = document.createElement('button');
+                        okBtn.className = 'custom-modal-btn primary';
+                        okBtn.innerText = 'OK';
+                        okBtn.onclick = () => { overlay.classList.remove('active'); resolve(true); };
+                        btnContainer.appendChild(okBtn);
+                    } else if (type === 'confirm') {
+                        const yesBtn = document.createElement('button');
+                        yesBtn.className = 'custom-modal-btn primary';
+                        yesBtn.innerText = options.yesText || 'はい';
+                        yesBtn.onclick = () => { overlay.classList.remove('active'); resolve(true); };
+                        btnContainer.appendChild(yesBtn);
+                        
+                        const noBtn = document.createElement('button');
+                        noBtn.className = 'custom-modal-btn secondary';
+                        noBtn.innerText = options.noText || 'いいえ';
+                        noBtn.onclick = () => { overlay.classList.remove('active'); resolve(false); };
+                        btnContainer.appendChild(noBtn);
+                    } else if (type === 'prompt') {
+                        inputEl.style.display = 'block';
+                        inputEl.type = options.inputType || 'text';
+                        inputEl.placeholder = options.placeholder || '';
+                        
+                        const okBtn = document.createElement('button');
+                        okBtn.className = 'custom-modal-btn primary';
+                        okBtn.innerText = '決定';
+                        okBtn.onclick = () => { overlay.classList.remove('active'); resolve(inputEl.value); };
+                        btnContainer.appendChild(okBtn);
+                        
+                        const cancelBtn = document.createElement('button');
+                        cancelBtn.className = 'custom-modal-btn secondary';
+                        cancelBtn.innerText = 'キャンセル';
+                        cancelBtn.onclick = () => { overlay.classList.remove('active'); resolve(null); };
+                        btnContainer.appendChild(cancelBtn);
+                        
+                        // Handle Enter key
+                        inputEl.onkeydown = (e) => {
+                            if (e.key === 'Enter') {
+                                overlay.classList.remove('active');
+                                resolve(inputEl.value);
+                            }
+                        };
+                        
+                        setTimeout(() => inputEl.focus(), 100);
+                    }
+                    
+                    overlay.classList.add('active');
+                });
+            },
+            alert(message) { return this.show('alert', message); },
+            confirm(message, options) { return this.show('confirm', message, options); },
+            prompt(message, options) { return this.show('prompt', message, options); }
+        };
+
         class GameManager {
             constructor() {
                 this.state = 'TITLE'; // TITLE, SUBJECT_SELECT, DIFFICULTY_SELECT, PLAY, RESULT, EXPLAIN, RANKING_VIEW
@@ -2082,6 +2294,7 @@
                 this.startTime = 0;
                 this.elapsedTime = 0;
                 this.timerInterval = null;
+                this.isRankingMode = false;
 
                 this.questionsQueue = [];
                 this.currentQuestion = null;
@@ -2139,8 +2352,11 @@
 
                 this.init();
             }
-
             init() {
+                // BACKUP HARDCODED DATA for merging later
+                this.initialGameData = JSON.parse(JSON.stringify(GAME_DATA));
+                this.isRankingMode = false; 
+
                 this.renderSubjects();
                 document.addEventListener('keydown', (e) => this.handleKey(e));
                 
@@ -2184,19 +2400,88 @@
                     btn.style.borderColor = subject.color;
                     btn.style.color = subject.color; // text color also
                     btn.innerHTML = `
-                        <div class="icon">${subject.icon}</div>
-                        <div class="label">${subject.label}</div>
+                        <div class="subject-icon">${subject.icon}</div>
+                        <div class="subject-label">${subject.label}</div>
                     `;
                     btn.onclick = () => this.selectSubject(key);
                     this.els.subjectGrid.appendChild(btn);
                 });
             }
 
+            // --- Ranking & Data Merge Logic ---
+            toRankingSelect() {
+                this.isRankingMode = true;
+                this.switchScreen('stage');
+                this.els.levelTitle.innerText = "ランキングを見る - きょうか を えらんでね";
+            }
+
+            async showRankingView(level) {
+                this.currentLevel = level;
+                this.switchScreen('rankingView');
+                
+                const subjectLabel = GAME_DATA.subjects[this.currentSubject].label;
+                this.els.rankingViewTitle.innerText = `${subjectLabel} - レベル ${level}`;
+                
+                this.els.rankingViewBody.innerHTML = '<tr><td colspan="4">読み込み中...</td></tr>';
+                
+                const rankings = await this.loadRankings();
+                
+                this.els.rankingViewBody.innerHTML = '';
+                if (rankings.length === 0) {
+                    this.els.rankingViewBody.innerHTML = '<tr><td colspan="4">ランキングデータがありません</td></tr>';
+                    return;
+                }
+                
+                rankings.forEach((entry, index) => {
+                    const date = new Date(entry.date);
+                    const dateStr = `${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes().toString().padStart(2,'0')}`;
+                    
+                    const row = document.createElement('tr');
+                    if (index === 0) row.style.color = '#D4AF37';
+                    else if (index === 1) row.style.color = '#A0A0A0';
+                    else if (index === 2) row.style.color = '#CD7F32';
+                    
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${entry.name}</td>
+                        <td>${entry.score}</td>
+                        <td>${dateStr}</td>
+                    `;
+                    this.els.rankingViewBody.appendChild(row);
+                });
+            }
+
+            mergeHardcodedData(loadedQuestions) {
+                if (!this.initialGameData || !this.initialGameData.questions) return;
+
+                const loadedSubjects = new Set(loadedQuestions.map(q => q.subject));
+                const hardcodedSubjects = new Set(this.initialGameData.questions.map(q => q.subject));
+                
+                let updated = false;
+                
+                hardcodedSubjects.forEach(subj => {
+                    if (!loadedSubjects.has(subj)) {
+                        console.log(`[Data Merge] Subject '${subj}' missing in loaded data. Appending default questions.`);
+                        const newQuestions = this.initialGameData.questions.filter(q => q.subject === subj);
+                        loadedQuestions = loadedQuestions.concat(newQuestions);
+                        updated = true;
+                    }
+                });
+                
+                if (updated) {
+                   GAME_DATA.questions = loadedQuestions;
+                   localStorage.setItem('typing_game_data_v1', JSON.stringify({ questions: GAME_DATA.questions }));
+                   this.saveCloudDataSilent();
+                } else {
+                   GAME_DATA.questions = loadedQuestions;
+                }
+            }
+
             toTitle() {
                 this.switchScreen('title');
             }
-
             toStageSelect() {
+                this.isRankingMode = false;
                 this.switchScreen('stage');
             }
 
@@ -2210,8 +2495,12 @@
                 // Fallback for localStorage if offline
                 return `typinggame_rank_${this.currentSubject}_${this.currentLevel}`;
             }
-
             startStage(level) {
+                if (this.isRankingMode) {
+                    this.showRankingView(level);
+                    return;
+                }
+
                 this.currentLevel = level;
                 // Filter questions
                 let questions = GAME_DATA.questions.filter(q => 
@@ -2219,7 +2508,7 @@
                 );
 
                 if (questions.length === 0) {
-                    alert('もんだいが まだありません！');
+                    ModalUtil.alert('もんだいが まだありません！');
                     return;
                 }
 
@@ -2330,38 +2619,57 @@
 
             showExplanation() {
                 clearInterval(this.timerInterval);
+                this.isPaused = false;
+                const pauseBtn = document.getElementById('pause-btn');
+                if (pauseBtn) {
+                    pauseBtn.innerText = '一時停止';
+                    pauseBtn.classList.remove('paused');
+                }
+
+                // Restore word/kana display in modal
+                const expWord = document.getElementById('explain-word-display');
+                const expKana = document.getElementById('explain-kana-display');
+                if (expWord) expWord.innerText = this.currentQuestion.word;
+                if (expKana) expKana.innerText = this.currentQuestion.kana;
+
                 this.els.modal.classList.add('active');
                 this.els.explanation.innerText = this.currentQuestion.explanations[0] || "よくできました！";
 
-                // Update countdown label based on whether this is the last question
                 const countdownLabel = document.getElementById('countdown-label');
                 const isLastQuestion = this.currentQuestionIndex >= this.questionsQueue.length - 1;
                 countdownLabel.innerText = isLastQuestion ? 'けっかはっぴょうまで' : 'つぎのもんだいまで';
 
-                // CHANGED: 5 seconds countdown
                 let count = 5;
                 this.els.countdown.innerText = count;
 
-                const interval = setInterval(() => {
+                this.explanationInterval = setInterval(() => {
+                    if (this.isPaused) return;
+
                     count--;
                     this.els.countdown.innerText = count;
                     if (count <= 0) {
-                        clearInterval(interval);
+                        clearInterval(this.explanationInterval);
                         this.els.modal.classList.remove('active');
                         
-                        // Store answered question for bonus game
                         this.answeredQuestions.push(this.currentQuestion);
-                        
                         this.currentQuestionIndex++;
                         this.nextQuestion();
 
-                        // Restart timer
                         this.startTime = Date.now() - (this.elapsedTime * 1000);
                         this.timerInterval = setInterval(() => {
                             this.elapsedTime = Math.floor((Date.now() - this.startTime) / 1000);
                         }, 100);
                     }
                 }, 1000);
+            }
+
+            togglePause() {
+                this.isPaused = !this.isPaused;
+                const btn = document.getElementById('pause-btn');
+                if (btn) {
+                    btn.innerText = this.isPaused ? '再開する' : '一時停止';
+                    btn.classList.toggle('paused', this.isPaused);
+                }
             }
 
             /* --- Bonus Game Logic --- */
@@ -2513,7 +2821,15 @@
             async updateRankingDisplay() {
                 this.els.rankingBody.innerHTML = '<tr><td colspan="4">よみこみちゅう...</td></tr>';
                 this.els.rankDisplay.innerText = 'よみこみちゅう...';
-                const rankings = await this.loadRankings();
+                
+                let rankings = [];
+                try {
+                    rankings = await this.loadRankings();
+                } catch (e) {
+                    console.error("Rankings load failed", e);
+                }
+
+                if (!rankings) rankings = [];
 
                 let totalCount = rankings.length;
                 let myRank = "ー";
@@ -2536,11 +2852,14 @@
                             where("subject", "==", this.currentSubject),
                             where("level", "==", this.currentLevel)
                         );
-                        const snapTotal = await getCountFromServer(qCount);
-                        totalCount = snapTotal.data().count;
+                        try {
+                            const snapTotal = await getCountFromServer(qCount);
+                            totalCount = snapTotal.data().count;
+                        } catch (e) {
+                            console.error("Total count fetch failed", e);
+                        }
 
                         // もし10位以内に入っていない（または確定できない）かつ、全人数が10人以上なら
-                        // サーバー側で詳細な順位を計算する（これにはインデックスが必要）
                         if (myRank === "ー" && totalCount > 10) {
                             try {
                                 const qBetter = query(
@@ -2552,13 +2871,12 @@
                                 const snapBetter = await getCountFromServer(qBetter);
                                 myRank = snapBetter.data().count + 1;
                             } catch (e) {
-                                console.warn("詳細順位の取得に失敗しました（インデックス未作成の可能性があります）", e);
-                                // 10位以下であることは確かなので「10位〜」のような表記にするか「ー」のままにする
+                                console.warn("詳細順位の取得に失敗しました", e);
                                 myRank = "11位以下";
                             }
                         }
                     } catch (e) {
-                        console.error("Firestore人数取得エラー", e);
+                        console.error("Firestore error in updateRankingDisplay", e);
                     }
                 }
 
@@ -2626,7 +2944,7 @@
                         await addDoc(collection(this.db, "rankings"), scoreData);
                     } catch (e) {
                         console.error("Firestore save failed", e);
-                        alert("サーバーへの保存に失敗しました。");
+                        await ModalUtil.alert("サーバーへの保存に失敗しました。");
                         return;
                     }
                 } else {
@@ -2637,7 +2955,7 @@
 
                 this.els.nameRegArea.style.display = 'none';
                 await this.updateRankingDisplay();
-                alert('ランキングに登録しました！');
+                await ModalUtil.alert('ランキングに登録しました！');
             }
 
             retry() {
@@ -2649,6 +2967,7 @@
             }
             
             /* --- Persistence Methods --- */
+            async
             async loadCloudData() {
                 if (!this.db) {
                     this.loadLocalData();
@@ -2663,9 +2982,8 @@
                     if (docSnap.exists()) {
                         const data = docSnap.data();
                         if (data && Array.isArray(data.questions)) {
-                            GAME_DATA.questions = data.questions;
+                            this.mergeHardcodedData(data.questions);
                             console.log("Loaded game data from Cloud");
-                            localStorage.setItem('typing_game_data_v1', JSON.stringify({ questions: GAME_DATA.questions }));
                         }
                         // Load password
                         if (data.adminPassword) {
@@ -2684,49 +3002,65 @@
                     this.adminPassword = "admin123";
                     this.loadLocalData();
                 }
+            } catch (e) {
+                    console.error("Failed to load cloud data", e);
+                    this.adminPassword = "admin123";
+                    this.loadLocalData();
+                }
             }
 
-            async saveCloudData() {
-                if (!this.db) {
-                    alert("データベースに接続されていません。");
-                    return;
-                }
-                if (!confirm("クラウドに保存しますか？\n（これは全プレイヤーに反映されます）")) return;
-
+            async saveCloudDataSilent() {
+                // Silent version for internal use (no dialogs)
+                if (!this.db) return false;
                 try {
-                    // Ensure password is set to fallback if not present
                     const pw = this.adminPassword || "admin123";
-                    
                     const { doc, setDoc } = await import("firebase/firestore");
                     await setDoc(doc(this.db, "game_data", "v1"), {
                         questions: GAME_DATA.questions,
                         adminPassword: pw,
                         updatedAt: Date.now()
                     });
-                    
-                    // Update local cache too
                     localStorage.setItem('typing_game_data_v1', JSON.stringify({ questions: GAME_DATA.questions }));
-                    
-                    alert("クラウドに保存しました！");
+                    return true;
                 } catch (e) {
                     console.error("Cloud save failed", e);
-                    alert("保存に失敗しました: " + e.message);
+                    return false;
                 }
             }
 
+            async saveCloudData() {
+                if (!this.db) {
+                    await ModalUtil.alert("データベースに接続されていません。");
+                    return;
+                }
+                const confirmed = await ModalUtil.confirm("クラウドに保存しますか？\n（これは全プレイヤーに反映されます）");
+                if (!confirmed) return;
+
+                const success = await this.saveCloudDataSilent();
+                if (success) {
+                    await ModalUtil.alert("クラウドに保存しました！");
+                } else {
+                    await ModalUtil.alert("保存に失敗しました。");
+                }
+            }
             loadLocalData() {
                 const json = localStorage.getItem('typing_game_data_v1');
                 if (json) {
                     try {
                         const savedData = JSON.parse(json);
                         if (savedData && Array.isArray(savedData.questions)) {
-                            GAME_DATA.questions = savedData.questions;
+                            this.mergeHardcodedData(savedData.questions);
+                            // Password
+                            const adminPw = localStorage.getItem('typing_game_admin_pw');
+                            if (adminPw) this.adminPassword = adminPw;
                             console.log("Loaded custom data from LocalStorage (Cache)");
+                            return;
                         }
                     } catch (e) {
                         console.error("Failed to load local data", e);
                     }
                 }
+                console.log("No valid local data found, using default");
             }
 
             saveLocalData() {
@@ -2741,19 +3075,21 @@
                 }
             }
 
-            resetData() {
-                if (!confirm("初期データに戻しますか？\n（編集した内容はすべて消えます）")) return;
+            async resetData() {
+                const confirmed = await ModalUtil.confirm("初期データに戻しますか？\n（編集した内容はすべて消えます）");
+                if (!confirmed) return;
                 localStorage.removeItem('typing_game_data_v1');
-                alert("初期化しました。ページをリロードします。");
+                await ModalUtil.alert("初期化しました。ページをリロードします。");
                 location.reload();
             }
 
             /* --- Admin Mode Methods --- */
-            toAdmin() {
+            async toAdmin() {
                 const currentPw = this.adminPassword || "admin123";
-                const password = prompt("管理者パスワードを入力してください");
+                const password = await ModalUtil.prompt("管理者パスワードを入力してください", { inputType: 'password' });
+                if (password === null) return;
                 if (password !== currentPw) {
-                    alert("パスワードが違います。");
+                    await ModalUtil.alert("パスワードが違います。");
                     return;
                 }
                 this.switchScreen('admin');
@@ -2764,32 +3100,34 @@
             async changeAdminPassword() {
                 const currentPw = this.adminPassword || "admin123";
                 
-                const inputOld = prompt("現在のパスワードを入力してください:");
+                const inputOld = await ModalUtil.prompt("現在のパスワードを入力してください:", { inputType: 'password' });
                 if (inputOld === null) return;
                 if (inputOld !== currentPw) {
-                    alert("現在のパスワードが違います。");
+                    await ModalUtil.alert("現在のパスワードが違います。");
                     return;
                 }
 
-                const inputNew = prompt("新しいパスワードを入力してください:");
+                const inputNew = await ModalUtil.prompt("新しいパスワードを入力してください:", { inputType: 'password' });
                 if (inputNew === null || inputNew.trim() === "") {
-                    alert("パスワードは空にできません。");
+                    await ModalUtil.alert("パスワードは空にできません。");
                     return;
                 }
 
-                const inputConfirm = prompt("新しいパスワード（確認）を入力してください:");
+                const inputConfirm = await ModalUtil.prompt("新しいパスワード（確認）を入力してください:", { inputType: 'password' });
                 if (inputNew !== inputConfirm) {
-                    alert("新しいパスワードが一致しません。");
+                    await ModalUtil.alert("新しいパスワードが一致しません。");
                     return;
                 }
 
-                if(!confirm("パスワードを変更してクラウドに保存しますか？\n（次回から新しいパスワードが必要になります）")) return;
+                const confirmed = await ModalUtil.confirm("パスワードを変更してクラウドに保存しますか？\n（次回から新しいパスワードが必要になります）");
+                if (!confirmed) return;
 
                 // Update local state
                 this.adminPassword = inputNew;
                 
                 // Save to cloud immediately
-                await this.saveCloudData();
+                await this.saveCloudDataSilent();
+                await ModalUtil.alert("パスワードを変更しました！");
             }
 
             renderAdminSubjectSelect() {
