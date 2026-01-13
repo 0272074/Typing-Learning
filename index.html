@@ -1699,8 +1699,9 @@
 
             async initFirebase() {
                 try {
-                    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js");
-                    const { getFirestore } = await import("https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js");
+                    // Start of FIX: Use bare modules to match importmap
+                    const { initializeApp } = await import("firebase/app");
+                    const { getFirestore } = await import("firebase/firestore");
                     
                     this.app = initializeApp(firebaseConfig);
                     this.db = getFirestore(this.app);
@@ -1725,7 +1726,8 @@
                 this.els.subjectGrid.innerHTML = '';
                 Object.entries(GAME_DATA.subjects).forEach(([key, subject]) => {
                     const btn = document.createElement('div');
-                    btn.className = 'subject-card';
+                    // Start of FIX: Use correct class name
+                    btn.className = 'subject-btn';
                     btn.style.borderColor = subject.color;
                     btn.style.color = subject.color; // text color also
                     btn.innerHTML = `
@@ -1793,20 +1795,14 @@
             }
 
             updateGauge() {
-                // Max time for full bar? E.g. 60 sec/question avg or total 300 sec?
-                // Let's make it visualized simply: Time elapsed
-                // Or "Life gauge" if we had life.
-                // Or "Progress" in total questions.
-                
-                // Let's use it as TIME gauge (decreasing?) or increasing?
-                // Visual indicates "Time" label.
-                // Let's say 10 questions, target 100 seconds (10s each).
-                // Or just show total seconds.
-                
-                const maxTime = 300; // 5 mins max display
-                const percent = Math.min(100, (this.elapsedTime / maxTime) * 100);
-                this.els.gaugeBar.style.width = `${percent}%`;
-                this.els.timeText.innerText = `${this.elapsedTime}秒`;
+                // Start of FIX: Revert to question count
+                const total = this.questionsQueue.length;
+                const current = this.currentQuestionIndex + 1;
+                // Progress bar shows question progress, not time
+                const percent = (this.currentQuestionIndex / total) * 100; // e.g. 0% at Q1 start, 90% at Q10 start? 
+                // Alternatively (current / total) * 100 which would be 10%...100%
+                this.els.gaugeBar.style.width = `${(current / total) * 100}%`;
+                this.els.timeText.innerText = `${current} / ${total} 問`;
             }
 
             nextQuestion() {
