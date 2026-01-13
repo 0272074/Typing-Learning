@@ -2967,7 +2967,6 @@
             }
             
             /* --- Persistence Methods --- */
-            async
             async loadCloudData() {
                 if (!this.db) {
                     this.loadLocalData();
@@ -2998,11 +2997,6 @@
                         this.loadLocalData();
                     }
                 } catch (e) {
-                    console.error("Failed to load cloud data", e);
-                    this.adminPassword = "admin123";
-                    this.loadLocalData();
-                }
-            } catch (e) {
                     console.error("Failed to load cloud data", e);
                     this.adminPassword = "admin123";
                     this.loadLocalData();
