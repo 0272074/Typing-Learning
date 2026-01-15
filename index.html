@@ -4450,6 +4450,9 @@
                     return;
                 }
                 
+                console.log("Admin Check - Your UID:", this.user.uid);
+                console.log("Allowed Admins:", this.adminUids);
+
                 if (!this.adminUids.includes(this.user.uid)) {
                     console.warn("Unauthorized Admin Access attempt:", this.user.uid);
                     await ModalUtil.alert(`管理者権限がありません。\nあなたのUID: ${this.user.uid}\nこのIDを管理者に伝えてください。`);
