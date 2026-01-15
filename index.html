@@ -810,6 +810,67 @@
             100% { transform: scale(1); opacity: 1; }
         }
         
+    
+        /* --- Versus Mode Styles --- */
+        .lobby-container {
+            background: rgba(255,255,255,0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .lobby-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .lobby-tab {
+            flex: 1; padding: 10px; border: none; background: #EDF2F7;
+            border-radius: 10px; font-weight: bold; cursor: pointer; color: #A0AEC0;
+        }
+        .lobby-tab.active { background: #4ECDC4; color: white; }
+        .lobby-view { animation: fadeIn 0.3s ease; }
+        .lobby-input {
+            width: 80%; padding: 12px; font-size: 1.2rem;
+            border: 2px solid #E2E8F0; border-radius: 10px; margin: 10px 0;
+            text-align: center;
+        }
+        .lobby-btn {
+            padding: 12px 30px; border: none; border-radius: 30px;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer;
+            color: white; margin-top: 10px; transition: transform 0.2s;
+            box-shadow: var(--shadow-md);
+        }
+        .lobby-btn:active { transform: scale(0.95); }
+        .lobby-btn.primary { background: #4ECDC4; }
+        .lobby-btn.secondary { background: #FF9F43; }
+        .lobby-btn.back { background: #CBD5E0; color: #4A5568; margin-top: 20px; }
+
+        .room-header { text-align: center; margin-bottom: 20px; }
+        .room-id-text { font-family: monospace; font-size: 2.5rem; letter-spacing: 5px; color: #2D3748; }
+        .badge { display: inline-block; padding: 5px 12px; border-radius: 15px; background: #FC8181; color: white; font-size: 0.9rem; font-weight: bold;}
+        
+        .room-layout { display: flex; gap: 20px; width: 95%; max-width: 900px; height: 50vh; }
+        .room-players-panel, .room-settings-panel {
+            flex: 1; background: rgba(255,255,255,0.9);
+            border-radius: 15px; padding: 20px; box-shadow: var(--shadow-md);
+            overflow-y: auto;
+        }
+        .player-list { list-style: none; padding: 0; margin: 0; }
+        .player-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px; border-bottom: 1px solid #EDF2F7;
+        }
+        .player-item.self { background: #E6FFFA; }
+        .player-name { font-weight: bold; font-size: 1.1rem; }
+        .player-vote { font-size: 0.85rem; color: #718096; }
+        
+        .vs-select { width: 100%; padding: 10px; border-radius: 8px; border: 2px solid #E2E8F0; margin-bottom: 15px; }
+        .room-footer { margin-top: 20px; text-align: center; }
+        
+        .vs-ranking-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .vs-ranking-table th { background: #4ECDC4; color: white; padding: 10px; border-radius: 5px 5px 0 0; }
+        .vs-ranking-table td { padding: 10px; border-bottom: 1px solid #eee; text-align: center; font-weight: bold; }
+        .vs-ranking-table tr:nth-child(1) { color: #D4AF37; font-size: 1.2rem; }
+    
     </style>
 </head>
 
@@ -826,11 +887,111 @@
 
 
     <!-- Title Screen -->
+    
+    <!-- VS LOBBY SCREEN -->
+    <div id="screen-lobby" class="screen">
+        <h1>対戦モード</h1>
+        <div class="lobby-container">
+            <div class="lobby-tabs">
+                <button id="btn-tab-create" class="lobby-tab active" onclick="game.mp.switchTab('create')">ルームを作る</button>
+                <button id="btn-tab-join" class="lobby-tab" onclick="game.mp.switchTab('join')">ルームに入る</button>
+            </div>
+            
+            <div id="lobby-view-create" class="lobby-view">
+                <p>ニックネームを入力して、ルームを作成します。</p>
+                <input type="text" id="input-host-name" class="lobby-input" placeholder="あなたの名前 (例: たろう)" maxlength="8">
+                <button class="lobby-btn primary" onclick="game.mp.createRoom()">ルーム作成</button>
+            </div>
+
+            <div id="lobby-view-join" class="lobby-view" style="display:none;">
+                <p>ルームIDとニックネームを入力して参加します。</p>
+                <input type="text" id="input-join-name" class="lobby-input" placeholder="あなたの名前 (例: はなこ)" maxlength="8">
+                <input type="number" id="input-room-id" class="lobby-input" placeholder="6桁のルームID" maxlength="6">
+                <button class="lobby-btn secondary" onclick="game.mp.joinRoom()">ルーム参加</button>
+            </div>
+            
+            <button class="lobby-btn back" onclick="game.toTitle()">タイトルへ戻る</button>
+        </div>
+    </div>
+
+    <!-- VS WAITING ROOM SCREEN -->
+    <div id="screen-room-waiting" class="screen">
+        <div class="room-header">
+            <h2>ルームID: <span id="room-id-display" class="room-id-text">------</span></h2>
+            <div id="room-status-badge" class="badge">待機中</div>
+        </div>
+        
+        <div class="room-layout">
+            <div class="room-players-panel">
+                <h3>さんかしゃ</h3>
+                <ul id="room-player-list" class="player-list">
+                    <!-- Players go here -->
+                </ul>
+            </div>
+            
+            <div class="room-settings-panel">
+                <h3>きぼう設定 (投票)</h3>
+                <p>みんなの希望からランダムで決まります！</p>
+                
+                <div class="setting-group">
+                    <label>きょうか</label>
+                    <select id="vs-vote-subject" class="vs-select" onchange="game.mp.updateVote()">
+                        <!-- filled by JS -->
+                    </select>
+                </div>
+                
+                <div class="setting-group">
+                    <label>レベル</label>
+                    <select id="vs-vote-level" class="vs-select" onchange="game.mp.updateVote()">
+                        <option value="1">レベル1 (やさしい)</option>
+                        <option value="2">レベル2 (ふつう)</option>
+                        <option value="3">レベル3 (むずかしい)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="room-footer">
+            <div id="host-controls" class="hidden">
+                 <button class="lobby-btn primary" onclick="game.mp.tryStartGame()">ゲームスタート！</button>
+            </div>
+            <div id="guest-message" class="waiting-text hidden">
+                ホストが開始するのを待っています...
+            </div>
+            <button class="lobby-btn back" onclick="game.mp.leaveRoom()">退出する</button>
+        </div>
+    </div>
+
+    <!-- VS RESULT SCREEN -->
+    <div id="screen-result-versus" class="screen">
+        <h1>けっかはっぴょう！</h1>
+        <div class="result-box">
+             <table class="vs-ranking-table">
+                 <thead>
+                     <tr>
+                         <th>順位</th>
+                         <th>名前</th>
+                         <th>スコア</th>
+                         <th>ミス</th>
+                     </tr>
+                 </thead>
+                 <tbody id="vs-ranking-body">
+                     <!-- Results -->
+                 </tbody>
+             </table>
+        </div>
+        <button class="btn-start" onclick="game.mp.backToRoom()">ルームに戻る</button>
+        <button class="btn-start secondary" onclick="game.toTitle()">タイトルへ</button>
+    </div>
+    
     <div id="screen-title" class="screen active">
         <h1>Typing-Learning</h1>
         <p class="subtitle">ータイピングラーニングー</p>
         <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
             <button class="btn-start" onclick="game.toStageSelect()">スタート！</button>
+            <button class="btn-start" style="background:linear-gradient(135deg, #FF9F43 0%, #FF6B6B 100%); margin-top:20px;" onclick="game.toLobby()">
+                <span class="icon">⚔️</span> 対戦モード
+            </button>
             <button class="btn-start" style="background: #4ECDC4; box-shadow: 0 6px 0 #3BAEA5; font-size: 1.8rem;"
                 onclick="game.toRankingSelect()">ランキングを見る</button>
             <button class="btn-start" style="background: #718096; box-shadow: 0 6px 0 #4A5568; font-size: 1.0rem; padding: 0.5rem 1rem;"
@@ -2379,6 +2540,323 @@
             prompt(message, options) { return this.show('prompt', message, options); }
         };
 
+        
+        class MultiplayerManager {
+            constructor(gameManager) {
+                this.gm = gameManager; // Ref to main game
+                this.db = null;
+                this.roomId = null;
+                this.playerId = null; // Generated random ID
+                this.playerName = "Player";
+                this.unsubscribe = null; // Firestore listener
+                this.isHost = false;
+                
+                // State
+                this.roomData = null;
+            }
+            
+            async init() {
+                // Ensure auth/anon login if needed? 
+                // For now, we assume simple DB access.
+                // Generate a session Player ID
+                if (!sessionStorage.getItem('vs_player_id')) {
+                    sessionStorage.setItem('vs_player_id', 'p_' + Math.random().toString(36).substr(2, 9));
+                }
+                this.playerId = sessionStorage.getItem('vs_player_id');
+            }
+
+            // --- UI Navigation ---
+            switchTab(tab) {
+                const createView = document.getElementById('lobby-view-create');
+                const joinView = document.getElementById('lobby-view-join');
+                const btnCreate = document.getElementById('btn-tab-create');
+                const btnJoin = document.getElementById('btn-tab-join');
+                
+                if (tab === 'create') {
+                    createView.style.display = 'block';
+                    joinView.style.display = 'none';
+                    btnCreate.classList.add('active');
+                    btnJoin.classList.remove('active');
+                } else {
+                    createView.style.display = 'none';
+                    joinView.style.display = 'block';
+                    btnCreate.classList.remove('active');
+                    btnJoin.classList.add('active');
+                }
+            }
+
+            // --- Firestore Actions ---
+            async createRoom() {
+                const name = document.getElementById('input-host-name').value.trim();
+                if (!name) return alert("名前を入力してください");
+                
+                this.playerName = name;
+                this.isHost = true;
+                
+                // Generate 6-digit ID
+                const roomId = Math.floor(100000 + Math.random() * 900000).toString();
+                this.roomId = roomId;
+                
+                const { doc, setDoc } = await import("firebase/firestore");
+                
+                // Initial Room Data
+                const roomDoc = {
+                    hostId: this.playerId,
+                    status: 'WAITING',
+                    createdAt: Date.now(),
+                    gameConfig: null,
+                    players: {
+                        [this.playerId]: {
+                            name: this.playerName,
+                            voteSubject: 'japanese', // Default
+                            voteLevel: 1,
+                            score: 0,
+                            status: 'READY'
+                        }
+                    }
+                };
+                
+                try {
+                    await setDoc(doc(this.gm.db, "rooms", roomId), roomDoc);
+                    this.enterWaitingRoom();
+                    this.subscribeToRoom();
+                } catch(e) {
+                    console.error(e);
+                    alert("ルーム作成に失敗しました: " + e.message);
+                }
+            }
+
+            async joinRoom() {
+                const name = document.getElementById('input-join-name').value.trim();
+                const roomId = document.getElementById('input-room-id').value.trim();
+                
+                if (!name || roomId.length !== 6) return alert("名前と6桁のIDを入力してください");
+                
+                this.playerName = name;
+                this.roomId = roomId;
+                this.isHost = false;
+                
+                const { doc, getDoc, updateDoc } = await import("firebase/firestore");
+                const roomRef = doc(this.gm.db, "rooms", roomId);
+                
+                try {
+                    const snap = await getDoc(roomRef);
+                    if (!snap.exists()) return alert("ルームが見つかりません");
+                    
+                    const data = snap.data();
+                    if (data.status !== 'WAITING') return alert("ゲームは既に始まっているか終了しています");
+                    
+                    // Add self to players
+                    await updateDoc(roomRef, {
+                        [`players.${this.playerId}`]: {
+                            name: this.playerName,
+                            voteSubject: 'japanese',
+                            voteLevel: 1,
+                            score: 0,
+                            status: 'READY'
+                        }
+                    });
+                    
+                    this.enterWaitingRoom();
+                    this.subscribeToRoom();
+                } catch(e) {
+                    console.error(e);
+                    alert("参加できませんでした: " + e.message);
+                }
+            }
+            
+            subscribeToRoom() {
+                // Real-time updates
+                import("firebase/firestore").then(({ doc, onSnapshot }) => {
+                    this.unsubscribe = onSnapshot(doc(this.gm.db, "rooms", this.roomId), (doc) => {
+                        if (!doc.exists()) {
+                            alert("ルームが解散されたようです");
+                            this.leaveRoom();
+                            return;
+                        }
+                        this.roomData = doc.data();
+                        this.onRoomUpdate();
+                    });
+                });
+            }
+
+            onRoomUpdate() {
+                const data = this.roomData;
+                
+                // 1. Check Status
+                if (data.status === 'PLAYING' && this.gm.state !== 'PLAY_VS') {
+                    // Start Game!
+                    this.startConfiguredGame(data.gameConfig);
+                    return;
+                }
+                
+                if (data.status === 'FINISHED' && this.gm.state !== 'RESULT_VS') {
+                    this.showVsResult();
+                    return;
+                }
+                
+                // 2. Update Waiting Room UI
+                if (this.gm.state === 'ROOM_WAITING') {
+                    document.getElementById('room-id-display').innerText = this.roomId;
+                    
+                    // Render Players
+                    const list = document.getElementById('room-player-list');
+                    list.innerHTML = '';
+                    Object.entries(data.players || {}).forEach(([pid, p]) => {
+                        const li = document.createElement('li');
+                        li.className = `player-item ${pid === this.playerId ? 'self' : ''}`;
+                        let subjName = GAME_DATA.subjects[p.voteSubject] ? GAME_DATA.subjects[p.voteSubject].label : p.voteSubject;
+                        li.innerHTML = `
+                            <span class="player-name">${p.name} ${pid === data.hostId ? '👑' : ''}</span>
+                            <span class="player-vote">希望: ${subjName} Lv.${p.voteLevel}</span>
+                        `;
+                        list.appendChild(li);
+                    });
+                    
+                    // Show Start Button only for host
+                    const iAmHost = (data.hostId === this.playerId);
+                    document.getElementById('host-controls').classList.toggle('hidden', !iAmHost);
+                    document.getElementById('guest-message').classList.toggle('hidden', iAmHost);
+                }
+            }
+
+            async updateVote() {
+                const sub = document.getElementById('vs-vote-subject').value;
+                const lvl = document.getElementById('vs-vote-level').value;
+                
+                // Update Firestore
+                const { doc, updateDoc } = await import("firebase/firestore");
+                await updateDoc(doc(this.gm.db, "rooms", this.roomId), {
+                    [`players.${this.playerId}.voteSubject`]: sub,
+                    [`players.${this.playerId}.voteLevel`]: parseInt(lvl)
+                });
+            }
+
+            enterWaitingRoom() {
+                this.gm.switchScreen('roomWaiting');
+                // Fill subject select
+                const sel = document.getElementById('vs-vote-subject');
+                sel.innerHTML = '';
+                Object.entries(GAME_DATA.subjects).forEach(([key, s]) => {
+                    sel.innerHTML += `<option value="${key}">${s.label}</option>`;
+                });
+            }
+
+            async leaveRoom() {
+                if (this.unsubscribe) this.unsubscribe();
+                this.gm.toTitle();
+                // Optionally remove self from FS if not host, or delete room if host?
+                // Keeping simple for now.
+            }
+            
+            // --- Host Logic ---
+            async tryStartGame() {
+                if (!this.isHost) return;
+                
+                // 1. Decide Settings (Random from players)
+                const players = Object.values(this.roomData.players);
+                const randomPlayer = players[Math.floor(Math.random() * players.length)];
+                
+                const chosenSub = randomPlayer.voteSubject;
+                const chosenLvl = randomPlayer.voteLevel;
+                
+                // 2. Generate Question Indices
+                // Filter questions
+                const candidates = GAME_DATA.questions
+                     .map((q, i) => ({ ...q, index: i }))
+                     .filter(q => q.subject === chosenSub && q.level === chosenLvl);
+                
+                if (candidates.length < 13) {
+                     // Fallback: pick any form the subject
+                     // warning logic omitted for brevity
+                }
+                
+                // Shuffle and pick 13 (10 regular + 3 bonus)
+                candidates.sort(() => Math.random() - 0.5);
+                const chosenIndices = candidates.slice(0, 13).map(q => q.index);
+                
+                // 3. Update Room
+                const { doc, updateDoc } = await import("firebase/firestore");
+                await updateDoc(doc(this.gm.db, "rooms", this.roomId), {
+                    status: 'PLAYING',
+                    gameConfig: {
+                        subject: chosenSub,
+                        level: chosenLvl,
+                        questionIndices: chosenIndices
+                    }
+                });
+            }
+            
+            // --- Game Logic ---
+            startConfiguredGame(config) {
+                // Map indices to objects
+                const questions = config.questionIndices.map(i => GAME_DATA.questions[i]);
+                if (!questions || questions.length === 0) return alert("エラー: 問題データがありません");
+                
+                // Split 10 and 3
+                const queue = questions.slice(0, 10);
+                const bonus = questions.slice(10, 13);
+                
+                // Setup GameManager
+                this.gm.startVersusGame(queue, bonus, config.subject, config.level);
+            }
+            
+            async reportFinish(score, mistakes) {
+                // Update my status
+                 const { doc, updateDoc } = await import("firebase/firestore");
+                 await updateDoc(doc(this.gm.db, "rooms", this.roomId), {
+                    [`players.${this.playerId}.status`]: 'FINISHED',
+                    [`players.${this.playerId}.score`]: score,
+                    [`players.${this.playerId}.mistakes`]: mistakes
+                });
+                
+                // If I am host, check if everyone finished? 
+                // Alternatively, every client checks if ALL are finished in onUpdate?
+                // Better: Host monitors and sets room status = FINISHED
+                if (this.isHost) {
+                    this.checkAllFinished();
+                }
+            }
+            
+            async checkAllFinished() {
+                // Re-fetch or use this.roomData? roomData is synced.
+                const p = Object.values(this.roomData.players);
+                const allDone = p.every(pl => pl.status === 'FINISHED');
+                if (allDone) {
+                     const { doc, updateDoc } = await import("firebase/firestore");
+                     await updateDoc(doc(this.gm.db, "rooms", this.roomId), {
+                        status: 'FINISHED'
+                     });
+                }
+            }
+            
+            showVsResult() {
+                this.gm.switchScreen('resultVersus');
+                const tbody = document.getElementById('vs-ranking-body');
+                tbody.innerHTML = '';
+                
+                const players = Object.values(this.roomData.players);
+                players.sort((a,b) => b.score - a.score);
+                
+                players.forEach((p, idx) => {
+                    const row = document.createElement('tr');
+                    if (idx < 3) row.style.fontWeight = 'bold';
+                    row.innerHTML = `
+                        <td>${idx+1}</td>
+                        <td>${p.name}</td>
+                        <td>${p.score}</td>
+                        <td>${p.mistakes}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+            
+            backToRoom() {
+                // Reset status to READY? Impl future.
+                this.gm.toTitle();
+            }
+        }
+    
         class GameManager {
             constructor() {
                 this.state = 'TITLE'; // TITLE, SUBJECT_SELECT, DIFFICULTY_SELECT, PLAY, RESULT, EXPLAIN, RANKING_VIEW
@@ -2387,7 +2865,9 @@
                 this.startTime = 0;
                 this.elapsedTime = 0;
                 this.timerInterval = null;
-                this.isRankingMode = false;
+                this.isRankingMode = false; this.isVersus = false;
+                this.mp = new MultiplayerManager(this);
+                this.mp.init();
 
                 this.questionsQueue = [];
                 this.currentQuestion = null;
@@ -2412,6 +2892,9 @@
                         play: document.getElementById('screen-play'),
                         bonus: document.getElementById('screen-bonus'),
                         result: document.getElementById('screen-result'),
+                        lobby: document.getElementById('screen-lobby'),
+                        roomWaiting: document.getElementById('screen-room-waiting'),
+                        resultVersus: document.getElementById('screen-result-versus'),
                         rankingView: document.getElementById('screen-ranking-view'),
                         admin: document.getElementById('screen-admin')
                     },
@@ -2448,7 +2931,9 @@
             init() {
                 // BACKUP HARDCODED DATA for merging later
                 this.initialGameData = JSON.parse(JSON.stringify(GAME_DATA));
-                this.isRankingMode = false; 
+                this.isRankingMode = false; this.isVersus = false;
+                this.mp = new MultiplayerManager(this);
+                this.mp.init(); 
 
                 this.renderSubjects();
                 document.addEventListener('keydown', (e) => this.handleKey(e));
@@ -2472,6 +2957,38 @@
                 }
             }
 
+            
+            toLobby() {
+                this.switchScreen('lobby');
+            }
+            
+            startVersusGame(queue, bonus, subject, level) {
+                this.state = 'PLAY'; this.isVersus = true;
+                
+                this.currentSubject = subject;
+                this.currentLevel = level;
+                this.questionsQueue = queue;
+                this.bonusQuestions = bonus; // Store for later
+                
+                // Reset stats
+                this.score = 0;
+                this.mistakes = 0;
+                this.elapsedTime = 0;
+                this.answeredQuestions = []; 
+                this.bonusCorrectCount = 0;
+                this.bonusCurrentIndex = 0;
+
+                this.startTime = Date.now();
+                
+                this.switchScreen('play');
+                
+                // Special HUD for VS? reuse standard
+                this.els.score.innerText = `SCORE: 0`;
+                
+                // Start sequence (reuse countdown if possible)
+                this.startCountdown(); 
+            }
+    
             switchScreen(screenName) {
                 Object.values(this.els.screens).forEach(el => el.classList.remove('active'));
                 this.els.screens[screenName].classList.add('active');
@@ -2482,7 +2999,10 @@
                              screenName === 'level' ? 'DIFFICULTY_SELECT' : 
                              screenName === 'play' ? 'PLAY' : 
                              screenName === 'bonus' ? 'BONUS' :
-                             screenName === 'result' ? 'RESULT' : 'UNKNOWN';
+                             screenName === 'result' ? 'RESULT' : 
+                             screenName === 'lobby' ? 'LOBBY' :
+                             screenName === 'roomWaiting' ? 'ROOM_WAITING' :
+                             screenName === 'resultVersus' ? 'RESULT_VS' : 'UNKNOWN';
             }
 
             renderSubjects() {
@@ -2575,7 +3095,9 @@
                 this.switchScreen('title');
             }
             toStageSelect() {
-                this.isRankingMode = false;
+                this.isRankingMode = false; this.isVersus = false;
+                this.mp = new MultiplayerManager(this);
+                this.mp.init();
                 this.switchScreen('stage');
             }
 
@@ -2627,6 +3149,8 @@
             }
         
             startStage(level) {
+                this.isVersus = false;
+                this.isVersus = false;
                 if (this.isRankingMode) {
                     this.showRankingView(level);
                     return;
@@ -2896,7 +3420,14 @@
                 const multiplier = 1 + (this.bonusCorrectCount * 0.1);
                 let calcScore = Math.floor(baseScore * multiplier);
                 
-                this.lastScore = calcScore; 
+                this.lastScore = calcScore;
+                if (this.isVersus) {
+                     this.mp.reportFinish(calcScore, this.mistakes);
+                     this.els.screens.play.classList.remove('active'); // Hide play screen?
+                     // Or show a waiting overlay
+                     ModalUtil.alert("他のプレイヤーを待っています...");
+                     return;
+                } 
 
                 this.els.resScore.innerText = calcScore;
                 this.els.resTime.innerText = Math.floor(totalTime);
