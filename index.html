@@ -1229,11 +1229,12 @@
                     style="font-size:1.2rem; padding:0.5rem 1.5rem; margin-left:10px; vertical-align:middle;"
                     onclick="game.registerScore()">登録！</button>
                 <button id="btn-use-account-name" class="btn-start hidden" style="font-size:0.9rem; padding:0.5rem 1rem; margin-left:10px; background:#63B3ED;" onclick="game.fillAccountName()">アカウント名を使用</button>
+                <span id="account-name-preview" style="font-size:0.9rem; color:#4A5568; margin-left:5px; font-weight:bold;"></span>
             </div>
 
             <!-- Ranking List -->
             <div id="ranking-list-container" style="width:100%;">
-                <h3 style="margin-bottom:0.5rem; color:#4A5568;">TOP 10 ランキング</h3>
+                <h3 style="margin-bottom:0.5rem; color:#4A5568;">TOP 3 ランキング</h3>
                 <table class="ranking-table">
                     <thead>
                         <tr>
@@ -3950,6 +3951,10 @@
                 const btnAccount = document.getElementById('btn-use-account-name');
                 if (btnAccount) {
                      btnAccount.classList.toggle('hidden', !this.user);
+                     const namePreview = document.getElementById('account-name-preview');
+                     if (namePreview) {
+                         namePreview.innerText = this.user ? `(登録名: ${this.user.displayName.substring(0, 15)})` : '';
+                     }
                 }
                 
                 if (!this.user) {
@@ -4058,7 +4063,7 @@
                 if (rankings.length === 0) {
                     this.els.rankingBody.innerHTML = '<tr><td colspan="4">まだ きろくが ありません</td></tr>';
                 }
-                rankings.sort((a, b) => b.score - a.score).slice(0, 10).forEach((entry, idx) => {
+                rankings.sort((a, b) => b.score - a.score).slice(0, 3).forEach((entry, idx) => {
                     const row = document.createElement('tr');
                     const dateStr = new Date(entry.date).toLocaleDateString();
                     
@@ -4089,7 +4094,7 @@
                 if (rankings.length === 0) {
                     this.els.rankingViewBody.innerHTML = '<tr><td colspan="4">まだ きろくが ありません</td></tr>';
                 }
-                rankings.sort((a, b) => b.score - a.score).slice(0, 10).forEach((entry, idx) => {
+                rankings.sort((a, b) => b.score - a.score).slice(0, 3).forEach((entry, idx) => {
                     const row = document.createElement('tr');
                     const dateStr = new Date(entry.date).toLocaleDateString();
                     
