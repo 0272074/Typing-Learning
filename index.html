@@ -1272,9 +1272,10 @@
                     <table class="admin-table">
                         <thead>
                             <tr>
-                                <th width="25%">日時</th>
-                                <th width="15%">タイプ</th>
-                                <th width="60%">詳細</th>
+                                <th width="15%">日時</th>
+                                <th width="10%">タイプ</th>
+                                <th width="20%">IP</th>
+                                <th width="55%">詳細 / User Agent</th>
                             </tr>
                         </thead>
                         <tbody id="admin-logs-body">
@@ -3847,8 +3848,30 @@
                 }
             }
 
+
+            // === Client Info Helper ===
+            async getClientInfo() {
+                const ua = navigator.userAgent || 'Unknown';
+                let ip = 'Unknown';
+                try {
+                    const res = await fetch('https://api.ipify.org?format=json', { timeout: 3000 });
+                    const data = await res.json();
+                    ip = data.ip || 'Unknown';
+                } catch(e) {
+                    console.warn('IP fetch failed', e);
+                }
+                return { ip, userAgent: ua };
+            }
+    
             async logAction(type, details) {
-                const logEntry = { type, details, timestamp: Date.now() };
+                const clientInfo = await this.getClientInfo();
+                const logEntry = { 
+                    type, 
+                    details, 
+                    timestamp: Date.now(),
+                    ip: clientInfo.ip,
+                    userAgent: clientInfo.userAgent
+                };
                 
                 // 1. Local Storage (Immediate Backup)
                 try {
@@ -3873,12 +3896,12 @@
             
             async renderAdminLogs() {
                 const tbody = document.getElementById('admin-logs-body');
-                tbody.innerHTML = '<tr><td colspan="3">読み込み中...</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4">読み込み中...</td></tr>';
                 
                 // Render Helper
                 const render = (logs, isCloud) => {
                     if (!logs || logs.length === 0) {
-                        if (!isCloud) tbody.innerHTML = '<tr><td colspan="3">ログはありません（ローカル）。</td></tr>';
+                        if (!isCloud) tbody.innerHTML = '<tr><td colspan="4">ログはありません（ローカル）。</td></tr>';
                         return;
                     }
                     tbody.innerHTML = '';
@@ -3886,10 +3909,21 @@
                         const tr = document.createElement('tr');
                         const date = new Date(data.timestamp).toLocaleString('ja-JP');
                         // No source badge to keep clean, just implicit
+                        const typeColors = {
+                            'access': { bg: '#E6FFFA', fg: '#319795' },
+                            'game_start': { bg: '#FEFCE8', fg: '#CA8A04' },
+                            'ranking_update': { bg: '#FFF5F5', fg: '#E53E3E' }
+                        };
+                        const tc = typeColors[data.type] || { bg: '#F7FAFC', fg: '#4A5568' };
+                        const shortUA = (data.userAgent || 'N/A').substring(0, 50) + '...';
                         tr.innerHTML = `
-                            <td>${date}</td>
-                            <td><span style="padding:4px 8px; border-radius:4px; font-size:0.8rem; background:${data.type==='access'?'#E6FFFA':'#FFF5F5'}; color:${data.type==='access'?'#319795':'#E53E3E'}; font-weight:bold;">${data.type}</span></td>
-                            <td>${data.details}</td>
+                            <td style="font-size:0.75rem;">${date}</td>
+                            <td><span style="padding:2px 6px; border-radius:4px; font-size:0.7rem; background:${tc.bg}; color:${tc.fg}; font-weight:bold;">${data.type}</span></td>
+                            <td style="font-size:0.8rem; font-family:monospace;">${data.ip || 'N/A'}</td>
+                            <td style="font-size:0.75rem;">
+                                <div>${data.details}</div>
+                                <div style="color:#A0AEC0; font-size:0.65rem; margin-top:2px; word-break:break-all;" title="${data.userAgent || ''}">${shortUA}</div>
+                            </td>
                         `;
                         tbody.appendChild(tr);
                     });
@@ -3902,7 +3936,7 @@
                 } catch(e) { console.error(e); }
 
                 if (!this.db) {
-                    tbody.insertAdjacentHTML('beforeend', '<tr><td colspan="3" style="color:#A0AEC0; font-size:0.9rem; text-align:center;">※クラウド未接続: ローカルログのみ表示</td></tr>');
+                    tbody.insertAdjacentHTML('beforeend', '<tr><td colspan="4" style="color:#A0AEC0; font-size:0.9rem; text-align:center;">※クラウド未接続: ローカルログのみ表示</td></tr>');
                     return;
                 }
                 
@@ -3927,7 +3961,7 @@
                     
                 } catch(e) {
                     console.error("Cloud log fetch error:", e);
-                    tbody.insertAdjacentHTML('beforeend', '<tr><td colspan="3" style="color:#E53E3E; text-align:center;">クラウドからの取得に失敗しました（タイムアウトまたはエラー）</td></tr>');
+                    tbody.insertAdjacentHTML('beforeend', '<tr><td colspan="4" style="color:#E53E3E; text-align:center;">クラウドからの取得に失敗しました（タイムアウトまたはエラー）</td></tr>');
                 }
             }
     
