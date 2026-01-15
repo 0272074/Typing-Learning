@@ -1228,6 +1228,7 @@
                 <button class="btn-start"
                     style="font-size:1.2rem; padding:0.5rem 1.5rem; margin-left:10px; vertical-align:middle;"
                     onclick="game.registerScore()">登録！</button>
+                <button id="btn-use-account-name" class="btn-start hidden" style="font-size:0.9rem; padding:0.5rem 1rem; margin-left:10px; background:#63B3ED;" onclick="game.fillAccountName()">アカウント名を使用</button>
             </div>
 
             <!-- Ranking List -->
@@ -3940,12 +3941,20 @@
                     this.els.playerName.value = '';
                 }
                 if (this.user) {
-                    this.els.playerName.value = this.user.displayName.substring(0, 10);
+                    this.els.playerName.value = this.user.displayName.substring(0, 15);
                 } else {
                     this.els.playerName.value = '';
                 }
                 this.els.nameRegArea.style.display = 'block';
-                this.els.playerName.value = '';
+                
+                const btnAccount = document.getElementById('btn-use-account-name');
+                if (btnAccount) {
+                     btnAccount.classList.toggle('hidden', !this.user);
+                }
+                
+                if (!this.user) {
+                     this.els.playerName.value = '';
+                }
 
                 this.updateRankingDisplay();
             }
@@ -4052,9 +4061,16 @@
                 rankings.sort((a, b) => b.score - a.score).slice(0, 10).forEach((entry, idx) => {
                     const row = document.createElement('tr');
                     const dateStr = new Date(entry.date).toLocaleDateString();
+                    
+                    let nameDisplay = entry.name;
+                    // Check for logged in user (Admin View)
+                    if (this.user && this.adminUids.includes(this.user.uid) && entry.uid) {
+                        nameDisplay += ' <span style="font-size:0.8rem; color:#3182CE;" title="Login User">🛡️</span>';
+                    }
+                    
                     row.innerHTML = `
                         <td>${idx + 1}</td>
-                        <td>${entry.name}</td>
+                        <td>${nameDisplay}</td>
                         <td>${entry.score}</td>
                         <td>${dateStr}</td>
                     `;
@@ -4076,9 +4092,16 @@
                 rankings.sort((a, b) => b.score - a.score).slice(0, 10).forEach((entry, idx) => {
                     const row = document.createElement('tr');
                     const dateStr = new Date(entry.date).toLocaleDateString();
+                    
+                    let nameDisplay = entry.name;
+                    // Check for logged in user (Admin View)
+                    if (this.user && this.adminUids.includes(this.user.uid) && entry.uid) {
+                        nameDisplay += ' <span style="font-size:0.8rem; color:#3182CE;" title="Login User">🛡️</span>';
+                    }
+                    
                     row.innerHTML = `
                         <td>${idx + 1}</td>
-                        <td>${entry.name}</td>
+                        <td>${nameDisplay}</td>
                         <td>${entry.score}</td>
                         <td>${dateStr}</td>
                     `;
