@@ -16,7 +16,8 @@
     {
       "imports": {
         "firebase/app": "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js",
-        "firebase/firestore": "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"
+        "firebase/firestore": "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js",
+        "firebase/auth": "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"
       }
     }
     </script>
@@ -51,6 +52,7 @@
         }
 
         /* --- Layout & Screens --- */
+        .hidden { display: none !important; }
         .screen {
             position: absolute;
             width: 100%;
@@ -922,6 +924,45 @@
         .ranking-card .rank-3 { color: #CD7F32; }
         .ranking-card .no-data { color: #A0AEC0; font-size: 0.8rem; text-align: center; padding: 1rem; }
     
+    
+        /* === Log Detail Modal === */
+        .log-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        .log-modal-box {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+        }
+        .log-detail-row {
+            display: flex;
+            border-bottom: 1px solid #EDF2F7;
+            padding: 8px 0;
+        }
+        .log-detail-label {
+            width: 140px;
+            font-weight: 600;
+            color: #4A5568;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .log-detail-value {
+            flex: 1;
+            color: #2D3748;
+            font-size: 0.9rem;
+            word-break: break-all;
+            font-family: monospace;
+        }
+    
     </style>
 </head>
 
@@ -1035,6 +1076,20 @@
         <button class="btn-start secondary" onclick="game.toTitle()">タイトルへ</button>
     </div>
     
+    
+    <!-- Login Section -->
+    <div id="auth-section" style="position:fixed; top:20px; right:20px; z-index:100; background:rgba(255,255,255,0.9); padding:10px 20px; border-radius:15px; box-shadow:var(--shadow-md); display:flex; align-items:center; gap:10px;">
+        <div id="auth-user-info" class="hidden" style="display:flex; align-items:center; gap:10px;">
+            <img id="auth-user-photo" src="" style="width:32px; height:32px; border-radius:50%; border:2px solid var(--primary-color);">
+            <span id="auth-user-name" style="font-weight:bold; font-size:0.9rem;">ユーザー名</span>
+            <button onclick="game.signOut()" style="font-size:0.7rem; padding:4px 8px; background:#CBD5E0; border-radius:5px; box-shadow: 0 2px 0 #A0AEC0;">ログアウト</button>
+        </div>
+        <div id="auth-login-buttons" style="display:flex; gap:5px;">
+            <button onclick="game.signIn('google')" style="padding:6px 12px; border-radius:8px; font-size:0.75rem; background:#4285F4; color:white; font-weight:bold; display:flex; align-items:center; gap:5px;"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width:14px;"> Google</button>
+            <button onclick="game.signIn('microsoft')" style="padding:6px 12px; border-radius:8px; font-size:0.75rem; background:#2F2F2F; color:white; font-weight:bold; display:flex; align-items:center; gap:5px;"><img src="https://www.microsoft.com/favicon.ico" style="width:14px; filter:brightness(0) invert(1);"> Microsoft</button>
+        </div>
+    </div>
+    
     <div id="screen-title" class="screen active">
         <h1>Typing-Learning</h1>
         <p class="subtitle">ータイピングラーニングー</p>
@@ -1047,6 +1102,7 @@
             </button>
             <button class="btn-start" style="background: #4ECDC4; box-shadow: 0 6px 0 #3BAEA5; font-size: 1.8rem;"
                 onclick="game.toRankingSelect()">ランキングを見る</button>
+            <button class="btn-start" style="font-size:1.5rem; padding:0.8rem 2rem; background:#667EEA; box-shadow: 0 6px 0 #5A67D8; margin-top:10px;" onclick="game.toStats()">📊 マイスコア分析</button>
             <button class="btn-start" style="background: #718096; box-shadow: 0 6px 0 #4A5568; font-size: 1.0rem; padding: 0.5rem 1rem;"
                 onclick="game.toAdmin()">管理者モード</button>
         </div>
@@ -1164,7 +1220,7 @@
             <!-- Name Registration Area -->
             <div id="name-reg-area" class="name-input-area">
                 <label class="input-label">なまえを アルファベット 2文字 で いれよう！</label>
-                <input type="text" id="player-name" maxlength="2" placeholder="AA"
+                <input type="text" id="player-name" maxlength="15" placeholder="AA"
                     oninput="this.value = this.value.toUpperCase().replace(/[^A-Z]/g,'')">
                 <button class="btn-start"
                     style="font-size:1.2rem; padding:0.5rem 1.5rem; margin-left:10px; vertical-align:middle;"
@@ -1213,6 +1269,51 @@
         </div>
     </div>
 
+    
+    <!-- My Stats Screen -->
+    <div id="screen-stats" class="screen">
+        <h1>📊 マイスコア分析</h1>
+        <div class="game-wrapper" style="width:95%; max-width:900px; height:80vh; overflow-y:auto; padding:2rem;">
+            <div id="stats-not-logged-in" class="hidden" style="text-align:center; padding:3rem;">
+                <p style="font-size:1.5rem; color:#718096;">ログインするとプレイデータの分析が見れるようになります！</p>
+            </div>
+            <div id="stats-content" class="hidden">
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px; margin-bottom:2rem;">
+                    <div class="ranking-card" style="margin:0;">
+                        <h3>⏱ 平均タイプ速度 (CPM)</h3>
+                        <div id="avg-speed-val" style="font-size:3rem; font-weight:900; color:var(--primary-color);">---</div>
+                        <p style="font-size:0.8rem; color:#A0AEC0;">※直近10ゲームの平均</p>
+                    </div>
+                    <div class="ranking-card" style="margin:0;">
+                        <h3>❌ 総ミス数</h3>
+                        <div id="total-miss-val" style="font-size:3rem; font-weight:900; color:var(--secondary-color);">---</div>
+                    </div>
+                </div>
+                
+                <div class="ranking-card">
+                    <h3>⚠️ 間違いやすいキー TOP 5</h3>
+                    <table class="ranking-table">
+                        <thead><tr><th>キー</th><th>ミスカウント</th></tr></thead>
+                        <tbody id="mistake-keys-body">
+                            <!-- Dynamic -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="ranking-card">
+                    <h3>いきおい（最近のスコア履歴）</h3>
+                    <div id="score-history-chart" style="height:150px; display:flex; align-items:flex-end; gap:10px; padding:20px 0; border-bottom:2px solid #EDF2F7;">
+                        <!-- Bars -->
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top:2rem; text-align:center;">
+                <button class="btn-start" style="font-size:1.2rem; padding:0.8rem 2rem; background:#718096; box-shadow: 0 6px 0 #4A5568;" onclick="game.toTitle()">メニューへ</button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Admin Screen -->
     
     <div id="screen-admin" class="screen">
@@ -2900,6 +3001,10 @@
                 this.state = 'TITLE'; // TITLE, SUBJECT_SELECT, DIFFICULTY_SELECT, PLAY, RESULT, EXPLAIN, RANKING_VIEW
                 this.score = 0;
                 this.mistakes = 0;
+                this.mistakeMap = {};
+                this.totalCharsInGame = 0;
+                this.mistakeMap = {};
+                this.totalCharsInGame = 0;
                 this.startTime = 0;
                 this.elapsedTime = 0;
                 this.timerInterval = null;
@@ -2920,7 +3025,15 @@
                 this.bonusCurrentIndex = 0;
                 this.bonusCorrectCount = 0;
                 this.answeredQuestions = [];
-                this.totalTypingScore = 0; // Temporary storage before bonus
+                this.totalTypingScore = 0;
+                this.totalCharsInGame = 0;
+                this.user = null;
+                this.mistakeMap = {}; // Current game mistakes
+                this.totalCharsInGame = 0;
+                this.totalCharsInGame = 0;
+                this.user = null;
+                this.mistakeMap = {}; // Current game mistakes
+                this.totalCharsInGame = 0; // Temporary storage before bonus
 
                 this.els = {
                     screens: {
@@ -2933,6 +3046,8 @@
                         lobby: document.getElementById('screen-lobby'),
                         roomWaiting: document.getElementById('screen-room-waiting'),
                         resultVersus: document.getElementById('screen-result-versus'),
+                        stats: document.getElementById('screen-stats'),
+                        stats: document.getElementById('screen-stats'),
                         rankingView: document.getElementById('screen-ranking-view'),
                         admin: document.getElementById('screen-admin')
                     },
@@ -2961,7 +3076,39 @@
                     playerName: document.getElementById('player-name'),
                     nameRegArea: document.getElementById('name-reg-area'),
                     rankingViewBody: document.getElementById('ranking-view-body'),
-                    rankingViewTitle: document.getElementById('ranking-view-title')
+                    rankingViewTitle: document.getElementById('ranking-view-title'),
+                    auth: {
+                        section: document.getElementById('auth-section'),
+                        userInfo: document.getElementById('auth-user-info'),
+                        userName: document.getElementById('auth-user-name'),
+                        userPhoto: document.getElementById('auth-user-photo'),
+                        loginBtns: document.getElementById('auth-login-buttons')
+                    },
+                    stats: {
+                        screen: document.getElementById('screen-stats'),
+                        content: document.getElementById('stats-content'),
+                        notLoggedIn: document.getElementById('stats-not-logged-in'),
+                        avgSpeed: document.getElementById('avg-speed-val'),
+                        totalMiss: document.getElementById('total-miss-val'),
+                        mistakeTbody: document.getElementById('mistake-keys-body'),
+                        historyChart: document.getElementById('score-history-chart')
+                    },
+                    auth: {
+                        section: document.getElementById('auth-section'),
+                        userInfo: document.getElementById('auth-user-info'),
+                        userName: document.getElementById('auth-user-name'),
+                        userPhoto: document.getElementById('auth-user-photo'),
+                        loginBtns: document.getElementById('auth-login-buttons')
+                    },
+                    stats: {
+                        screen: document.getElementById('screen-stats'),
+                        content: document.getElementById('stats-content'),
+                        notLoggedIn: document.getElementById('stats-not-logged-in'),
+                        avgSpeed: document.getElementById('avg-speed-val'),
+                        totalMiss: document.getElementById('total-miss-val'),
+                        mistakeTbody: document.getElementById('mistake-keys-body'),
+                        historyChart: document.getElementById('score-history-chart')
+                    }
                 };
 
                 this.init();
@@ -2983,12 +3130,28 @@
 
             async initFirebase() {
                 try {
-                    // Start of FIX: Use bare modules to match importmap
                     const { initializeApp } = await import("firebase/app");
                     const { getFirestore } = await import("firebase/firestore");
+                    const { getAuth, onAuthStateChanged, GoogleAuthProvider, OAuthProvider } = await import("firebase/auth");
                     
                     this.app = initializeApp(firebaseConfig);
                     this.db = getFirestore(this.app);
+                    this.auth = getAuth(this.app);
+                    
+                    // Auth state listener
+                    onAuthStateChanged(this.auth, (user) => {
+                        this.user = user;
+                        this.updateAuthUI();
+                    });
+
+                    // Providers
+                    this.providers = {
+                        google: new GoogleAuthProvider(),
+                        microsoft: new OAuthProvider("microsoft.com")
+                    };
+                    // Enable multi-tenant / work accounts for Microsoft if needed
+                    // this.providers.microsoft.setCustomParameters({ tenant: 'organizations' });
+
                 } catch (e) {
                     console.error("Firebase init failed (offline?)", e);
                     this.db = null;
@@ -2996,6 +3159,214 @@
             }
 
             
+            
+            /* --- Auth Methods --- */
+            async signIn(providerName) {
+                const { signInWithPopup } = await import("firebase/auth");
+                try {
+                    const provider = this.providers[providerName];
+                    if (providerName === 'microsoft') {
+                        provider.setCustomParameters({ prompt: 'select_account' });
+                    }
+                    await signInWithPopup(this.auth, provider);
+                    this.logAction('access', `User Logged In (${providerName})`);
+                } catch(e) {
+                    console.error("Login failed", e);
+                    await ModalUtil.alert("ログインに失敗しました: " + e.message);
+                }
+            }
+
+            async signOut() {
+                const { signOut } = await import("firebase/auth");
+                await signOut(this.auth);
+                this.logAction('access', 'User Logged Out');
+            }
+
+            updateAuthUI() {
+                if (this.user) {
+                    this.els.auth.userInfo.classList.remove('hidden');
+                    this.els.auth.loginBtns.classList.add('hidden');
+                    this.els.auth.userName.innerText = this.user.displayName || "No Name";
+                    this.els.auth.userPhoto.src = this.user.photoURL || "https://www.gravatar.com/avatar/?d=mp";
+                } else {
+                    this.els.auth.userInfo.classList.add('hidden');
+                    this.els.auth.loginBtns.classList.remove('hidden');
+                }
+            }
+
+            /* --- Analytics & Stats --- */
+            async toStats() {
+                this.switchScreen('stats');
+                if (!this.user) {
+                    this.els.stats.notLoggedIn.classList.remove('hidden');
+                    this.els.stats.content.classList.add('hidden');
+                    return;
+                }
+                this.els.stats.notLoggedIn.classList.add('hidden');
+                this.els.stats.content.classList.remove('hidden');
+                this.renderUserStats();
+            }
+
+            async renderUserStats() {
+                if (!this.db || !this.user) return;
+                try {
+                    const { collection, query, where, orderBy, limit, getDocs } = await import("firebase/firestore");
+                    const q = query(
+                        collection(this.db, "user_stats"),
+                        where("userId", "==", this.user.uid),
+                        orderBy("timestamp", "desc"),
+                        limit(20)
+                    );
+                    const snap = await getDocs(q);
+                    const records = [];
+                    snap.forEach(d => records.push(d.data()));
+
+                    if (records.length === 0) {
+                        this.els.stats.avgSpeed.innerText = "---";
+                        this.els.stats.totalMiss.innerText = "---";
+                        this.els.stats.mistakeTbody.innerHTML = '<tr><td colspan="2">データがまだありません</td></tr>';
+                        return;
+                    }
+
+                    // 1. Avg Speed (Last 10)
+                    const last10 = records.slice(0, 10);
+                    const avgCPM = Math.ceil(last10.reduce((sum, r) => sum + (r.speed_cpm || 0), 0) / last10.length);
+                    this.els.stats.avgSpeed.innerText = avgCPM;
+
+                    // 2. Total Miss
+                    const totalMiss = records.reduce((sum, r) => sum + (r.mistakes || 0), 0);
+                    this.els.stats.totalMiss.innerText = totalMiss;
+
+                    // 3. Mistake Keys (Global for user) - Summing from last 20 records
+                    const globalMistakes = {};
+                    records.forEach(r => {
+                        if (r.mistakeMap) {
+                            Object.entries(r.mistakeMap).forEach(([k, v]) => {
+                                globalMistakes[k] = (globalMistakes[k] || 0) + v;
+                            });
+                        }
+                    });
+                    const sortedMistakes = Object.entries(globalMistakes).sort((a,b) => b[1] - a[1]).slice(0, 5);
+                    this.els.stats.mistakeTbody.innerHTML = sortedMistakes.map(([k, v]) => `
+                        <tr><td>${k === ' ' ? 'スペース' : k.toUpperCase()}</td><td>${v}</td></tr>
+                    `).join('') || '<tr><td colspan="2">ミス記録なし</td></tr>';
+
+                    // 4. History Chart (Score)
+                    const histories = [...records].reverse();
+                    this.els.stats.historyChart.innerHTML = histories.map(r => `
+                        <div style="flex:1; background:var(--primary-color); height:${Math.min(r.score / 20, 100)}%; border-radius:3px; position:relative;" title="${r.score}pts">
+                        </div>
+                    `).join('');
+
+                } catch(e) {
+                    console.error("Stats fetch error", e);
+                }
+            }
+
+            
+            /* --- Auth Methods --- */
+            async signIn(providerName) {
+                const { signInWithPopup } = await import("firebase/auth");
+                try {
+                    const provider = this.providers[providerName];
+                    if (providerName === 'microsoft') {
+                        provider.setCustomParameters({ prompt: 'select_account' });
+                    }
+                    await signInWithPopup(this.auth, provider);
+                    this.logAction('access', `User Logged In (${providerName})`);
+                } catch(e) {
+                    console.error("Login failed", e);
+                    await ModalUtil.alert("ログインに失敗しました: " + e.message);
+                }
+            }
+
+            async signOut() {
+                const { signOut } = await import("firebase/auth");
+                await signOut(this.auth);
+                this.logAction('access', 'User Logged Out');
+            }
+
+            updateAuthUI() {
+                if (this.user) {
+                    this.els.auth.userInfo.classList.remove('hidden');
+                    this.els.auth.loginBtns.classList.add('hidden');
+                    this.els.auth.userName.innerText = this.user.displayName || "No Name";
+                    this.els.auth.userPhoto.src = this.user.photoURL || "https://www.gravatar.com/avatar/?d=mp";
+                } else {
+                    this.els.auth.userInfo.classList.add('hidden');
+                    this.els.auth.loginBtns.classList.remove('hidden');
+                }
+            }
+
+            /* --- Analytics & Stats --- */
+            async toStats() {
+                this.switchScreen('stats');
+                if (!this.user) {
+                    this.els.stats.notLoggedIn.classList.remove('hidden');
+                    this.els.stats.content.classList.add('hidden');
+                    return;
+                }
+                this.els.stats.notLoggedIn.classList.add('hidden');
+                this.els.stats.content.classList.remove('hidden');
+                this.renderUserStats();
+            }
+
+            async renderUserStats() {
+                if (!this.db || !this.user) return;
+                try {
+                    const { collection, query, where, orderBy, limit, getDocs } = await import("firebase/firestore");
+                    const q = query(
+                        collection(this.db, "user_stats"),
+                        where("userId", "==", this.user.uid),
+                        orderBy("timestamp", "desc"),
+                        limit(20)
+                    );
+                    const snap = await getDocs(q);
+                    const records = [];
+                    snap.forEach(d => records.push(d.data()));
+
+                    if (records.length === 0) {
+                        this.els.stats.avgSpeed.innerText = "---";
+                        this.els.stats.totalMiss.innerText = "---";
+                        this.els.stats.mistakeTbody.innerHTML = '<tr><td colspan="2">データがまだありません</td></tr>';
+                        return;
+                    }
+
+                    // 1. Avg Speed (Last 10)
+                    const last10 = records.slice(0, 10);
+                    const avgCPM = Math.ceil(last10.reduce((sum, r) => sum + (r.speed_cpm || 0), 0) / last10.length);
+                    this.els.stats.avgSpeed.innerText = avgCPM;
+
+                    // 2. Total Miss
+                    const totalMiss = records.reduce((sum, r) => sum + (r.mistakes || 0), 0);
+                    this.els.stats.totalMiss.innerText = totalMiss;
+
+                    // 3. Mistake Keys (Global for user) - Summing from last 20 records
+                    const globalMistakes = {};
+                    records.forEach(r => {
+                        if (r.mistakeMap) {
+                            Object.entries(r.mistakeMap).forEach(([k, v]) => {
+                                globalMistakes[k] = (globalMistakes[k] || 0) + v;
+                            });
+                        }
+                    });
+                    const sortedMistakes = Object.entries(globalMistakes).sort((a,b) => b[1] - a[1]).slice(0, 5);
+                    this.els.stats.mistakeTbody.innerHTML = sortedMistakes.map(([k, v]) => `
+                        <tr><td>${k === ' ' ? 'スペース' : k.toUpperCase()}</td><td>${v}</td></tr>
+                    `).join('') || '<tr><td colspan="2">ミス記録なし</td></tr>';
+
+                    // 4. History Chart (Score)
+                    const histories = [...records].reverse();
+                    this.els.stats.historyChart.innerHTML = histories.map(r => `
+                        <div style="flex:1; background:var(--primary-color); height:${Math.min(r.score / 20, 100)}%; border-radius:3px; position:relative;" title="${r.score}pts">
+                        </div>
+                    `).join('');
+
+                } catch(e) {
+                    console.error("Stats fetch error", e);
+                }
+            }
+
             toLobby() {
                 this.logAction('access', 'Versus Mode Lobby Accessed');
                 this.switchScreen('lobby');
@@ -3012,6 +3383,10 @@
                 // Reset stats
                 this.score = 0;
                 this.mistakes = 0;
+                this.mistakeMap = {};
+                this.totalCharsInGame = 0;
+                this.mistakeMap = {};
+                this.totalCharsInGame = 0;
                 this.elapsedTime = 0;
                 this.answeredQuestions = []; 
                 this.bonusCorrectCount = 0;
@@ -3041,7 +3416,7 @@
                              screenName === 'result' ? 'RESULT' : 
                              screenName === 'lobby' ? 'LOBBY' :
                              screenName === 'roomWaiting' ? 'ROOM_WAITING' :
-                             screenName === 'resultVersus' ? 'RESULT_VS' : 'UNKNOWN';
+                             screenName === 'resultVersus' ? 'RESULT_VS' : screenName === 'stats' ? 'STATS' : 'UNKNOWN';
             }
 
             renderSubjects() {
@@ -3270,6 +3645,10 @@
                 
                 this.score = 0;
                 this.mistakes = 0;
+                this.mistakeMap = {};
+                this.totalCharsInGame = 0;
+                this.mistakeMap = {};
+                this.totalCharsInGame = 0;
                 this.elapsedTime = 0;
                 this.startTime = Date.now();
                 
@@ -3295,6 +3674,8 @@
                 }
                 this.currentQuestion = this.questionsQueue[this.currentQuestionIndex];
                 this.typingEngine.setWord(this.currentQuestion);
+                this.totalCharsInGame += this.typingEngine.displayRomanji.length;
+                this.totalCharsInGame += this.typingEngine.displayRomanji.length;
                 this.updateHUD();
             }
 
@@ -3345,6 +3726,9 @@
                     }
                 } else {
                     this.mistakes++;
+                    // Track mistake key
+                    const expected = this.typingEngine.displayRomanji[this.typingEngine.inputBuffer.length] || 'unknown';
+                    this.mistakeMap[expected] = (this.mistakeMap[expected] || 0) + 1;
                     this.flashError();
                 }
             }
@@ -3525,8 +3909,37 @@
                 this.els.resScore.innerText = calcScore;
                 this.els.resTime.innerText = Math.floor(totalTime);
                 this.els.resMiss.innerText = this.mistakes;
+                // --- Save User Stats ---
+                if (this.user && this.db) {
+                    const cpm = Math.floor(this.totalCharsInGame / (totalTime / 60));
+                    const statData = {
+                        userId: this.user.uid,
+                        userName: this.user.displayName,
+                        score: calcScore,
+                        mistakes: this.mistakes,
+                        speed_cpm: cpm,
+                        mistakeMap: this.mistakeMap,
+                        subject: this.currentSubject,
+                        level: this.currentLevel,
+                        timestamp: Date.now()
+                    };
+                    import("firebase/firestore").then(({ collection, addDoc }) => {
+                        addDoc(collection(this.db, "user_stats"), statData);
+                    });
+                }
+    
 
                 // Reset name area
+                if (this.user) {
+                    this.els.playerName.value = this.user.displayName.substring(0, 10);
+                } else {
+                    this.els.playerName.value = '';
+                }
+                if (this.user) {
+                    this.els.playerName.value = this.user.displayName.substring(0, 10);
+                } else {
+                    this.els.playerName.value = '';
+                }
                 this.els.nameRegArea.style.display = 'block';
                 this.els.playerName.value = '';
 
@@ -3671,7 +4084,11 @@
 
             async registerScore() {
                 let name = this.els.playerName.value.trim().toUpperCase();
-                if (name.length !== 2) {
+                if (!this.user && name.length !== 2) {
+                    alert('名前をアルファベット2文字で入力してください。');
+                    return;
+                }
+                if (name.length < 1) {
                     alert('名前をアルファベット2文字で入力してください。');
                     return;
                 }
@@ -3681,7 +4098,8 @@
                     score: this.lastScore,
                     subject: this.currentSubject,
                     level: this.currentLevel,
-                    date: Date.now()
+                    date: Date.now(),
+                    uid: this.user ? this.user.uid : null
                 };
 
                 if (this.db) {
@@ -3849,18 +4267,38 @@
             }
 
 
-            // === Client Info Helper ===
+            // === Client Info Helper (Comprehensive) ===
             async getClientInfo() {
                 const ua = navigator.userAgent || 'Unknown';
                 let ip = 'Unknown';
                 try {
-                    const res = await fetch('https://api.ipify.org?format=json', { timeout: 3000 });
+                    const res = await fetch('https://api.ipify.org?format=json');
                     const data = await res.json();
                     ip = data.ip || 'Unknown';
                 } catch(e) {
                     console.warn('IP fetch failed', e);
                 }
-                return { ip, userAgent: ua };
+                
+                // Collect all available browser info
+                return { 
+                    ip,
+                    userAgent: ua,
+                    language: navigator.language || 'Unknown',
+                    languages: (navigator.languages || []).join(', ') || 'Unknown',
+                    platform: navigator.platform || 'Unknown',
+                    vendor: navigator.vendor || 'Unknown',
+                    cookieEnabled: navigator.cookieEnabled ? 'Yes' : 'No',
+                    onLine: navigator.onLine ? 'Online' : 'Offline',
+                    hardwareConcurrency: navigator.hardwareConcurrency || 'Unknown',
+                    deviceMemory: navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'Unknown',
+                    screenWidth: screen.width,
+                    screenHeight: screen.height,
+                    windowWidth: window.innerWidth,
+                    windowHeight: window.innerHeight,
+                    colorDepth: screen.colorDepth + '-bit',
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
+                    referrer: document.referrer || 'Direct'
+                };
             }
     
             async logAction(type, details) {
@@ -3869,8 +4307,7 @@
                     type, 
                     details, 
                     timestamp: Date.now(),
-                    ip: clientInfo.ip,
-                    userAgent: clientInfo.userAgent
+                    ...clientInfo
                 };
                 
                 // 1. Local Storage (Immediate Backup)
@@ -3894,6 +4331,43 @@
                 }
             }
             
+            
+            // === Show Log Detail Modal ===
+            showLogDetail(data) {
+                const modal = document.getElementById('log-detail-modal');
+                const content = document.getElementById('log-detail-content');
+                
+                const fields = [
+                    { label: '日時', value: new Date(data.timestamp).toLocaleString('ja-JP') },
+                    { label: 'タイプ', value: data.type },
+                    { label: 'アクション', value: data.details },
+                    { label: 'IPアドレス', value: data.ip || 'N/A' },
+                    { label: 'User Agent', value: data.userAgent || 'N/A' },
+                    { label: '言語', value: data.language || 'N/A' },
+                    { label: '対応言語一覧', value: data.languages || 'N/A' },
+                    { label: 'プラットフォーム', value: data.platform || 'N/A' },
+                    { label: 'ブラウザベンダー', value: data.vendor || 'N/A' },
+                    { label: 'Cookie', value: data.cookieEnabled || 'N/A' },
+                    { label: '接続状態', value: data.onLine || 'N/A' },
+                    { label: 'CPUコア数', value: data.hardwareConcurrency || 'N/A' },
+                    { label: 'メモリ', value: data.deviceMemory || 'N/A' },
+                    { label: '画面解像度', value: data.screenWidth && data.screenHeight ? `${data.screenWidth} x ${data.screenHeight}` : 'N/A' },
+                    { label: 'ウィンドウサイズ', value: data.windowWidth && data.windowHeight ? `${data.windowWidth} x ${data.windowHeight}` : 'N/A' },
+                    { label: '色深度', value: data.colorDepth || 'N/A' },
+                    { label: 'タイムゾーン', value: data.timezone || 'N/A' },
+                    { label: 'リファラー', value: data.referrer || 'N/A' }
+                ];
+                
+                content.innerHTML = fields.map(f => `
+                    <div class="log-detail-row">
+                        <div class="log-detail-label">${f.label}</div>
+                        <div class="log-detail-value">${f.value}</div>
+                    </div>
+                `).join('');
+                
+                modal.style.display = 'flex';
+            }
+
             async renderAdminLogs() {
                 const tbody = document.getElementById('admin-logs-body');
                 tbody.innerHTML = '<tr><td colspan="4">読み込み中...</td></tr>';
@@ -3907,6 +4381,9 @@
                     tbody.innerHTML = '';
                     logs.forEach((data) => {
                         const tr = document.createElement('tr');
+                        tr.style.cursor = 'pointer';
+                        tr.onclick = () => this.showLogDetail(data);
+                        tr.title = 'クリックで詳細表示';
                         const date = new Date(data.timestamp).toLocaleString('ja-JP');
                         // No source badge to keep clean, just implicit
                         const typeColors = {
@@ -4145,6 +4622,16 @@
             window.game.loadCloudData();
         });
     </script>
+
+    <!-- Log Detail Modal -->
+    <div id="log-detail-modal" class="log-modal-overlay" onclick="if(event.target===this) this.style.display='none';">
+        <div class="log-modal-box">
+            <h3 style="margin:0 0 1rem 0; color:#2D3748;">📋 アクセス詳細</h3>
+            <div id="log-detail-content" style="max-height:60vh; overflow-y:auto;"></div>
+            <button class="btn-admin" style="margin-top:1rem; background:#718096;" onclick="document.getElementById('log-detail-modal').style.display='none';">閉じる</button>
+        </div>
+    </div>
+
 </body>
 
 </html>
