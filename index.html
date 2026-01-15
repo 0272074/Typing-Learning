@@ -2684,6 +2684,7 @@
             constructor(gameManager) {
                 this.gm = gameManager; // Ref to main game
                 this.db = null;
+                this.adminUids = []; // TODO: Add your UID here
                 this.roomId = null;
                 this.playerId = null; // Generated random ID
                 this.playerName = "Player";
@@ -3155,6 +3156,7 @@
                 } catch (e) {
                     console.error("Firebase init failed (offline?)", e);
                     this.db = null;
+                this.adminUids = []; // TODO: Add your UID here
                 }
             }
 
@@ -3186,8 +3188,11 @@
                 if (this.user) {
                     this.els.auth.userInfo.classList.remove('hidden');
                     this.els.auth.loginBtns.classList.add('hidden');
-                    this.els.auth.userName.innerText = this.user.displayName || "No Name";
+                                        this.els.auth.userName.innerText = this.user.displayName || "No Name";
                     this.els.auth.userPhoto.src = this.user.photoURL || "https://www.gravatar.com/avatar/?d=mp";
+                    // Display UID for admin configuration
+                    console.log("Your UID:", this.user.uid);
+                    this.els.auth.userName.title = "UID: " + this.user.uid;
                 } else {
                     this.els.auth.userInfo.classList.add('hidden');
                     this.els.auth.loginBtns.classList.remove('hidden');
@@ -3290,8 +3295,11 @@
                 if (this.user) {
                     this.els.auth.userInfo.classList.remove('hidden');
                     this.els.auth.loginBtns.classList.add('hidden');
-                    this.els.auth.userName.innerText = this.user.displayName || "No Name";
+                                        this.els.auth.userName.innerText = this.user.displayName || "No Name";
                     this.els.auth.userPhoto.src = this.user.photoURL || "https://www.gravatar.com/avatar/?d=mp";
+                    // Display UID for admin configuration
+                    console.log("Your UID:", this.user.uid);
+                    this.els.auth.userName.title = "UID: " + this.user.uid;
                 } else {
                     this.els.auth.userInfo.classList.add('hidden');
                     this.els.auth.loginBtns.classList.remove('hidden');
@@ -4444,14 +4452,18 @@
     
 
             async toAdmin() {
-                this.logAction('access', 'Admin Panel Accessed');
-                const currentPw = this.adminPassword || "admin123";
-                const password = await ModalUtil.prompt("管理者パスワードを入力してください", { inputType: 'password' });
-                if (password === null) return;
-                if (password !== currentPw) {
-                    await ModalUtil.alert("パスワードが違います。");
+                if (!this.user) {
+                    await ModalUtil.alert("管理者パネルを開くには、まずログインしてください。");
                     return;
                 }
+                
+                if (!this.adminUids.includes(this.user.uid)) {
+                    console.warn("Unauthorized Admin Access attempt:", this.user.uid);
+                    await ModalUtil.alert(`管理者権限がありません。\nあなたのUID: ${this.user.uid}\nこのIDを管理者に伝えてください。`);
+                    return;
+                }
+
+                this.logAction('access', 'Admin Panel Accessed (UID Auth)');
                 this.switchScreen('admin');
                 this.renderAdminSubjectSelect();
                 this.renderAdminTable();
