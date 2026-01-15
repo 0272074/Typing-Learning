@@ -2582,6 +2582,18 @@
                 
                 return results;
             }
+            getDisplayPath() {
+                if (this.inputBuffer.length === 0) return this.displayRomanji;
+                
+                // Find path matching current input
+                // Sort by length? No, any match is valid.
+                // If multiple matches (e.g. s -> si, shi, su...), 
+                // we prefer one that matches the *original* displayRomanji if possible to minimize jumping?
+                // Or just the first valid one.
+                const match = this.validPaths.find(p => p.startsWith(this.inputBuffer));
+                return match || this.displayRomanji;
+            }
+
             checkInput(key) {
                 // Return true if key advances any valid path
                 // Normalize input: lowercase, and convert full-width space to half-width
@@ -3694,7 +3706,7 @@
             }
 
             renderRomanji() {
-                const target = this.typingEngine.displayRomanji;
+                const target = this.typingEngine.getDisplayPath ? this.typingEngine.getDisplayPath() : this.typingEngine.displayRomanji;
                 const typed = this.typingEngine.inputBuffer;
 
                 let html = '';
@@ -4115,6 +4127,21 @@
             }
 
             async registerScore() {
+                const nameCheck = this.els.playerName.value.trim();
+                let isValid = false;
+                // 1. Account Name Match
+                if (this.user && nameCheck === this.user.displayName.substring(0, 15)) {
+                    isValid = true;
+                }
+                // 2. Alphabet 2 Chars (Strict)
+                else if (/^[A-Z]{1,2}$/.test(nameCheck)) { 
+                    isValid = true;
+                }
+                
+                if (!isValid) {
+                    await ModalUtil.alert("名前はアルファベット2文字、\nまたはログイン中のアカウント名を使用してください。");
+                    return;
+                }
                 let name = this.els.playerName.value.trim().toUpperCase();
                 if (!this.user && name.length !== 2) {
                     alert('名前をアルファベット2文字で入力してください。');
