@@ -2428,6 +2428,7 @@
                 
                 // Initialize Firebase
                 this.initFirebase();
+                this.logAction('access', 'Application Initialized');
             }
 
             async initFirebase() {
@@ -3169,20 +3170,25 @@
             }
 
             async logAction(type, details) {
-                // Log to console
+                const logEntry = { type, details, timestamp: Date.now() };
+                
+                // 1. Local Storage (Immediate Backup)
+                try {
+                    const localLogs = JSON.parse(localStorage.getItem('typing_game_logs') || '[]');
+                    localLogs.unshift(logEntry);
+                    if (localLogs.length > 100) localLogs.pop(); 
+                    localStorage.setItem('typing_game_logs', JSON.stringify(localLogs));
+                } catch(e) { console.error("Local log save failed", e); }
+
                 console.log(`[LOG:${type}] ${details}`);
                 
-                // Log to Firestore if available
+                // 2. Cloud
                 if (this.db) {
                     try {
                         const { collection, addDoc } = await import("firebase/firestore");
-                        await addDoc(collection(this.db, "logs"), {
-                            type: type,
-                            details: details,
-                            timestamp: Date.now()
-                        });
+                        await addDoc(collection(this.db, "logs"), logEntry);
                     } catch(e) {
-                        console.error("Failed to save log", e);
+                        console.error("Failed to save log to cloud", e);
                     }
                 }
             }
@@ -3191,28 +3197,17 @@
                 const tbody = document.getElementById('admin-logs-body');
                 tbody.innerHTML = '<tr><td colspan="3">読み込み中...</td></tr>';
                 
-                if (!this.db) {
-                    tbody.innerHTML = '<tr><td colspan="3">クラウドデータベースに接続されていません。</td></tr>';
-                    return;
-                }
-                
-                try {
-                    const { collection, query, orderBy, limit, getDocs } = await import("firebase/firestore");
-                    const q = query(collection(this.db, "logs"), orderBy("timestamp", "desc"), limit(50));
-                    const querySnapshot = await getDocs(q);
-                    
-                    tbody.innerHTML = '';
-                    
-                    if (querySnapshot.empty) {
-                         tbody.innerHTML = '<tr><td colspan="3">ログはありません。</td></tr>';
-                         return;
+                // Render Helper
+                const render = (logs, isCloud) => {
+                    if (!logs || logs.length === 0) {
+                        if (!isCloud) tbody.innerHTML = '<tr><td colspan="3">ログはありません（ローカル）。</td></tr>';
+                        return;
                     }
-
-                    querySnapshot.forEach((doc) => {
-                        const data = doc.data();
+                    tbody.innerHTML = '';
+                    logs.forEach((data) => {
                         const tr = document.createElement('tr');
                         const date = new Date(data.timestamp).toLocaleString('ja-JP');
-                        
+                        // No source badge to keep clean, just implicit
                         tr.innerHTML = `
                             <td>${date}</td>
                             <td><span style="padding:4px 8px; border-radius:4px; font-size:0.8rem; background:${data.type==='access'?'#E6FFFA':'#FFF5F5'}; color:${data.type==='access'?'#319795':'#E53E3E'}; font-weight:bold;">${data.type}</span></td>
@@ -3220,14 +3215,47 @@
                         `;
                         tbody.appendChild(tr);
                     });
+                };
+
+                // 1. Show Local Logs Immediately
+                try {
+                    const localLogs = JSON.parse(localStorage.getItem('typing_game_logs') || '[]');
+                    render(localLogs, false);
+                } catch(e) { console.error(e); }
+
+                if (!this.db) {
+                    tbody.insertAdjacentHTML('beforeend', '<tr><td colspan="3" style="color:#A0AEC0; font-size:0.9rem; text-align:center;">※クラウド未接続: ローカルログのみ表示</td></tr>');
+                    return;
+                }
+                
+                // 2. Fetch Cloud Logs with Timeout
+                try {
+                    const { collection, query, orderBy, limit, getDocs } = await import("firebase/firestore");
+                    
+                    const fetchPromise = (async () => {
+                         const q = query(collection(this.db, "logs"), orderBy("timestamp", "desc"), limit(50));
+                         return await getDocs(q);
+                    })();
+                    
+                    // 5 second timeout
+                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 5000));
+                    
+                    const querySnapshot = await Promise.race([fetchPromise, timeoutPromise]);
+                    
+                    const cloudLogs = [];
+                    querySnapshot.forEach(doc => cloudLogs.push(doc.data()));
+                    
+                    render(cloudLogs, true); // Replace with authoritative cloud logs
+                    
                 } catch(e) {
-                    console.error(e);
-                    tbody.innerHTML = '<tr><td colspan="3">ログの読み込みに失敗しました。</td></tr>';
+                    console.error("Cloud log fetch error:", e);
+                    tbody.insertAdjacentHTML('beforeend', '<tr><td colspan="3" style="color:#E53E3E; text-align:center;">クラウドからの取得に失敗しました（タイムアウトまたはエラー）</td></tr>');
                 }
             }
     
 
             async toAdmin() {
+                this.logAction('access', 'Admin Panel Accessed');
                 const currentPw = this.adminPassword || "admin123";
                 const password = await ModalUtil.prompt("管理者パスワードを入力してください", { inputType: 'password' });
                 if (password === null) return;
