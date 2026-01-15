@@ -47,7 +47,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow-y: auto;
         }
 
         /* --- Layout & Screens --- */
@@ -787,6 +787,29 @@
             transform: translateY(2px);
             box-shadow: none;
         }
+    
+        /* Start Countdown Overlay */
+        #start-countdown-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .start-count {
+            font-size: 8rem;
+            font-weight: 900;
+            color: var(--secondary-color);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
     </style>
 </head>
 
@@ -844,6 +867,10 @@
 
     <!-- Play Screen -->
     <div id="screen-play" class="screen">
+        <div id="start-countdown-overlay" class="hidden">
+            <div class="start-count">3</div>
+        </div>
+        
         <div class="game-wrapper">
             <!-- Gauge Header -->
             <div class="gauge-container">
@@ -2562,6 +2589,43 @@
                 // Fallback for localStorage if offline
                 return `typinggame_rank_${this.currentSubject}_${this.currentLevel}`;
             }
+            
+            startCountdown() {
+                const overlay = document.getElementById('start-countdown-overlay');
+                const countEl = overlay.querySelector('.start-count');
+                overlay.classList.remove('hidden');
+                
+                let count = 3;
+                countEl.innerText = count;
+                
+                // Play sound if possible? (skip for now)
+                
+                const timer = setInterval(() => {
+                    count--;
+                    if (count > 0) {
+                        countEl.innerText = count;
+                    } else if (count === 0) {
+                        countEl.innerText = 'START!';
+                    } else {
+                        clearInterval(timer);
+                        overlay.classList.add('hidden');
+                        this.startGameLoop();
+                    }
+                }, 1000);
+            }
+
+            startGameLoop() {
+                this.nextQuestion();
+                // Timer
+                if (this.timerInterval) clearInterval(this.timerInterval);
+                this.timerInterval = setInterval(() => {
+                    if (this.state === 'PLAY') {
+                        this.elapsedTime = Math.floor((Date.now() - this.startTime) / 1000);
+                        this.updateGauge(); 
+                    }
+                }, 100);
+            }
+        
             startStage(level) {
                 if (this.isRankingMode) {
                     this.showRankingView(level);
@@ -2593,16 +2657,7 @@
                 this.startTime = Date.now();
                 
                 this.switchScreen('play');
-                this.nextQuestion();
-
-                // Timer
-                if (this.timerInterval) clearInterval(this.timerInterval);
-                this.timerInterval = setInterval(() => {
-                    if (this.state === 'PLAY') {
-                        this.elapsedTime = Math.floor((Date.now() - this.startTime) / 1000);
-                        this.updateGauge(); // Update gauge every tick
-                    }
-                }, 100);
+                this.startCountdown();
             }
 
             updateGauge() {
@@ -2704,7 +2759,7 @@
 
                 const countdownLabel = document.getElementById('countdown-label');
                 const isLastQuestion = this.currentQuestionIndex >= this.questionsQueue.length - 1;
-                countdownLabel.innerText = isLastQuestion ? 'けっかはっぴょうまで' : 'つぎのもんだいまで';
+                countdownLabel.innerText = isLastQuestion ? 'ボーナスステージまで' : 'つぎのもんだいまで';
 
                 let count = 5;
                 this.els.countdown.innerText = count;
