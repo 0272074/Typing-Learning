@@ -2454,7 +2454,7 @@
                 document.addEventListener('keydown', (e) => this.handleKey(e));
                 
                 // Initialize Firebase
-                this.initFirebase();
+                // this.initFirebase(); // Moved to DOMContentLoaded
                 this.logAction('access', 'Application Initialized');
             }
 
@@ -3293,7 +3293,7 @@
                     })();
                     
                     // 5 second timeout
-                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 5000));
+                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 15000));
                     
                     const querySnapshot = await Promise.race([fetchPromise, timeoutPromise]);
                     
