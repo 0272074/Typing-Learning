@@ -3531,7 +3531,7 @@
                     return;
                 }
                 
-                rankings.forEach((entry, index) => {
+                rankings.sort((a,b)=>b.score-a.score).slice(0, 3).forEach((entry, index) => {
                     const date = new Date(entry.date);
                     const dateStr = `${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes().toString().padStart(2,'0')}`;
                     
@@ -3540,9 +3540,14 @@
                     else if (index === 1) row.style.color = '#A0A0A0';
                     else if (index === 2) row.style.color = '#CD7F32';
                     
+                    let nameDisplay = entry.name;
+                    if (this.user && this.adminUids.includes(this.user.uid) && entry.uid) {
+                         nameDisplay += ' <span style="font-size:0.8rem; color:#3182CE;" title="Login User">🛡️</span>';
+                    }
+
                     row.innerHTML = `
                         <td>${index + 1}</td>
-                        <td>${entry.name}</td>
+                        <td>${nameDisplay}</td>
                         <td>${entry.score}</td>
                         <td>${dateStr}</td>
                     `;
@@ -4124,6 +4129,12 @@
                     `;
                     this.els.rankingViewBody.appendChild(row);
                 });
+            }
+
+            fillAccountName() {
+                if (this.user && this.user.displayName) {
+                    this.els.playerName.value = this.user.displayName.substring(0, 15);
+                }
             }
 
             async registerScore() {
