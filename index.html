@@ -2684,7 +2684,6 @@
             constructor(gameManager) {
                 this.gm = gameManager; // Ref to main game
                 this.db = null;
-                this.adminUids = ["EEXwYYIxk9df4H40UqAnQRMi6TX2"]; // Added user's UID
                 this.roomId = null;
                 this.playerId = null; // Generated random ID
                 this.playerName = "Player";
@@ -2999,11 +2998,10 @@
     
         class GameManager {
             constructor() {
-                this.state = 'TITLE'; // TITLE, SUBJECT_SELECT, DIFFICULTY_SELECT, PLAY, RESULT, EXPLAIN, RANKING_VIEW
+                this.adminUids = ["EEXwYYIxk9df4H40UqAnQRMi6TX2"];
+                this.state = 'TITLE'; 
                 this.score = 0;
                 this.mistakes = 0;
-                this.mistakeMap = {};
-                this.totalCharsInGame = 0;
                 this.mistakeMap = {};
                 this.totalCharsInGame = 0;
                 this.startTime = 0;
@@ -3031,10 +3029,6 @@
                 this.user = null;
                 this.mistakeMap = {}; // Current game mistakes
                 this.totalCharsInGame = 0;
-                this.totalCharsInGame = 0;
-                this.user = null;
-                this.mistakeMap = {}; // Current game mistakes
-                this.totalCharsInGame = 0; // Temporary storage before bonus
 
                 this.els = {
                     screens: {
@@ -3156,7 +3150,6 @@
                 } catch (e) {
                     console.error("Firebase init failed (offline?)", e);
                     this.db = null;
-                this.adminUids = ["EEXwYYIxk9df4H40UqAnQRMi6TX2"]; // Added user's UID
                 }
             }
 
