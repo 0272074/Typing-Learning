@@ -3519,7 +3519,7 @@
                 this.switchScreen('rankingView');
                 
                 const subjectLabel = GAME_DATA.subjects[this.currentSubject].label;
-                this.els.rankingViewTitle.innerText = `${subjectLabel} - レベル ${level}`;
+                this.els.rankingViewTitle.innerText = `${subjectLabel} - レベル ${level} (TOP 3)`;
                 
                 this.els.rankingViewBody.innerHTML = '<tr><td colspan="4">読み込み中...</td></tr>';
                 
@@ -3531,7 +3531,10 @@
                     return;
                 }
                 
-                rankings.sort((a,b)=>b.score-a.score).slice(0, 3).forEach((entry, index) => {
+                // Explicit Top 3
+                const top3 = rankings.sort((a,b)=>b.score-a.score).slice(0, 3);
+                console.log("Displaying Top 3 rankings. Count:", top3.length);
+                top3.forEach((entry, index) => {
                     const date = new Date(entry.date);
                     const dateStr = `${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes().toString().padStart(2,'0')}`;
                     
@@ -3541,6 +3544,7 @@
                     else if (index === 2) row.style.color = '#CD7F32';
                     
                     let nameDisplay = entry.name;
+                    console.log("Admin Check for", entry.name, "User:", this.user?.uid, "Entry UID:", entry.uid, "IsAdmin:", this.adminUids.includes(this.user?.uid));
                     if (this.user && this.adminUids.includes(this.user.uid) && entry.uid) {
                          nameDisplay += ' <span style="font-size:0.8rem; color:#3182CE;" title="Login User">🛡️</span>';
                     }
@@ -4086,6 +4090,7 @@
                     
                     let nameDisplay = entry.name;
                     // Check for logged in user (Admin View)
+                    console.log("Admin Check for", entry.name, "User:", this.user?.uid, "Entry UID:", entry.uid, "IsAdmin:", this.adminUids.includes(this.user?.uid));
                     if (this.user && this.adminUids.includes(this.user.uid) && entry.uid) {
                         nameDisplay += ' <span style="font-size:0.8rem; color:#3182CE;" title="Login User">🛡️</span>';
                     }
@@ -4117,6 +4122,7 @@
                     
                     let nameDisplay = entry.name;
                     // Check for logged in user (Admin View)
+                    console.log("Admin Check for", entry.name, "User:", this.user?.uid, "Entry UID:", entry.uid, "IsAdmin:", this.adminUids.includes(this.user?.uid));
                     if (this.user && this.adminUids.includes(this.user.uid) && entry.uid) {
                         nameDisplay += ' <span style="font-size:0.8rem; color:#3182CE;" title="Login User">🛡️</span>';
                     }
