@@ -967,6 +967,13 @@
         }
     
     </style>
+
+    <style>
+        /* GAS LOCAL MODE: Hide unsupported features */
+        #btn-login, .btn-login { display: none !important; }
+        #btn-versus-mode { display: none !important; }
+        #btn-use-account-name { display: none !important; } /* No auth = no account name */
+    </style>
 </head>
 
 <body>
@@ -2489,6 +2496,7 @@
 
         class TypingEngine {
             constructor() {
+                this.GAS_API_URL = "https://script.google.com/macros/s/AKfycbzTAFdexe5mMh-0I4ElaapVhpyxgCnx1B-ILLg40_gW27dCT67JFhRbreeTiJsHBhcPdg/exec";
                 this.currentKana = "";
                 this.inputBuffer = "";
                 this.validPaths = []; // All valid remaining romanji sequences
@@ -3015,6 +3023,7 @@
     
         class GameManager {
             constructor() {
+                this.GAS_API_URL = "https://script.google.com/macros/s/AKfycbzTAFdexe5mMh-0I4ElaapVhpyxgCnx1B-ILLg40_gW27dCT67JFhRbreeTiJsHBhcPdg/exec";
                 this.adminUids = ["EEXwYYlxk9df4H40UqAnQRMi6TX2"];
                 this.state = 'TITLE'; 
                 this.score = 0;
@@ -3986,6 +3995,19 @@
             }
 
             async loadRankings() {
+                // GAS MIGRATION: Fetch from Google Sheets
+                try {
+                    const res = await fetch(this.GAS_API_URL);
+                    const allData = await res.json();
+                    // Filter for current view
+                    return allData.filter(d => d.subject === this.currentSubject && d.level === this.currentLevel);
+                } catch(e) {
+                    console.error("GAS Load Failed", e);
+                    return [];
+                }
+                
+                /* FIREBASE DISABLED
+                if (this.db) { ... 
                 if (this.db) {
                     try {
                         const { collection, query, where, getDocs, orderBy, limit } = await import("firebase/firestore");
@@ -4178,7 +4200,20 @@
                     uid: this.user ? this.user.uid : null
                 };
 
-                if (this.db) {
+                // GAS MIGRATION: Save to Google Sheets
+                try {
+                    await fetch(this.GAS_API_URL, {
+                        method: 'POST',
+                        body: JSON.stringify(scoreData)
+                    });
+                } catch(e) {
+                    console.error("GAS Save Failed", e);
+                    await ModalUtil.alert("保存に失敗しました(GAS)");
+                    return;
+                }
+                
+                // Skip Firebase logic
+                if (false && this.db) {
                     try {
                         const { collection, addDoc } = await import("firebase/firestore");
                         await addDoc(collection(this.db, "rankings"), scoreData);
@@ -4520,6 +4555,20 @@
     
 
             async toAdmin() {
+                // GAS LOCAL MODE: Simple Password Check (No Auth)
+                const inputPw = await ModalUtil.prompt("管理者パスワードを入力してください:", { inputType: 'password' });
+                if (inputPw !== (this.adminPassword || "admin123")) {
+                    await ModalUtil.alert("パスワードが違います。");
+                    return;
+                }
+                
+                this.switchScreen('admin');
+                this.renderAdminSubjectSelect();
+                this.renderAdminTable();
+                return;
+
+                /* FIREBASE DISABLED
+                if (!this.user) { ... 
                 if (!this.user) {
                     await ModalUtil.alert("管理者パネルを開くには、まずログインしてください。");
                     return;
